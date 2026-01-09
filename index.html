@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>IHSAAN Medics</title>
+  <meta name="description" content="IHSAAN Medics, supporting Muslim medical students to thrive without compromising faith or integrity." />
+  <link rel="stylesheet" href="style.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Top Nav -->
+  <header class="top-nav">
+    <a class="brand" href="#home" aria-label="Go to home">
+      <!-- OPTION B: logo in root -->
+      <img class="brand-logo" src="logo.png" alt="IHSAAN Medics logo" />
+      <div class="brand-text">
+        <span class="brand-mark">IHSAAN</span>
+        <span class="brand-sub">Medics</span>
+      </div>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a class="nav-link" href="#home" data-route="home">Welcome</a>
+      <a class="nav-link" href="#whatwedo" data-route="whatwedo">What we do</a>
+      <a class="nav-link" href="#webinars" data-route="webinars">Webinars &amp; Workshops</a>
+      <a class="nav-link" href="#guides" data-route="guides">Portfolio Guides</a>
+      <a class="nav-link" href="#research" data-route="research">Research training</a>
+      <a class="nav-link" href="#opportunities" data-route="opportunities">Portfolio-building opportunities</a>
+      <a class="nav-link" href="#medtech" data-route="medtech">MedTech &amp; Innovation exposure</a>
+      <a class="nav-link" href="#getinvolved" data-route="getinvolved">Get involved</a>
+      <a class="nav-link" href="#contact" data-route="contact">Contact</a>
+    </nav>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-controls="mobileDrawer" aria-expanded="false">☰</button>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="drawer" id="mobileDrawer" aria-hidden="true">
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+    <aside class="drawer-panel" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="drawer-header">
+        <div class="drawer-title">IHSAAN Medics</div>
+        <button class="drawer-close" id="drawerClose" aria-label="Close menu">×</button>
+      </div>
+
+      <nav class="drawer-links" aria-label="Mobile navigation">
+        <a href="#home" data-route="home">Welcome</a>
+        <a href="#whatwedo" data-route="whatwedo">What we do</a>
+        <a href="#webinars" data-route="webinars">Webinars &amp; Workshops</a>
+        <a href="#guides" data-route="guides">Portfolio Guides</a>
+        <a href="#research" data-route="research">Research training</a>
+        <a href="#opportunities" data-route="opportunities">Portfolio-building opportunities</a>
+        <a href="#medtech" data-route="medtech">MedTech &amp; Innovation exposure</a>
+        <a href="#getinvolved" data-route="getinvolved">Get involved</a>
+        <a href="#contact" data-route="contact">Contact</a>
+      </nav>
+
+      <div class="drawer-cta">
+        <a class="btn primary" href="https://forms.gle/PHcbMPA5EUAqc5K57" target="_blank" rel="noopener">
+          Interest form
+        </a>
+      </div>
+    </aside>
+  </div>
+
+  <main class="app" id="app">
+
+    <!-- HOME -->
+    <section class="page active" id="page-home" data-page="home" aria-label="Home">
+      <div class="home-shell">
+        <div class="home-hero">
+          <div class="hero-left">
+            <p class="kicker">IHSAAN Medics</p>
+            <h1>Welcome.</h1>
+            <p class="lead">
+              A national initiative supporting Muslim medical students to thrive, without compromising faith or integrity.
+            </p>
+
+            <div class="cta-row">
+              <button class="btn primary" data-go="whatwedo">Explore</button>
+              <a class="btn ghost" href="https://forms.gle/PHcbMPA5EUAqc5K57" target="_blank" rel="noopener">Interest form</a>
+            </div>
+
+            <div class="bridge">
+              <h3 class="bridge-title">Bridging the gap</h3>
+              <p class="bridge-text">
+                IHSAAN Medics connects students with doctors through practical mentorship, real portfolio opportunities,
+                and structured guidance. Students move from uncertainty to clarity, and from ambition to action, with faith
+                and integrity at the centre.
+              </p>
+            </div>
+          </div>
+
+          <div class="hero-right">
+            <div class="hero-badge">
+              <img class="hero-logo" src="logo.png" alt="IHSAAN Medics logo" />
+              <div>
+                <p class="hero-badge-title">Built for students</p>
+                <p class="hero-stack">Mentorship<br>Guidance<br>Opportunity</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="home-panels">
+          <section class="panel">
+            <div class="panel-head">
+              <h2>Who we are</h2>
+              <p class="muted">
+                “Indeed, Allah does not change the condition of a people until they change what is within themselves.” (Qur’an 13:11)
+              </p>
+            </div>
+
+            <div class="grid two">
+              <div class="card dark">
+                <h3>Why we exist</h3>
+                <p>
+                  Muslim medical students contribute enormously to the NHS, yet many face avoidable barriers.
+                  Limited access to mentorship, uncertainty around portfolios and career planning, and environments
+                  where faith-related needs can be misunderstood or sidelined. IHSAAN Medics exists to remove these
+                  barriers through clear guidance, genuine community, and practical opportunities, so students can
+                  progress confidently without compromising their values.
+                </p>
+              </div>
+
+              <div class="card dark">
+                <h3>What we’re changing</h3>
+                <p>
+                  IHSAAN Medics supports students through structured development, sincere mentorship,
+                  and faith-grounded professionalism — creating a bridge between training and real-world progression.
+                </p>
+
+                <!-- Mini diagram -->
+                <div class="mini-diagram" aria-hidden="true">
+                  <div class="node">
+                    <span class="dot"></span>
+                    <span class="label">Mentorship</span>
+                  </div>
+                  <div class="connector"></div>
+                  <div class="node">
+                    <span class="dot"></span>
+                    <span class="label">Guidance</span>
+                  </div>
+                  <div class="connector"></div>
+                  <div class="node">
+                    <span class="dot"></span>
+                    <span class="label">Opportunity</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head">
+              <h2>Our vision</h2>
+              <p class="muted">
+                “And thus We have made you a balanced community, that you may be witnesses over humanity.” (Qur’an 2:143)
+              </p>
+            </div>
+
+            <div class="grid three">
+              <div class="card dark">
+                <h3>Knowledge</h3>
+                <p>Strong portfolios, research skills, and career clarity.</p>
+              </div>
+              <div class="card dark">
+                <h3>Character</h3>
+                <p>Integrity, confidence, and faith-grounded professionalism.</p>
+              </div>
+              <div class="card dark">
+                <h3>Contribution</h3>
+                <p>Service to patients, teams, and the Ummah.</p>
+              </div>
+            </div>
+
+            <div class="quote">
+              <p class="quote-text">
+                We believe excellence in medicine is a form of ʿibādah, and a means of daʿwah through action.
+              </p>
+            </div>
+          </section>
+        </div>
+
+        <footer class="footer">
+          <p>© <span id="year"></span> IHSAAN Medics</p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- Other pages -->
+    <section class="page" id="page-whatwedo" data-page="whatwedo" aria-label="What we do">
+      <div class="page-head">
+        <h2>What we do</h2>
+        <p class="muted">A structured pathway across skills, portfolios, and opportunities.</p>
+      </div>
+
+      <div class="grid two">
+        <div class="card dark">
+          <h3>Skills</h3>
+          <ul class="list">
+            <li>Webinars &amp; workshops (specialties, academic pathways, purpose)</li>
+            <li>Research training &amp; publishing opportunities</li>
+          </ul>
+        </div>
+
+        <div class="card dark">
+          <h3>Ethos</h3>
+          <ul class="list">
+            <li>Clear portfolio guidance (audits, QIPs, systematic reviews)</li>
+            <li>Faith-grounded professionalism</li>
+            <li>Community-led mentorship and real access</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="page-webinars" data-page="webinars" aria-label="Webinars & Workshops">
+      <div class="page-head">
+        <h2>Webinars &amp; Workshops</h2>
+        <p class="muted">Specialties, academic pathways, navigating medicine with purpose</p>
+      </div>
+
+      <div class="grid two">
+        <div class="card dark">
+          <h3>Topics</h3>
+          <ul class="list">
+            <li>Specialty pathways and competitiveness</li>
+            <li>Academic medicine, publications, research, funding</li>
+            <li>Purpose-led career growth</li>
+          </ul>
+        </div>
+        <div class="card dark">
+          <h3>Format</h3>
+          <ul class="list">
+            <li>Short, high-value sessions</li>
+            <li>Q&amp;A with clinicians</li>
+            <li>Actionable next steps</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="page-guides" data-page="guides" aria-label="Portfolio Guides">
+      <div class="page-head">
+        <h2>Portfolio Guides</h2>
+        <p class="muted">Summarised guides across every specialty.</p>
+      </div>
+
+      <div class="card dark">
+        <h3>What you’ll get</h3>
+        <ul class="list">
+          <li>Step-by-step portfolio checklists</li>
+          <li>Examples of strong evidence</li>
+          <li>Templates you can copy and use</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="page" id="page-research" data-page="research" aria-label="Research training">
+      <div class="page-head">
+        <h2>Research training</h2>
+        <p class="muted">How to undertake audits, QIPs, systematic reviews &amp; meta-analyses, and find opportunities to do them.</p>
+      </div>
+
+      <div class="grid two">
+        <div class="card dark">
+          <h3>Core skills</h3>
+          <ul class="list">
+            <li>Choosing a good question</li>
+            <li>Methods and write-up</li>
+            <li>Submission and publication basics</li>
+          </ul>
+        </div>
+        <div class="card dark">
+          <h3>Opportunities</h3>
+          <ul class="list">
+            <li>Projects supervised by clinicians</li>
+            <li>Access to teams and ongoing work</li>
+            <li>Support to reach publishable outcomes</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="page-opportunities" data-page="opportunities" aria-label="Portfolio-building opportunities">
+      <div class="page-head">
+        <h2>Portfolio-building opportunities</h2>
+        <p class="muted">Facilitated access to shadowing, electives, teaching, and research publishing.</p>
+      </div>
+
+      <div class="card dark">
+        <h3>Facilitated access to:</h3>
+        <ul class="list">
+          <li>Shadowing</li>
+          <li>Electives</li>
+          <li>Teaching opportunities</li>
+          <li>Research &amp; publishing opportunities</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="page" id="page-medtech" data-page="medtech" aria-label="MedTech & Innovation exposure">
+      <div class="page-head">
+        <h2>MedTech &amp; Innovation exposure</h2>
+        <p class="muted">Exploring lateral, non-clinical careers in medicine.</p>
+      </div>
+
+      <div class="grid two">
+        <div class="card dark">
+          <h3>Exposure to:</h3>
+          <ul class="list">
+            <li>Innovation roles</li>
+            <li>Startups and product thinking</li>
+            <li>Clinical AI, data and digital health</li>
+          </ul>
+        </div>
+        <div class="card dark">
+          <h3>Why it matters</h3>
+          <p>Understanding the wider ecosystem helps you build a resilient career and contribute beyond the bedside.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="page-getinvolved" data-page="getinvolved" aria-label="Get involved">
+      <div class="page-head">
+        <h2>Get involved</h2>
+        <p class="muted">Join the network, access support, opportunities, and updates.</p>
+      </div>
+
+      <div class="grid two">
+        <div class="card dark">
+          <h3>Join the WhatsApp community</h3>
+          <p class="muted">Access requires approval by an admin. Request access below.</p>
+          <a class="btn primary" href="https://forms.gle/PHcbMPA5EUAqc5K57" target="_blank" rel="noopener">
+            Request WhatsApp access
+          </a>
+        </div>
+        <div class="card dark callout">
+          <h3>For doctors &amp; mentors</h3>
+          <p>Support can be light-touch, webinars, mentoring, supervising projects, or sharing lived experience.</p>
+          <a class="btn ghost" href="https://forms.gle/PHcbMPA5EUAqc5K57" target="_blank" rel="noopener">Register interest</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="page-contact" data-page="contact" aria-label="Contact">
+      <div class="page-head">
+        <h2>Contact</h2>
+        <p class="muted">Jazakumallahu Khayran, from Team IHSAAN</p>
+      </div>
+
+      <div class="grid two">
+        <div class="card dark">
+          <h3>Social</h3>
+          <ul class="list">
+            <li>@ihsaan.medics</li>
+            <li>@ihsaan.network</li>
+            <li>@fosischannel</li>
+          </ul>
+        </div>
+        <div class="card dark">
+          <h3>Principle</h3>
+          <p class="muted">“Allah is excellent and He loves excellence.”</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
