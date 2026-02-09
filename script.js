@@ -1,3 +1,5 @@
+// script.js (FULL UPDATED)
+
 // Footer year
 const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();
@@ -92,3 +94,64 @@ if (!window.location.hash) {
 } else {
   routeFromHash();
 }
+
+/* ========= Portfolio Guides image fallback ========= */
+const guideCovers = Array.from(document.querySelectorAll(".guide-cover"));
+guideCovers.forEach(img => {
+  img.addEventListener("error", () => {
+    const art = img.closest(".guide-art");
+    if (art) art.classList.add("is-missing");
+  });
+});
+
+/* ========= Portfolio Guides modal ========= */
+const guideModal = document.getElementById("guideModal");
+const guideModalBackdrop = document.getElementById("guideModalBackdrop");
+const guideModalClose = document.getElementById("guideModalClose");
+const guideModalBack = document.getElementById("guideModalBack");
+const guideModalText = document.getElementById("guideModalText");
+
+function openGuideModal(specialty){
+  if (!guideModal) return;
+  guideModal.classList.add("open");
+  guideModal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("nav-open");
+
+  if (guideModalText) {
+    guideModalText.textContent = `${specialty} portfolio guide is coming soon.`;
+  }
+}
+
+function closeGuideModal(){
+  if (!guideModal) return;
+  guideModal.classList.remove("open");
+  guideModal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("nav-open");
+}
+
+const guideCards = Array.from(document.querySelectorAll(".guide-card[data-guide]"));
+guideCards.forEach(card => {
+  card.addEventListener("click", (e) => {
+    e.preventDefault();
+    const specialty = card.getAttribute("data-guide") || "This";
+    openGuideModal(specialty);
+  });
+
+  card.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      const specialty = card.getAttribute("data-guide") || "This";
+      openGuideModal(specialty);
+    }
+  });
+});
+
+if (guideModalBackdrop) guideModalBackdrop.addEventListener("click", closeGuideModal);
+if (guideModalClose) guideModalClose.addEventListener("click", closeGuideModal);
+if (guideModalBack) guideModalBack.addEventListener("click", closeGuideModal);
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && guideModal && guideModal.classList.contains("open")) {
+    closeGuideModal();
+  }
+});
