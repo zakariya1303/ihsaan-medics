@@ -1,3 +1,4 @@
+<!-- index.html (FULL UPDATED) -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -16,7 +17,6 @@
   <!-- Top Nav -->
   <header class="top-nav">
     <a class="brand" href="#home" aria-label="Go to home">
-      <!-- OPTION B: logo in root -->
       <img class="brand-logo" src="logo.png" alt="IHSAAN Medics logo" />
       <div class="brand-text">
         <span class="brand-mark">IHSAAN</span>
@@ -36,7 +36,6 @@
       <a class="nav-link" href="#contact" data-route="contact">Contact</a>
     </nav>
 
-    <!-- ✅ FIXED burger button (no "☰", uses CSS lines) -->
     <button class="nav-toggle" id="navToggle"
             aria-label="Open menu"
             aria-controls="mobileDrawer"
@@ -141,7 +140,7 @@
                   and faith-grounded professionalism — creating a bridge between training and real-world progression.
                 </p>
 
-                <!-- Mini diagram -->
+                <!-- Updated diagram (matches your screenshot style) -->
                 <div class="mini-diagram" aria-hidden="true">
                   <div class="node">
                     <span class="dot"></span>
@@ -199,185 +198,727 @@
       </div>
     </section>
 
-    <!-- What we do -->
+    <!-- WHAT WE DO -->
     <section class="page" id="page-whatwedo" data-page="whatwedo" aria-label="What we do">
-      <div class="page-head">
+      <div class="page-head page-head--spaced">
         <h2>What we do</h2>
-        <p class="muted">A structured pathway across skills, portfolios, and opportunities.</p>
+
+        <div class="intro-block">
+          <p class="lead lead-strong">
+            IHSAAN Medics is made for Muslim medics who want to explore their specialties, academic pathways, and purpose.
+            We bridge the gap by offering opportunities to build confidence, clarity, and real progress
+            <span class="inline-note">(including clear portfolio guidance: audits, QIPs, and systematic reviews).</span>
+          </p>
+        </div>
+
+        <p class="opportunities-label">These opportunities include:</p>
       </div>
 
-      <div class="grid two">
-        <div class="card dark">
-          <h3>Skills</h3>
-          <ul class="list">
-            <li>Webinars and workshops (specialties, academic pathways, purpose)</li>
-            <li>Research training and publishing opportunities</li>
-          </ul>
-        </div>
+      <div class="feature-list" role="list" aria-label="Opportunities list">
+        <a class="feature-row" role="listitem" href="#webinars" aria-label="Go to Webinars and Workshops">
+          <div class="feature-icon pulsing" aria-hidden="true"></div>
+          <div class="feature-body">
+            <h3 class="feature-title">Webinars</h3>
+            <p class="muted feature-text">High-yield sessions on specialty pathways, competitiveness, and what “good” looks like — with clear next steps.</p>
+          </div>
+          <span class="feature-cta" aria-hidden="true">View →</span>
+        </a>
 
-        <div class="card dark">
-          <h3>Ethos</h3>
-          <ul class="list">
-            <li>Clear portfolio guidance (audits, QIPs, systematic reviews)</li>
-            <li>Faith-grounded professionalism</li>
-            <li>Community-led mentorship and real access</li>
-          </ul>
-        </div>
+        <a class="feature-row" role="listitem" href="#webinars" aria-label="Go to Webinars and Workshops">
+          <div class="feature-icon pulsing" aria-hidden="true"></div>
+          <div class="feature-body">
+            <h3 class="feature-title">Workshops</h3>
+            <p class="muted feature-text">Practical, hands-on guidance to help you take action — from planning to execution, with templates you can reuse.</p>
+          </div>
+          <span class="feature-cta" aria-hidden="true">View →</span>
+        </a>
+
+        <a class="feature-row" role="listitem" href="#research" aria-label="Go to Research training">
+          <div class="feature-icon pulsing" aria-hidden="true"></div>
+          <div class="feature-body">
+            <h3 class="feature-title">Research training</h3>
+            <p class="muted feature-text">Learn how to undertake audits, QIPs, systematic reviews and more — structured so you can actually deliver outcomes.</p>
+          </div>
+          <span class="feature-cta" aria-hidden="true">View →</span>
+        </a>
+
+        <a class="feature-row" role="listitem" href="#opportunities" aria-label="Go to Portfolio-building opportunities">
+          <div class="feature-icon pulsing" aria-hidden="true"></div>
+          <div class="feature-body">
+            <h3 class="feature-title">Publishing opportunities</h3>
+            <p class="muted feature-text">Supported routes to posters, abstracts, and publications — turning effort into evidence that strengthens your portfolio.</p>
+          </div>
+          <span class="feature-cta" aria-hidden="true">View →</span>
+        </a>
+
+        <a class="feature-row" role="listitem" href="#getinvolved" aria-label="Go to Get involved">
+          <div class="feature-icon pulsing" aria-hidden="true"></div>
+          <div class="feature-body">
+            <h3 class="feature-title">Access to doctors &amp; consultants</h3>
+            <p class="muted feature-text">Real networking and mentorship — connecting you with high-level clinicians who can guide, supervise, and open doors.</p>
+          </div>
+          <span class="feature-cta" aria-hidden="true">View →</span>
+        </a>
+      </div>
+
+      <div class="page-signoff" aria-label="Ethos">
+        <p class="signoff-title">Our ethos</p>
+        <p class="signoff-text">
+          Our ethos revolves around faith-guided professionalism, community mentorship, and real access.
+          <span class="signoff-highlight">Let’s build with clarity, purpose, and barakah.</span>
+        </p>
       </div>
     </section>
 
+    <!-- WEBINARS -->
     <section class="page" id="page-webinars" data-page="webinars" aria-label="Webinars & Workshops">
-      <div class="page-head">
+      <div class="page-head page-head--spaced">
         <h2>Webinars &amp; Workshops</h2>
-        <p class="muted">Specialties, academic pathways, navigating medicine with purpose</p>
-      </div>
 
-      <div class="grid two">
-        <div class="card dark">
-          <h3>Topics</h3>
-          <ul class="list">
-            <li>Specialty pathways and competitiveness</li>
-            <li>Academic medicine, publications, research, funding</li>
-            <li>Purpose-led career growth</li>
-          </ul>
+        <div class="intro-block">
+          <p class="lead lead-strong">
+            High-value sessions built to educate, clarify, and move you forward — including Q&amp;As with clinicians and
+            actionable next steps you can apply immediately.
+          </p>
+          <p class="muted" style="margin-top:10px;">
+            Each tutorial below includes a visual preview and a clear outline of what you’ll learn.
+          </p>
         </div>
-        <div class="card dark">
-          <h3>Format</h3>
-          <ul class="list">
-            <li>Short, high-value sessions</li>
-            <li>Q&amp;A with clinicians</li>
-            <li>Actionable next steps</li>
-          </ul>
-        </div>
-      </div>
-    </section>
 
-    <section class="page" id="page-guides" data-page="guides" aria-label="Portfolio Guides">
-      <div class="page-head">
-        <h2>Portfolio Guides</h2>
-        <p class="muted">Summarised guides across every specialty.</p>
+        <p class="opportunities-label">Current tutorial themes:</p>
       </div>
 
-      <div class="card dark">
-        <h3>What you’ll get</h3>
-        <ul class="list">
-          <li>Step-by-step portfolio checklists</li>
-          <li>Examples of strong evidence</li>
-          <li>Templates you can copy and use</li>
-        </ul>
-      </div>
-    </section>
+      <div class="tutorial-list" role="list" aria-label="Tutorial list">
+        <article class="tutorial-row" role="listitem" tabindex="0">
+          <div class="tutorial-media" aria-hidden="true">
+            <div class="clipart">
+              <svg viewBox="0 0 96 96">
+                <path d="M18 20h44a8 8 0 0 1 8 8v42a6 6 0 0 1-6 6H28a10 10 0 0 1-10-10V20z" fill="none" stroke="currentColor" stroke-width="4" opacity=".9"/>
+                <path d="M28 34h26M28 46h34M28 58h18" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" opacity=".85"/>
+                <path d="M74 36l10 6-10 6" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+              </svg>
+            </div>
+          </div>
+          <div class="tutorial-body">
+            <h3 class="tutorial-title">Specialty pathways</h3>
+            <p class="muted tutorial-text">
+              Understand different specialty routes, what training actually looks like, and how to map your next 6–12 months
+              to a clear direction — without overwhelm.
+            </p>
+          </div>
+        </article>
 
-    <section class="page" id="page-research" data-page="research" aria-label="Research training">
-      <div class="page-head">
-        <h2>Research training</h2>
-        <p class="muted">How to undertake audits, QIPs, systematic reviews and meta-analyses, and find opportunities to do them.</p>
-      </div>
+        <article class="tutorial-row" role="listitem" tabindex="0">
+          <div class="tutorial-media" aria-hidden="true">
+            <div class="clipart">
+              <svg viewBox="0 0 96 96">
+                <path d="M20 72V32a10 10 0 0 1 10-10h36a10 10 0 0 1 10 10v40" fill="none" stroke="currentColor" stroke-width="4" opacity=".9"/>
+                <path d="M26 66h44" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" opacity=".85"/>
+                <path d="M30 58l10-12 10 8 14-18" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+                <path d="M20 72h56" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" opacity=".9"/>
+              </svg>
+            </div>
+          </div>
+          <div class="tutorial-body">
+            <h3 class="tutorial-title">Competition ratios</h3>
+            <p class="muted tutorial-text">
+              Learn how to interpret competition ratios properly, what they mean in real life, and how to build a sensible,
+              high-yield plan that matches your goals and timeline.
+            </p>
+          </div>
+        </article>
 
-      <div class="grid two">
-        <div class="card dark">
-          <h3>Core skills</h3>
-          <ul class="list">
-            <li>Choosing a good question</li>
-            <li>Methods and write-up</li>
-            <li>Submission and publication basics</li>
-          </ul>
-        </div>
-        <div class="card dark">
-          <h3>Opportunities</h3>
-          <ul class="list">
-            <li>Projects supervised by clinicians</li>
-            <li>Access to teams and ongoing work</li>
-            <li>Support to reach publishable outcomes</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+        <article class="tutorial-row" role="listitem" tabindex="0">
+          <div class="tutorial-media" aria-hidden="true">
+            <div class="clipart">
+              <svg viewBox="0 0 96 96">
+                <path d="M24 74V26a8 8 0 0 1 8-8h18l6 8h16a8 8 0 0 1 8 8v40a10 10 0 0 1-10 10H34a10 10 0 0 1-10-10z" fill="none" stroke="currentColor" stroke-width="4" opacity=".9"/>
+                <path d="M34 44h38M34 56h28" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" opacity=".85"/>
+                <path d="M62 18v16" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" opacity=".85"/>
+              </svg>
+            </div>
+          </div>
+          <div class="tutorial-body">
+            <h3 class="tutorial-title">Academic medicine</h3>
+            <p class="muted tutorial-text">
+              A practical overview of research tracks, academic pathways, and how to get involved with supervision and projects —
+              including how to choose topics that are achievable and portfolio-relevant.
+            </p>
+          </div>
+        </article>
 
-    <section class="page" id="page-opportunities" data-page="opportunities" aria-label="Portfolio-building opportunities">
-      <div class="page-head">
-        <h2>Portfolio-building opportunities</h2>
-        <p class="muted">Facilitated access to shadowing, electives, teaching, and research publishing.</p>
-      </div>
-
-      <div class="card dark">
-        <h3>Facilitated access to:</h3>
-        <ul class="list">
-          <li>Shadowing</li>
-          <li>Electives</li>
-          <li>Teaching opportunities</li>
-          <li>Research and publishing opportunities</li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="page" id="page-medtech" data-page="medtech" aria-label="MedTech & Innovation exposure">
-      <div class="page-head">
-        <h2>MedTech &amp; Innovation exposure</h2>
-        <p class="muted">Exploring lateral, non-clinical careers in medicine.</p>
-      </div>
-
-      <div class="grid two">
-        <div class="card dark">
-          <h3>Exposure to:</h3>
-          <ul class="list">
-            <li>Innovation roles</li>
-            <li>Startups and product thinking</li>
-            <li>Clinical AI, data and digital health</li>
-          </ul>
-        </div>
-        <div class="card dark">
-          <h3>Why it matters</h3>
-          <p>Understanding the wider ecosystem helps you build a resilient career and contribute beyond the bedside.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="page" id="page-getinvolved" data-page="getinvolved" aria-label="Get involved">
-      <div class="page-head">
-        <h2>Get involved</h2>
-        <p class="muted">Join the network, access support, opportunities, and updates.</p>
+        <article class="tutorial-row" role="listitem" tabindex="0">
+          <div class="tutorial-media" aria-hidden="true">
+            <div class="clipart">
+              <svg viewBox="0 0 96 96">
+                <path d="M28 20h32a10 10 0 0 1 10 10v42a6 6 0 0 1-6 6H38a10 10 0 0 1-10-10V20z" fill="none" stroke="currentColor" stroke-width="4" opacity=".9"/>
+                <path d="M36 38h26M36 50h30M36 62h18" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" opacity=".85"/>
+                <path d="M66 20l10-6v20" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+              </svg>
+            </div>
+          </div>
+          <div class="tutorial-body">
+            <h3 class="tutorial-title">Role of publications</h3>
+            <p class="muted tutorial-text">
+              What publications actually do for your portfolio, how to approach abstracts/posters/papers realistically,
+              and how to build evidence without chasing complexity.
+            </p>
+          </div>
+        </article>
       </div>
 
-      <div class="grid two">
-        <div class="card dark">
-          <h3>Join the WhatsApp community</h3>
-          <p class="muted">Access requires approval by an admin. Request access below.</p>
+      <div class="page-signoff" aria-label="More to come">
+        <p class="signoff-title">More to come</p>
+        <p class="signoff-text">
+          New webinars and workshops will be added regularly.
+          <span class="signoff-highlight">Want updates when new sessions are uploaded?</span>
+        </p>
+
+        <div class="signoff-actions">
           <a class="btn primary" href="https://forms.gle/PHcbMPA5EUAqc5K57" target="_blank" rel="noopener">
-            Request WhatsApp access
+            Get updates (interest form)
           </a>
-        </div>
-        <div class="card dark callout">
-          <h3>For doctors &amp; mentors</h3>
-          <p>Support can be light-touch, webinars, mentoring, supervising projects, or sharing lived experience.</p>
-          <a class="btn ghost" href="https://forms.gle/PHcbMPA5EUAqc5K57" target="_blank" rel="noopener">Register interest</a>
+          <a class="btn ghost" href="#getinvolved">Get involved</a>
         </div>
       </div>
     </section>
 
-    <section class="page" id="page-contact" data-page="contact" aria-label="Contact">
-      <div class="page-head">
-        <h2>Contact</h2>
-        <p class="muted">Jazakumallahu Khayran, from Team IHSAAN</p>
+    <!-- PORTFOLIO GUIDES -->
+    <section class="page" id="page-guides" data-page="guides" aria-label="Portfolio Guides">
+      <div class="page-head page-head--spaced">
+        <h2>Portfolio Guides</h2>
+
+        <div class="intro-block">
+          <p class="lead lead-strong">
+            We understand that choosing a specialty is difficult — and it’s become even more complicated with the distinctions
+            and specific portfolio requirements within each pathway.
+          </p>
+          <p class="muted" style="margin-top:10px;">
+            IHSAAN Medics is building specialty-specific portfolio guides so you can explore your interests, understand what matters,
+            and move from confusion to clarity with a practical plan.
+          </p>
+        </div>
+
+        <p class="opportunities-label">Choose your specialty:</p>
       </div>
 
-      <div class="grid two">
-        <div class="card dark">
-          <h3>Social</h3>
-          <ul class="list">
-            <li>@ihsaan.medics</li>
-            <li>@ihsaan.network</li>
-            <li>@fosischannel</li>
-          </ul>
+      <div class="guide-grid" aria-label="Specialty guides grid">
+        <a class="guide-card" href="#guides" data-guide="Ophthalmology">
+          <div class="guide-art" aria-hidden="true">
+            <img class="guide-cover" src="Ophthalmology.png" alt="Ophthalmology cover" loading="lazy">
+            <div class="guide-overlay"></div>
+            <div class="art-fallback">COMING SOON</div>
+          </div>
+          <div class="guide-meta">
+            <span class="guide-pill">Portfolio guide</span>
+            <h3 class="guide-title">Ophthalmology</h3>
+          </div>
+        </a>
+
+        <a class="guide-card" href="#guides" data-guide="Cardiology">
+          <div class="guide-art" aria-hidden="true">
+            <img class="guide-cover" src="Cardiology.png" alt="Cardiology cover" loading="lazy">
+            <div class="guide-overlay"></div>
+            <div class="art-fallback">COMING SOON</div>
+          </div>
+          <div class="guide-meta">
+            <span class="guide-pill">Portfolio guide</span>
+            <h3 class="guide-title">Cardiology</h3>
+          </div>
+        </a>
+
+        <a class="guide-card" href="#guides" data-guide="Psychiatry">
+          <div class="guide-art" aria-hidden="true">
+            <img class="guide-cover" src="Psychiatry.png" alt="Psychiatry cover" loading="lazy">
+            <div class="guide-overlay"></div>
+            <div class="art-fallback">COMING SOON</div>
+          </div>
+          <div class="guide-meta">
+            <span class="guide-pill">Portfolio guide</span>
+            <h3 class="guide-title">Psychiatry</h3>
+          </div>
+        </a>
+
+        <a class="guide-card" href="#guides" data-guide="Paediatrics">
+          <div class="guide-art" aria-hidden="true">
+            <img class="guide-cover" src="Paediatrics.png" alt="Paediatrics cover" loading="lazy">
+            <div class="guide-overlay"></div>
+            <div class="art-fallback">COMING SOON</div>
+          </div>
+          <div class="guide-meta">
+            <span class="guide-pill">Portfolio guide</span>
+            <h3 class="guide-title">Paediatrics</h3>
+          </div>
+        </a>
+
+        <a class="guide-card" href="#guides" data-guide="General Practice">
+          <div class="guide-art" aria-hidden="true">
+            <img class="guide-cover" src="General%20Practice.png" alt="General Practice cover" loading="lazy">
+            <div class="guide-overlay"></div>
+            <div class="art-fallback">COMING SOON</div>
+          </div>
+          <div class="guide-meta">
+            <span class="guide-pill">Portfolio guide</span>
+            <h3 class="guide-title">General Practice</h3>
+          </div>
+        </a>
+
+        <a class="guide-card" href="#guides" data-guide="Endocrinology">
+          <div class="guide-art" aria-hidden="true">
+            <img class="guide-cover" src="Endocrinology.png" alt="Endocrinology cover" loading="lazy">
+            <div class="guide-overlay"></div>
+            <div class="art-fallback">COMING SOON</div>
+          </div>
+          <div class="guide-meta">
+            <span class="guide-pill">Portfolio guide</span>
+            <h3 class="guide-title">Endocrinology</h3>
+          </div>
+        </a>
+
+        <a class="guide-card" href="#guides" data-guide="Gastroenterology">
+          <div class="guide-art" aria-hidden="true">
+            <img class="guide-cover" src="Gastroenterology.png" alt="Gastroenterology cover" loading="lazy">
+            <div class="guide-overlay"></div>
+            <div class="art-fallback">COMING SOON</div>
+          </div>
+          <div class="guide-meta">
+            <span class="guide-pill">Portfolio guide</span>
+            <h3 class="guide-title">Gastroenterology</h3>
+          </div>
+        </a>
+
+        <a class="guide-card" href="#guides" data-guide="Cardiothoracic Surgery">
+          <div class="guide-art" aria-hidden="true">
+            <img class="guide-cover" src="Cardiothoracic%20Surgery.png" alt="Cardiothoracic Surgery cover" loading="lazy">
+            <div class="guide-overlay"></div>
+            <div class="art-fallback">COMING SOON</div>
+          </div>
+          <div class="guide-meta">
+            <span class="guide-pill">Portfolio guide</span>
+            <h3 class="guide-title">Cardiothoracic Surgery</h3>
+          </div>
+        </a>
+
+        <a class="guide-card" href="#guides" data-guide="ENT">
+          <div class="guide-art" aria-hidden="true">
+            <img class="guide-cover" src="ENT.png" alt="ENT cover" loading="lazy">
+            <div class="guide-overlay"></div>
+            <div class="art-fallback">COMING SOON</div>
+          </div>
+          <div class="guide-meta">
+            <span class="guide-pill">Portfolio guide</span>
+            <h3 class="guide-title">ENT</h3>
+          </div>
+        </a>
+
+        <a class="guide-card" href="#guides" data-guide="Trauma &amp; Orthopaedics">
+          <div class="guide-art" aria-hidden="true">
+            <img class="guide-cover" src="Trauma%20and%20Orthopaedics.png" alt="Trauma and Orthopaedics cover" loading="lazy">
+            <div class="guide-overlay"></div>
+            <div class="art-fallback">COMING SOON</div>
+          </div>
+          <div class="guide-meta">
+            <span class="guide-pill">Portfolio guide</span>
+            <h3 class="guide-title">Trauma &amp; Orthopaedics</h3>
+          </div>
+        </a>
+
+        <a class="guide-card" href="#guides" data-guide="Dermatology">
+          <div class="guide-art" aria-hidden="true">
+            <img class="guide-cover" src="Dermatology.png" alt="Dermatology cover" loading="lazy">
+            <div class="guide-overlay"></div>
+            <div class="art-fallback">COMING SOON</div>
+          </div>
+          <div class="guide-meta">
+            <span class="guide-pill">Portfolio guide</span>
+            <h3 class="guide-title">Dermatology</h3>
+          </div>
+        </a>
+
+        <a class="guide-card" href="#guides" data-guide="Rheumatology">
+          <div class="guide-art" aria-hidden="true">
+            <img class="guide-cover" src="Rheumatology.png" alt="Rheumatology cover" loading="lazy">
+            <div class="guide-overlay"></div>
+            <div class="art-fallback">COMING SOON</div>
+          </div>
+          <div class="guide-meta">
+            <span class="guide-pill">Portfolio guide</span>
+            <h3 class="guide-title">Rheumatology</h3>
+          </div>
+        </a>
+
+        <a class="guide-card" href="#guides" data-guide="Haematology">
+          <div class="guide-art" aria-hidden="true">
+            <img class="guide-cover" src="Haematology.png" alt="Haematology cover" loading="lazy">
+            <div class="guide-overlay"></div>
+            <div class="art-fallback">COMING SOON</div>
+          </div>
+          <div class="guide-meta">
+            <span class="guide-pill">Portfolio guide</span>
+            <h3 class="guide-title">Haematology</h3>
+          </div>
+        </a>
+      </div>
+
+      <div class="page-signoff" aria-label="More to come">
+        <p class="signoff-title">More to come</p>
+        <p class="signoff-text">
+          More specialties will be added as guides are developed.
+          <span class="signoff-highlight">Want updates when new portfolio guides are uploaded?</span>
+        </p>
+
+        <div class="signoff-actions">
+          <a class="btn primary" href="https://forms.gle/PHcbMPA5EUAqc5K57" target="_blank" rel="noopener">
+            Get updates (interest form)
+          </a>
+          <a class="btn ghost" href="#contact">Contact</a>
         </div>
-        <div class="card dark">
-          <h3>Principle</h3>
-          <p class="muted">“Allah is excellent and He loves excellence.”</p>
+      </div>
+    </section>
+
+    <!-- RESEARCH -->
+    <section class="page" id="page-research" data-page="research" aria-label="Research training">
+      <div class="page-head page-head--spaced">
+        <h2>Research training</h2>
+
+        <div class="intro-block">
+          <p class="lead lead-strong">
+            Research can feel confusing at first — not because you’re incapable, but because nobody teaches the “real-world”
+            steps clearly. This page is designed to give you a practical, ethical, and repeatable approach to audits, QIPs,
+            systematic reviews and meta-analyses — from idea to submission.
+          </p>
+          <p class="muted" style="margin-top:10px;">
+            The goal is simple: help you build competence and confidence, so your effort turns into outcomes you can evidence
+            in your portfolio — without shortcuts, and with integrity.
+          </p>
+        </div>
+
+        <div class="longform">
+          <h3 class="longform-title">Core skills</h3>
+
+          <p>
+            <strong>1) Choosing a good question.</strong>
+            Strong projects usually start with clarity. A “good” question is specific, achievable in your setting, and aligned with a meaningful outcome.
+            For audits and QIPs, this often means a well-defined standard (e.g., local guideline, NICE, trust policy), a measurable outcome, and a realistic timescale.
+            For reviews, it means a focused clinical question and a method that’s appropriate to the level of evidence available.
+          </p>
+
+          <p>
+            <strong>2) Methods and write-up.</strong>
+            Most projects succeed or fail based on how well the method is planned. Think through your data source, your inclusion criteria,
+            your variables, and how you’ll present results before you begin collecting anything. A simple structure helps:
+            background → aim → methods → results → discussion → limitations → next steps.
+            Clear writing is not about fancy language — it’s about being precise, honest, and easy to follow.
+          </p>
+
+          <p>
+            <strong>3) Submission and publication basics.</strong>
+            One of the most useful mindsets is to <strong>work backwards from a target</strong>.
+            If your aim is publication, identify a realistic journal early and skim their author guidance (format, word count, figure limits, referencing style).
+            Then design your write-up to match those expectations from day one.
+            <span class="muted">
+              Pro tip: if a journal expects a certain structure (e.g., abstract headings, ethics statement, or specific reporting checklist),
+              you’ll save huge time by aligning early rather than rewriting later.
+            </span>
+          </p>
+
+          <div class="protip">
+            <p class="protip-title">Practical tips we teach</p>
+            <ul class="protip-list">
+              <li><strong>Keep it feasible:</strong> smaller, well-run projects beat large, unfinished ones.</li>
+              <li><strong>Evidence early:</strong> log meetings, approvals, and outputs (posters, certificates, abstracts) as you go.</li>
+              <li><strong>Make it reproducible:</strong> use simple templates for methods, data tables, and reflection.</li>
+              <li><strong>Stay ethical:</strong> understand local governance early (audit vs research vs service evaluation).</li>
+            </ul>
+          </div>
+
+          <h3 class="longform-title" style="margin-top:16px;">Opportunities</h3>
+
+          <p>
+            IHSAAN Medics aims to <strong>facilitate access</strong> where possible — especially by helping students connect with clinicians,
+            trainees, and teams who may be running ongoing work. This can include introductions to potential supervisors, signposting to projects,
+            and building “working groups” where students can collaborate and learn together.
+          </p>
+
+          <p class="muted">
+            We can’t guarantee supervision or placement within a specific team — availability depends on local capacity and timing — but our intention
+            is to create a structured environment where networking happens naturally through community, shared learning, and consistent opportunities.
+          </p>
+        </div>
+
+        <div class="page-signoff" aria-label="Research sign-off">
+          <p class="signoff-title">Build with intention</p>
+          <p class="signoff-text">
+            Research is not just a tick-box — it’s a skill. We focus on doing it properly, so you can grow, contribute, and produce evidence with ihsaan.
+            <span class="signoff-highlight">If you want updates on training sessions and upcoming projects, register your interest below.</span>
+          </p>
+
+          <div class="signoff-actions">
+            <a class="btn primary" href="https://forms.gle/PHcbMPA5EUAqc5K57" target="_blank" rel="noopener">
+              Get updates (interest form)
+            </a>
+            <a class="btn ghost" href="#getinvolved">Get involved</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO-BUILDING OPPORTUNITIES -->
+    <section class="page" id="page-opportunities" data-page="opportunities" aria-label="Portfolio-building opportunities">
+      <div class="page-head page-head--spaced">
+        <h2>Portfolio-building opportunities</h2>
+        <div class="intro-block">
+          <p class="lead lead-strong">
+            We aim to help students access practical, portfolio-relevant opportunities — from shadowing and teaching, to research and evidence-building —
+            in a way that is realistic, ethical, and consistent.
+          </p>
+          <p class="muted" style="margin-top:10px;">
+            Opportunities will be shared as they arise and may vary depending on capacity and location.
+          </p>
+        </div>
+
+        <div class="grid two" style="margin-top:12px;">
+          <div class="card dark">
+            <h3>Examples include</h3>
+            <ul class="list">
+              <li>Shadowing</li>
+              <li>Electives</li>
+              <li>Teaching opportunities</li>
+              <li>Research and publishing routes</li>
+            </ul>
+          </div>
+          <div class="card dark callout">
+            <h3>More to come</h3>
+            <p class="muted">
+              New opportunities will be added as the network grows. If you’d like to be notified, register your interest below.
+            </p>
+            <div style="margin-top:12px;">
+              <a class="btn primary" href="https://forms.gle/PHcbMPA5EUAqc5K57" target="_blank" rel="noopener">Get updates</a>
+              <a class="btn ghost" href="#getinvolved">Get involved</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MEDTECH -->
+    <section class="page" id="page-medtech" data-page="medtech" aria-label="MedTech & Innovation exposure">
+      <div class="page-head page-head--spaced">
+        <h2>MedTech &amp; Innovation exposure</h2>
+        <div class="intro-block">
+          <p class="lead lead-strong">
+            Medicine is bigger than one job title. We explore innovation, digital health, startups, and product thinking —
+            so you can understand the wider ecosystem and contribute beyond the bedside.
+          </p>
+          <p class="muted" style="margin-top:10px;">
+            This section will expand over time with curated resources, guest speakers, and practical exposure.
+          </p>
+        </div>
+
+        <div class="grid two" style="margin-top:12px;">
+          <div class="card dark">
+            <h3>Exposure to</h3>
+            <ul class="list">
+              <li>Innovation roles</li>
+              <li>Startups and product thinking</li>
+              <li>Clinical AI, data and digital health</li>
+            </ul>
+          </div>
+          <div class="card dark callout">
+            <h3>More to come</h3>
+            <p class="muted">
+              We’ll add resources and sessions as this space develops. If you want updates, join the network.
+            </p>
+            <div style="margin-top:12px;">
+              <a class="btn primary" href="https://forms.gle/PHcbMPA5EUAqc5K57" target="_blank" rel="noopener">Get updates</a>
+              <a class="btn ghost" href="#getinvolved">Get involved</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GET INVOLVED -->
+    <section class="page" id="page-getinvolved" data-page="getinvolved" aria-label="Get involved">
+      <div class="page-head page-head--spaced">
+        <h2>Get involved</h2>
+        <div class="intro-block">
+          <p class="lead lead-strong">
+            Join the network for support, opportunities, and updates — and help build a community grounded in ihsaan, integrity, and excellence.
+          </p>
+          <p class="muted" style="margin-top:10px;">
+            Follow our socials below, and register your interest to stay in the loop. WhatsApp access will be added soon.
+          </p>
+        </div>
+
+        <div class="grid two" style="margin-top:12px;">
+          <div class="card dark">
+            <h3>Connect with us</h3>
+
+            <div class="social-grid" aria-label="Social links">
+              <a class="social-card" href="https://www.instagram.com/ihsaan.medics/" target="_blank" rel="noopener" aria-label="Instagram: ihsaan.medics">
+                <div class="social-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="22" height="22">
+                    <path fill="currentColor" d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-5 4a6 6 0 1 1 0 12a6 6 0 0 1 0-12zm0 2a4 4 0 1 0 0 8a4 4 0 0 0 0-8zm6.5-.9a1.1 1.1 0 1 1-2.2 0a1.1 1.1 0 0 1 2.2 0z"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="social-title">Instagram</div>
+                  <div class="muted social-sub">@ihsaan.medics</div>
+                </div>
+                <span class="social-cta" aria-hidden="true">Open →</span>
+              </a>
+
+              <a class="social-card" href="https://www.linkedin.com/company/ihsaan-medics/" target="_blank" rel="noopener" aria-label="LinkedIn: IHSAAN Medics">
+                <div class="social-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="22" height="22">
+                    <path fill="currentColor" d="M6.94 6.5A2.44 2.44 0 1 1 6.94 1.6a2.44 2.44 0 0 1 0 4.9zM2.9 22V8.2h8.1V22H2.9zm9.6 0V8.2h7.7v1.9h.1c1.1-1.8 3-2.7 5.1-2.7c5 0 5.9 3.2 5.9 7.3V22h-8.1v-5.8c0-1.4 0-3.2-2.1-3.2s-2.4 1.5-2.4 3.1V22h-8.2z"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="social-title">LinkedIn</div>
+                  <div class="muted social-sub">IHSAAN Medics</div>
+                </div>
+                <span class="social-cta" aria-hidden="true">Open →</span>
+              </a>
+
+              <!-- WhatsApp: now WHITE (not faded), still "coming soon" -->
+              <div class="social-card social-soon" role="note" aria-label="WhatsApp link coming soon">
+                <div class="social-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="22" height="22">
+                    <path fill="currentColor" d="M12 2a9.7 9.7 0 0 0-8.4 14.6L2 22l5.6-1.5A9.8 9.8 0 1 0 12 2zm0 2a7.8 7.8 0 0 1 0 15.6c-1.3 0-2.6-.3-3.7-.9l-.3-.2-3.3.9.9-3.2-.2-.3A7.7 7.7 0 0 1 12 4zm4.6 10.5c-.2-.1-1.3-.6-1.5-.7s-.4-.1-.6.1-.6.7-.7.8-.3.2-.5.1a6.4 6.4 0 0 1-1.9-1.2a7.2 7.2 0 0 1-1.3-1.7c-.1-.2 0-.4.1-.5l.4-.5c.1-.1.1-.3.2-.4s0-.3 0-.4c-.1-.1-.6-1.4-.8-1.9s-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3s-.8.8-.8 2s.8 2.4.9 2.6a9.1 9.1 0 0 0 3.5 3.6c.5.3.9.5 1.2.6c.5.2 1 .2 1.4.1c.4-.1 1.3-.5 1.5-1s.2-.9.1-1c-.1-.1-.2-.1-.4-.2z"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="social-title">WhatsApp</div>
+                  <div class="social-sub">Link coming soon</div>
+                </div>
+                <span class="social-cta" aria-hidden="true">Soon</span>
+              </div>
+            </div>
+
+            <div style="margin-top:14px;">
+              <a class="btn primary" href="https://forms.gle/PHcbMPA5EUAqc5K57" target="_blank" rel="noopener">
+                Register interest
+              </a>
+            </div>
+          </div>
+
+          <div class="card dark callout">
+            <h3>For doctors &amp; mentors</h3>
+            <p class="muted">
+              Would you like to support Muslim medical students through light-touch mentorship?
+              This may involve joining Q&amp;As, delivering short talks, supervising small projects, or sharing lived experience.
+              Your guidance can help students gain clarity, confidence, and direction — with ihsaan.
+            </p>
+
+            <div style="margin-top:12px;">
+              <button class="btn ghost" type="button" disabled aria-label="Mentor registration form coming soon">
+                Mentor registration (coming soon)
+              </button>
+            </div>
+
+            <p class="muted" style="margin-top:10px;font-size:.92rem;">
+              (We’ll link the registration form here once it’s ready.)
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT (filled nicely as a final page) -->
+    <section class="page" id="page-contact" data-page="contact" aria-label="Contact">
+      <div class="contact-shell">
+        <div class="page-head page-head--spaced">
+          <h2>Contact</h2>
+
+          <div class="contact-hero">
+            <p class="lead lead-strong">
+              “Allah is excellent and He loves excellence.”
+            </p>
+            <p class="muted" style="margin-top:10px;">
+              May Allah guide us all to sincerity, strengthen our character, and allow us to strive for ihsaan in every intention,
+              every interaction, and every act of service. May our efforts in medicine be a means of benefit for patients,
+              teams, and the Ummah — and a source of barakah in this life and the next.
+            </p>
+          </div>
+
+          <div class="grid two" style="margin-top:14px;">
+            <div class="card dark">
+              <h3>Social</h3>
+              <ul class="list">
+                <li><a href="https://www.instagram.com/ihsaan.medics/" target="_blank" rel="noopener">@ihsaan.medics</a></li>
+                <li><a href="https://www.linkedin.com/company/ihsaan-medics/" target="_blank" rel="noopener">IHSAAN Medics (LinkedIn)</a></li>
+                <li>WhatsApp link — coming soon</li>
+              </ul>
+            </div>
+            <div class="card dark">
+              <h3>Principle</h3>
+              <p class="muted">
+                Strive for ihsaan: excellence with sincerity, humility, and integrity — even when nobody is watching.
+              </p>
+            </div>
+          </div>
+
+          <!-- A strong “ending” block so the page doesn’t feel empty -->
+          <div class="contact-finale" aria-label="Final sign-off">
+            <div class="contact-finale-left">
+              <p class="finale-title">A final reminder</p>
+              <p class="finale-text">
+                Build your path with intention. Take the next right step. Seek sincerity. Trust Allah.
+                <span class="finale-highlight">And let excellence be your standard — with barakah.</span>
+              </p>
+            </div>
+
+            <div class="contact-finale-right">
+              <p class="muted" style="margin-bottom:10px;">
+                Want updates, resources, and opportunities as we publish them?
+              </p>
+              <div class="finale-actions">
+                <a class="btn primary" href="https://forms.gle/PHcbMPA5EUAqc5K57" target="_blank" rel="noopener">Interest form</a>
+                <a class="btn ghost" href="#getinvolved">Get involved</a>
+              </div>
+
+              <div class="finale-mini-social" aria-label="Quick social links">
+                <a href="https://www.instagram.com/ihsaan.medics/" target="_blank" rel="noopener" class="mini-link">Instagram →</a>
+                <a href="https://www.linkedin.com/company/ihsaan-medics/" target="_blank" rel="noopener" class="mini-link">LinkedIn →</a>
+              </div>
+            </div>
+          </div>
+
+          <footer class="footer footer-tight">
+            <p>© <span id="year"></span> IHSAAN Medics</p>
+          </footer>
         </div>
       </div>
     </section>
 
   </main>
+
+  <!-- Portfolio guide modal -->
+  <div class="modal" id="guideModal" aria-hidden="true">
+    <div class="modal-backdrop" id="guideModalBackdrop"></div>
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="guideModalTitle">
+      <div class="modal-head">
+        <div class="modal-title" id="guideModalTitle">Coming soon</div>
+        <button class="modal-close" id="guideModalClose" aria-label="Close">×</button>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-lead" id="guideModalText">This guide is coming soon.</p>
+        <p class="muted" style="margin-top:8px;">
+          If you’d like to be notified when it’s published, register your interest below.
+        </p>
+
+        <div class="modal-actions">
+          <a class="btn primary" href="https://forms.gle/PHcbMPA5EUAqc5K57" target="_blank" rel="noopener">
+            Get updates (interest form)
+          </a>
+          <button class="btn ghost" id="guideModalBack">Back</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
