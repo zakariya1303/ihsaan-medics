@@ -1,8 +1,8 @@
 // script.js (FULL UPDATED)
 
 // Footer year
-const yearEl = document.getElementById("year");
-if (yearEl) yearEl.textContent = new Date().getFullYear();
+const yearEls = document.querySelectorAll("#year");
+yearEls.forEach(el => el.textContent = new Date().getFullYear());
 
 /* ========= Drawer (mobile nav) ========= */
 const navToggle = document.getElementById("navToggle");
@@ -17,7 +17,6 @@ function openDrawer(){
   drawer.setAttribute("aria-hidden", "false");
   navToggle.setAttribute("aria-expanded", "true");
 }
-
 function closeDrawer(){
   if (!drawer || !navToggle) return;
   drawer.classList.remove("open");
@@ -34,17 +33,53 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && drawer && drawer.classList.contains("open")) closeDrawer();
 });
 
+/* ========= Dropdown menus (desktop) ========= */
+const dropdowns = Array.from(document.querySelectorAll("[data-dd]"));
+
+function closeAllDropdowns(){
+  dropdowns.forEach(dd => {
+    dd.classList.remove("open");
+    const btn = dd.querySelector(".nav-dd-btn");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  });
+}
+
+dropdowns.forEach(dd => {
+  const btn = dd.querySelector(".nav-dd-btn");
+  if (!btn) return;
+
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    const isOpen = dd.classList.contains("open");
+    closeAllDropdowns();
+    dd.classList.toggle("open", !isOpen);
+    btn.setAttribute("aria-expanded", (!isOpen).toString());
+  });
+});
+
+// close on outside click
+document.addEventListener("click", (e) => {
+  const target = e.target;
+  const inside = dropdowns.some(dd => dd.contains(target));
+  if (!inside) closeAllDropdowns();
+});
+
+// close on escape
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeAllDropdowns();
+});
+
 /* ========= “Separate pages” routing ========= */
 const pages = Array.from(document.querySelectorAll(".page"));
-const navLinks = Array.from(document.querySelectorAll(".nav-link"));
-const drawerLinks = Array.from(document.querySelectorAll(".drawer-links a"));
-const goButtons = Array.from(document.querySelectorAll("[data-go]"));
+const navLinks = Array.from(document.querySelectorAll(".nav-link[data-route]"));
+const drawerLinks = Array.from(document.querySelectorAll(".drawer-links a[data-route]"));
+const ddLinks = Array.from(document.querySelectorAll(".nav-dd-menu a[data-route]"));
+const allRouteLinks = [...navLinks, ...drawerLinks, ...ddLinks];
 
 function setActiveNav(route){
   navLinks.forEach(a => {
     const isActive = a.dataset.route === route;
     a.classList.toggle("active", isActive);
-    a.setAttribute("aria-current", isActive ? "page" : "false");
   });
 }
 
@@ -53,6 +88,7 @@ function showPage(route){
   pages.forEach(p => p.classList.toggle("active", p.dataset.page === target));
   setActiveNav(target);
   window.scrollTo(0, 0);
+  closeAllDropdowns();
 }
 
 function routeFromHash(){
@@ -62,11 +98,6 @@ function routeFromHash(){
   showPage(exists ? route : "home");
 }
 
-window.addEventListener("hashchange", () => {
-  routeFromHash();
-  closeDrawer();
-});
-
 function attachRouteLinks(links){
   links.forEach(a => {
     a.addEventListener("click", (e) => {
@@ -74,18 +105,16 @@ function attachRouteLinks(links){
       if (!route) return;
       e.preventDefault();
       window.location.hash = route;
+      closeDrawer();
     });
   });
 }
 
-attachRouteLinks(navLinks);
-attachRouteLinks(drawerLinks);
+attachRouteLinks(allRouteLinks);
 
-goButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    const route = btn.dataset.go;
-    if (route) window.location.hash = route;
-  });
+window.addEventListener("hashchange", () => {
+  routeFromHash();
+  closeDrawer();
 });
 
 // Default to home on first load
@@ -121,7 +150,6 @@ function openGuideModal(specialty){
     guideModalText.textContent = `${specialty} portfolio guide is coming soon.`;
   }
 }
-
 function closeGuideModal(){
   if (!guideModal) return;
   guideModal.classList.remove("open");
@@ -155,3 +183,54 @@ document.addEventListener("keydown", (e) => {
     closeGuideModal();
   }
 });
+
+/* ========= Reveal on scroll ========= */
+const reveals = Array.from(document.querySelectorAll(".reveal"));
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("in");
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+reveals.forEach(el => io.observe(el));
+
+/* ========= Count-up stats ========= */
+const counters = Array.from(document.querySelectorAll(".count[data-count]"));
+let countersStarted = false;
+
+function animateCount(el, target, duration = 1100){
+  const start = 0;
+  const t0 = performance.now();
+
+  function tick(now){
+    const p = Math.min((now - t0) / duration, 1);
+    // ease out
+    const eased = 1 - Math.pow(1 - p, 3);
+    const val = Math.round(start + (target - start) * eased);
+    el.textContent = String(val);
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+const problemsSection = document.getElementById("home-problems");
+if (problemsSection) {
+  const ioStats = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !countersStarted) {
+        countersStarted = true;
+        counters.forEach(el => {
+          const target = Number(el.getAttribute("data-count") || "0");
+          animateCount(el, target);
+        });
+        ioStats.disconnect();
+      }
+    });
+  }, { threshold: 0.25 });
+
+  ioStats.observe(problemsSection);
+}
