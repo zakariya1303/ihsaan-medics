@@ -405,6 +405,20 @@ h2{
   background:rgba(110,162,161,.22);
 }
 
+.purpose-full-width-box {
+  background:rgba(255,255,255,.86);
+  border: 1px solid rgba(6,37,36,.10);
+  box-shadow:0 16px 45px rgba(0,0,0,.08);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+  padding: 20px;
+}
+
 /* Stats */
 .stats-grid{
   display:grid;
@@ -776,3 +790,4 @@ h2{
   .guide-grid{grid-template-columns:1fr;}
   .hero-logo{width:min(300px, 78vw);}
 }
+
