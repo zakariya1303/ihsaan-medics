@@ -349,6 +349,16 @@ body.nav-open{overflow:hidden}
   padding-top:120px;
 }
 
+/* Webinars page: keep content clear of fixed top nav */
+#page-webinars .section--soft{
+  padding-top:120px;
+}
+
+/* Portfolio Guides page: keep content clear of fixed top nav */
+#page-guides .section--soft{
+  padding-top:120px;
+}
+
 /* Research training page: keep content clear of fixed top nav */
 #page-research .section--soft{
   padding-top:120px;
@@ -356,6 +366,20 @@ body.nav-open{overflow:hidden}
 
 /* Contact page: keep content clear of fixed top nav */
 #page-contact .section--soft{
+  padding-top:120px;
+}
+
+/* Opportunities page: keep content clear of fixed top nav */
+#page-opportunities .section--soft{
+  padding-top:120px;
+}
+
+/* MedTech & Innovation subpages: keep content clear of fixed top nav */
+#page-medtech-intro .section--soft,
+#page-medtech-emerging .section--soft,
+#page-medtech-ethics .section--soft,
+#page-medtech-building .section--soft,
+#page-medtech-opps .section--soft{
   padding-top:120px;
 }
 
@@ -921,34 +945,7 @@ h2{
   gap:14px;
 }
 
-/* Portfolio Guides: single diagonal "COMING SOON" ribbon over the grid */
-#page-guides .guide-grid{
-  position:relative;
-  isolation:isolate;
-}
-#page-guides .guide-grid::after{
-  content:"COMING SOON";
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%, -50%) rotate(-12deg);
-  width:min(980px, 132%);
-  padding:18px 22px;
-  text-align:center;
-  font-weight:900;
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  font-size:clamp(1.0rem, 2.2vw, 1.35rem);
-  color:var(--white);
-  background:linear-gradient(90deg, var(--b), var(--a));
-  border:1px solid rgba(255,255,255,.22);
-  border-radius:999px;
-  box-shadow:0 22px 70px rgba(0,0,0,.28);
-  text-shadow:0 10px 26px rgba(0,0,0,.35);
-  opacity:.90;
-  z-index:6;
-  pointer-events:none;
-}
+/* Portfolio Guides ribbon removed (guides now available) */
 .guide-card{
   border-radius:18px;
   overflow:hidden;

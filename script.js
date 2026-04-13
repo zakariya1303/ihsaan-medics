@@ -83,12 +83,49 @@ function setActiveNav(route){
   });
 }
 
+function ensureHeroVideoAutoplay(){
+  const video = document.querySelector("#page-home .hero-video");
+  if (!video) return;
+
+  // Autoplay is commonly blocked unless muted + inline.
+  video.muted = true;
+  video.defaultMuted = true;
+  video.autoplay = true;
+  video.playsInline = true;
+  video.setAttribute("muted", "");
+  video.setAttribute("playsinline", "");
+  video.setAttribute("webkit-playsinline", "");
+
+  const tryPlay = () => {
+    const playPromise = video.play();
+    if (playPromise && typeof playPromise.catch === "function") {
+      playPromise.catch(() => {
+        // If the browser blocks autoplay, we'll try again
+        // on the first user interaction (click/tap/keydown).
+      });
+    }
+  };
+
+  if (video.readyState >= 2) {
+    tryPlay();
+    return;
+  }
+
+  video.addEventListener("loadedmetadata", tryPlay, { once: true });
+  video.addEventListener("canplay", tryPlay, { once: true });
+}
+
 function showPage(route){
   const target = route || "home";
   pages.forEach(p => p.classList.toggle("active", p.dataset.page === target));
   setActiveNav(target);
   window.scrollTo(0, 0);
   closeAllDropdowns();
+
+  if (target === "home") {
+    // Wait a tick so the page is visible before playing.
+    requestAnimationFrame(ensureHeroVideoAutoplay);
+  }
 }
 
 function routeFromHash(){
@@ -123,6 +160,9 @@ if (!window.location.hash) {
 } else {
   routeFromHash();
 }
+
+// Kick autoplay on first load as well.
+ensureHeroVideoAutoplay();
 
 /* ========= Portfolio Guides image fallback ========= */
 const guideCovers = Array.from(document.querySelectorAll(".guide-cover"));
