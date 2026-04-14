@@ -90,21 +90,52 @@ function ensureHeroVideoAutoplay(){
   // Autoplay is commonly blocked unless muted + inline.
   video.muted = true;
   video.defaultMuted = true;
+  video.volume = 0;
   video.autoplay = true;
   video.playsInline = true;
-  video.setAttribute("muted", "");
-  video.setAttribute("playsinline", "");
-  video.setAttribute("webkit-playsinline", "");
+  video.loop = true;
+  video.preload = "auto";
+  video.controls = false;
+  video.setAttribute("muted", "muted");
+  video.setAttribute("playsinline", "playsinline");
+  video.setAttribute("webkit-playsinline", "webkit-playsinline");
+  video.setAttribute("autoplay", "autoplay");
+
+  const isPlaying = () => !video.paused && !video.ended && video.readyState > 2;
 
   const tryPlay = () => {
+    if (isPlaying()) return;
+    // Ensure the resource load is kicked off.
+    if (video.readyState === 0) {
+      try { video.load(); } catch {}
+    }
+
     const playPromise = video.play();
     if (playPromise && typeof playPromise.catch === "function") {
       playPromise.catch(() => {
-        // If the browser blocks autoplay, we'll try again
-        // on the first user interaction (click/tap/keydown).
+        // If the browser blocks autoplay, try again on first interaction.
+        if (video.dataset.autoplayFallbackBound === "1") return;
+        video.dataset.autoplayFallbackBound = "1";
+
+        const onFirstInteraction = () => {
+          tryPlay();
+          document.removeEventListener("pointerdown", onFirstInteraction);
+          document.removeEventListener("touchstart", onFirstInteraction);
+          document.removeEventListener("keydown", onFirstInteraction);
+        };
+
+        document.addEventListener("pointerdown", onFirstInteraction, { once: true, passive: true });
+        document.addEventListener("touchstart", onFirstInteraction, { once: true, passive: true });
+        document.addEventListener("keydown", onFirstInteraction, { once: true });
       });
     }
   };
+
+  // A few quick retries help on slower networks / browser timing.
+  if (video.dataset.autoplayRetriesScheduled !== "1") {
+    video.dataset.autoplayRetriesScheduled = "1";
+    [0, 200, 700, 1500].forEach(ms => setTimeout(tryPlay, ms));
+  }
 
   if (video.readyState >= 2) {
     tryPlay();
@@ -113,6 +144,7 @@ function ensureHeroVideoAutoplay(){
 
   video.addEventListener("loadedmetadata", tryPlay, { once: true });
   video.addEventListener("canplay", tryPlay, { once: true });
+  video.addEventListener("loadeddata", tryPlay, { once: true });
 }
 
 function showPage(route){
@@ -163,6 +195,13 @@ if (!window.location.hash) {
 
 // Kick autoplay on first load as well.
 ensureHeroVideoAutoplay();
+
+// Try again when returning from bfcache / when the page becomes visible.
+window.addEventListener("pageshow", ensureHeroVideoAutoplay);
+window.addEventListener("load", ensureHeroVideoAutoplay);
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) ensureHeroVideoAutoplay();
+});
 
 /* ========= Portfolio Guides image fallback ========= */
 const guideCovers = Array.from(document.querySelectorAll(".guide-cover"));

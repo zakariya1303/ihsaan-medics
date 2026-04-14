@@ -204,6 +204,16 @@ body.nav-open{overflow:hidden}
   transform:scale(1.02);
   filter:saturate(1.06) contrast(1.02);
 }
+
+/* Hide any browser-rendered play overlays for background video (Safari/iOS) */
+.hero-video::-webkit-media-controls,
+.hero-video::-webkit-media-controls-panel,
+.hero-video::-webkit-media-controls-play-button,
+.hero-video::-webkit-media-controls-start-playback-button{
+  display:none !important;
+  -webkit-appearance:none;
+  opacity:0;
+}
 .hero-overlay{
   position:absolute; inset:0;
   background:
