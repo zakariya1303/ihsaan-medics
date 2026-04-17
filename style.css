@@ -207,8 +207,11 @@ body.nav-open{overflow:hidden}
 
 /* Hide any browser-rendered play overlays for background video (Safari/iOS) */
 .hero-video::-webkit-media-controls,
+.hero-video::-webkit-media-controls-enclosure,
 .hero-video::-webkit-media-controls-panel,
+.hero-video::-webkit-media-controls-overlay-play-button,
 .hero-video::-webkit-media-controls-play-button,
+.hero-video::-webkit-media-controls-fullscreen-button,
 .hero-video::-webkit-media-controls-start-playback-button{
   display:none !important;
   -webkit-appearance:none;
@@ -948,6 +951,15 @@ h2{
 .tutorial-text{margin-top:6px;}
 
 /* Guides */
+#page-guides .guides-blurb{
+  display:grid;
+  gap:10px;
+}
+#page-guides .guides-blurb p{
+  max-width:92ch;
+  line-height:1.65;
+}
+
 .guide-grid{
   margin-top:12px;
   display:grid;
