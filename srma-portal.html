@@ -1,0 +1,2326 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SRMA Student Portal — IHSAAN Medics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root{
+      --white:#FFFFFF;
+      --ink:#1A1A1A;
+      --primary:#1B6B6B;
+      --mid-teal:#3B8D8D;
+      --light-teal:#E8F4F4;
+      --light-grey:#F5F5F5;
+      --dark:#091926;
+      --accent:#1B6B6B;
+      --amber:#F5A623;
+      --muted:rgba(26,26,26,.68);
+      --b:#1B6B6B;
+    }
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:'Poppins',sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(900px 420px at 10% 0%, rgba(27,107,107,.10), transparent 60%),
+        radial-gradient(700px 320px at 90% 10%, rgba(168,212,212,.16), transparent 55%),
+        linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;letter-spacing:-.02em}
+    .btn{font-family:'Poppins',sans-serif}
+    .portal-wrap{width:100%;max-width:1240px;margin:0 auto;position:relative;z-index:1}
+    .portal-wrap.is-dashboard-shell{max-width:none;width:100vw;margin:0;overflow-x:hidden}
+    .portal-footer-note,.muted,.help-text,.login-help{color:var(--muted)}
+    .sidebar-section{margin-top:12px;padding-top:12px;border-top:1px solid rgba(27,107,107,.10)}
+    .sidebar-section:first-of-type{margin-top:0;padding-top:0;border-top:none}
+    .sidebar-heading{font-size:.76rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0 0 8px}
+    .sidebar-links{display:flex;flex-direction:column;gap:6px}
+    .sidebar-links a,.phase-switcher button{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      width:100%;padding:10px 12px;border-radius:12px;border:1px solid rgba(27,107,107,.08);
+      background:#fff;color:var(--ink);font-weight:800;font-size:.88rem;line-height:1.2;transition:background .15s ease,border-color .15s ease,transform .15s ease,box-shadow .15s ease,color .15s ease;
+    }
+    .phase-switcher button{flex-direction:column;align-items:flex-start;gap:4px;justify-content:flex-start}
+    .phase-switcher button span:first-child{font-size:.84rem;font-weight:900}
+    .phase-switcher button span:last-child{font-size:.74rem;font-weight:600;color:var(--muted)}
+    .sidebar-links a:hover,.phase-switcher button:hover{transform:translateY(-1px);border-color:rgba(27,107,107,.18);box-shadow:0 8px 16px rgba(27,107,107,.08)}
+    .sidebar-links a.is-active,.phase-switcher button.is-active{background:linear-gradient(180deg, rgba(27,107,107,.12), rgba(27,107,107,.06));border-color:rgba(27,107,107,.22);color:#174f39;box-shadow:0 10px 18px rgba(27,107,107,.10)}
+    .phase-switcher{display:flex;flex-direction:column;gap:6px}
+    .phase1-nav{display:flex;flex-direction:column;gap:6px}
+    .phase1-nav-item{display:flex;flex-direction:column;align-items:flex-start;gap:4px;width:100%;padding:10px 12px;border-radius:12px;border:1px solid rgba(27,107,107,.08);background:#fff;text-align:left;transition:background .15s ease,border-color .15s ease,transform .15s ease,box-shadow .15s ease,color .15s ease}
+    .phase1-nav-item:hover{transform:translateY(-1px);background:rgba(27,107,107,.04);border-color:rgba(27,107,107,.18);box-shadow:0 8px 16px rgba(27,107,107,.08)}
+    .phase1-nav-item.is-active{background:linear-gradient(180deg, rgba(27,107,107,.14), rgba(27,107,107,.08));color:#174f39;border-color:rgba(27,107,107,.24);box-shadow:0 10px 20px rgba(27,107,107,.10)}
+    .phase1-nav-page{display:inline-flex;align-items:center;min-width:2.6rem;padding:3px 8px;border-radius:999px;background:rgba(27,107,107,.10);color:#174f39;font-size:.66rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+    .phase1-nav-item.is-active .phase1-nav-page{background:#174f39;color:#fff}
+    .phase1-nav-title{display:block;font-weight:700;line-height:1.25;font-size:.88rem}
+    .phase1-nav-item.is-active .phase1-nav-title{color:#174f39}
+    .phase1-nav-badge{display:none}
+    .phase1-page-header{display:flex;flex-direction:column;gap:12px}
+    .phase1-banner{background:linear-gradient(180deg, #174f39, #0f3828);border:1px solid rgba(255,255,255,.10);border-radius:22px;padding:18px 20px;box-shadow:0 20px 50px rgba(15,56,40,.24);color:var(--white)}
+    .phase1-banner-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap}
+    .phase1-banner-kicker{font-size:.74rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.78)}
+    .phase1-banner-title{margin-top:6px;font-size:clamp(1.45rem,2.2vw,2rem);font-weight:900;line-height:1.15}
+    .phase1-banner-meta{margin-top:8px;display:flex;flex-wrap:wrap;gap:8px}
+    .phase1-banner-pill{display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.10);color:rgba(255,255,255,.94);font-size:.76rem;font-weight:700}
+    .phase1-page{display:flex;flex-direction:column;gap:18px}
+    .phase1-section-card{padding:18px;border-radius:20px;background:rgba(255,255,255,.96);border:1px solid rgba(27,107,107,.08);box-shadow:0 14px 34px rgba(26,26,26,.05)}
+    .phase1-section-card h2,.phase1-section-card h3{margin-top:0}
+    .phase1-callout{padding:16px;border-radius:16px;background:linear-gradient(180deg, rgba(27,107,107,.08), rgba(255,255,255,.96));border:1px solid rgba(27,107,107,.12)}
+    .phase1-callout.is-amber{background:linear-gradient(180deg, rgba(245,166,35,.14), rgba(255,255,255,.96));border-color:rgba(245,166,35,.18)}
+    .phase1-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .phase1-grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .phase1-step-card,.phase1-resource-card,.phase1-timeline-card{padding:16px;border-radius:18px;background:rgba(255,255,255,.96);border:1px solid rgba(27,107,107,.08);box-shadow:0 12px 28px rgba(26,26,26,.04)}
+    .phase1-step-num{font-size:.76rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+    .phase1-resource-card h3,.phase1-timeline-card h3,.phase1-step-card h3{margin:0 0 8px 0}
+    .phase1-table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border-radius:14px;border:1px solid rgba(27,107,107,.10)}
+    .phase1-table th,.phase1-table td{padding:12px 12px;text-align:left;vertical-align:top;border-bottom:1px solid rgba(27,107,107,.08)}
+    .phase1-table th{background:rgba(27,107,107,.08);color:var(--accent);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em}
+    .phase1-table tr:last-child td{border-bottom:none}
+    .phase1-table--srma thead th{background:#174f39;color:#fff;font-size:.82rem;letter-spacing:.08em;text-transform:none}
+    .phase1-table--srma tbody td{background:#fff;color:var(--ink)}
+    .phase1-table--srma tbody td:first-child{color:#174f39;font-weight:700;width:28%}
+    .phase1-table--srma tbody td:nth-child(2){color:#111}
+    .phase1-table--srma tbody tr:last-child td{border-bottom:none}
+    .phase1-section-title{color:#174f39;font-weight:800;line-height:1.2;margin:0 0 10px}
+    .phase1-disclaimer{background:#f9e7cb;border:1px solid rgba(245,166,35,.18);border-radius:18px;padding:18px 20px;box-shadow:0 12px 28px rgba(26,26,26,.04)}
+    .phase1-disclaimer h3{margin:0 0 10px;color:#174f39;font-weight:900;letter-spacing:.01em}
+    .phase1-disclaimer p{margin:0;line-height:1.7;color:var(--ink)}
+    .phase1-text-block{display:flex;flex-direction:column;gap:10px}
+    .phase1-text-block p{margin:0;line-height:1.8;color:var(--ink)}
+    .phase1-text-block strong{font-weight:800}
+    .phase1-bullets{margin:0;padding-left:1.2rem;line-height:1.8;color:var(--ink)}
+    .phase1-page--workflow{gap:16px}
+    .phase1-workflow-intro{background:#eff8ef;border:1px solid rgba(23,79,57,.22);border-radius:18px;padding:18px 20px;box-shadow:0 12px 28px rgba(26,26,26,.04)}
+    .phase1-workflow-intro h3{margin:0 0 10px;color:#174f39;font-weight:900;letter-spacing:.02em}
+    .phase1-workflow-intro p{margin:0;line-height:1.8;color:var(--ink)}
+    .phase1-phase-heading{margin:0 0 10px;color:#174f39;font-weight:900;line-height:1.25}
+    .phase1-goal{margin:0 0 14px;color:var(--ink);line-height:1.8}
+    .phase1-phase-list{margin:0;padding-left:1.2rem;line-height:1.85;color:var(--ink)}
+    .phase1-phase-list li{margin:8px 0}
+    .phase1-callout--green{background:#eff8ef;border:1px solid rgba(23,79,57,.22);box-shadow:0 10px 24px rgba(26,26,26,.04)}
+    .phase1-callout--green h4,.phase1-callout--orange h4{margin:0 0 8px;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;font-weight:900}
+    .phase1-callout--green h4{color:#174f39}
+    .phase1-callout--orange{background:#f9e7cb;border:1px solid rgba(245,166,35,.22);box-shadow:0 10px 24px rgba(26,26,26,.04)}
+    .phase1-callout--orange h4{color:#9b5b00}
+    .phase1-software-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .phase1-software-card{padding:18px;border-radius:18px;background:#fff;border:1px solid rgba(23,79,57,.12);box-shadow:0 12px 28px rgba(26,26,26,.04)}
+    .phase1-software-card h3{margin:0 0 10px;color:#174f39;font-weight:900;line-height:1.2}
+    .phase1-software-card p{margin:0 0 10px;line-height:1.8;color:var(--ink)}
+    .phase1-software-card ol{margin:0;padding-left:1.2rem;line-height:1.8;color:var(--ink)}
+    .phase1-software-card li{margin:6px 0}
+    .phase1-software-subtitle{margin:8px 0 0;color:var(--muted);font-size:.96rem;line-height:1.7}
+    .phase1-software-section{display:flex;flex-direction:column;gap:12px}
+    .phase1-reading-page{gap:16px}
+    .phase1-reading-intro{background:#eff8ef;border:1px solid rgba(23,79,57,.18);border-radius:18px;padding:18px 20px;box-shadow:0 12px 28px rgba(26,26,26,.04)}
+    .phase1-reading-intro h2{margin:0 0 8px;color:#174f39;font-weight:900;line-height:1.15}
+    .phase1-reading-intro p{margin:0;line-height:1.8;color:var(--ink)}
+    .phase1-reading-section-title{margin:0 0 12px;color:#174f39;font-weight:900;line-height:1.2}
+    .phase1-reading-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .phase1-reading-card{padding:18px;border-radius:18px;background:#fff;border:1px solid rgba(23,79,57,.12);box-shadow:0 12px 28px rgba(26,26,26,.04);display:flex;flex-direction:column;gap:10px}
+    .phase1-reading-card h3{margin:0;color:#174f39;font-weight:900;line-height:1.25}
+    .phase1-reading-card p{margin:0;line-height:1.8;color:var(--ink)}
+    .phase1-reading-link{display:inline-flex;align-items:center;gap:6px;margin-top:auto;font-weight:800;color:#174f39}
+    .phase1-reading-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .phase1-reading-tip{padding:16px 18px;border-radius:16px;background:#fff;border:1px solid rgba(23,79,57,.10);box-shadow:0 10px 24px rgba(26,26,26,.04)}
+    .phase1-reading-tip h4{margin:0 0 8px;color:#174f39;font-weight:900}
+    .phase1-reading-tip p{margin:0;line-height:1.8;color:var(--ink)}
+    .phase1-reading-timeline{display:grid;grid-template-columns:1fr;gap:14px}
+    .phase1-reading-why{background:#f9e7cb;border:1px solid rgba(245,166,35,.24);border-radius:18px;padding:18px 20px;box-shadow:0 12px 28px rgba(26,26,26,.04)}
+    .phase1-reading-why h4{margin:0 0 10px;color:#9b5b00;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+    .phase1-reading-why p{margin:0;line-height:1.8;color:var(--ink)}
+    .phase1-appraisal-page{gap:16px}
+    .phase1-appraisal-intro{background:#eff8ef;border:1px solid rgba(23,79,57,.18);border-radius:18px;padding:18px 20px;box-shadow:0 12px 28px rgba(26,26,26,.04)}
+    .phase1-appraisal-intro h2{margin:0 0 8px;color:#174f39;font-weight:900;line-height:1.15}
+    .phase1-appraisal-intro p{margin:0;line-height:1.8;color:var(--ink)}
+    .phase1-appraisal-section-title{margin:0 0 12px;color:#174f39;font-weight:900;line-height:1.2}
+    .phase1-appraisal-text{margin:0;line-height:1.8;color:var(--ink)}
+    .phase1-appraisal-table thead th{background:#154b35;color:#fff;font-size:.82rem;letter-spacing:.08em;text-transform:none}
+    .phase1-appraisal-table tbody td{background:#fff;color:var(--ink)}
+    .phase1-appraisal-table tbody td:first-child{color:#154b35;font-weight:800;width:30%}
+    .phase1-appraisal-table tbody td:nth-child(2){color:#111}
+    .phase1-appraisal-table tbody tr:last-child td{border-bottom:none}
+    .phase1-appraisal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .phase1-appraisal-card{padding:18px;border-radius:18px;background:#fff;border:1px solid rgba(23,79,57,.12);box-shadow:0 12px 28px rgba(26,26,26,.04)}
+    .phase1-appraisal-card h3{margin:0 0 10px;color:#174f39;font-weight:900;line-height:1.2}
+    .phase1-appraisal-card p,.phase1-appraisal-card li{line-height:1.8;color:var(--ink)}
+    .phase1-appraisal-card ul,.phase1-appraisal-card ol{margin:0;padding-left:1.2rem}
+    .phase1-appraisal-card li{margin:6px 0}
+    .phase1-appraisal-callout{background:#eff8ef;border:1px solid rgba(23,79,57,.22);border-radius:18px;padding:18px 20px;box-shadow:0 12px 28px rgba(26,26,26,.04)}
+    .phase1-appraisal-callout h4{margin:0 0 8px;color:#174f39;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+    .phase1-appraisal-callout p{margin:0;line-height:1.8;color:var(--ink)}
+    .phase1-quiz{display:flex;flex-direction:column;gap:14px}
+    .phase1-quiz-q{padding:14px;border-radius:16px;background:rgba(255,255,255,.96);border:1px solid rgba(27,107,107,.08)}
+    .phase1-quiz-q legend{font-weight:700;margin-bottom:8px}
+    .phase1-quiz-q label{display:block;margin:7px 0;line-height:1.45}
+    .phase1-unlock-overlay{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(6,37,36,.52);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:phase1UnlockFade .15s ease both}
+    .phase1-unlock-card{display:flex;flex-direction:column;align-items:center;gap:14px;padding:24px 28px;border-radius:26px;background:rgba(255,255,255,.96);border:1px solid rgba(27,107,107,.12);box-shadow:0 24px 60px rgba(0,0,0,.22);text-align:center;max-width:360px;animation:phase1UnlockPulse 1.4s ease-in-out infinite}
+    .phase1-unlock-lock{font-size:clamp(3.5rem,7vw,5.5rem);line-height:1;filter:drop-shadow(0 14px 24px rgba(27,107,107,.22));animation:phase1UnlockSpin 1.1s ease-in-out both}
+    .phase1-unlock-card h3{margin:0;font-size:1.2rem;font-weight:900;color:var(--ink)}
+    .phase1-unlock-card p{margin:0;color:var(--muted);line-height:1.6}
+    .phase1-page-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+    .phase-progress-wrap{margin:12px 0 14px;padding:12px;border-radius:16px;background:linear-gradient(180deg, var(--light-teal), var(--light-grey));border:1px solid rgba(27,107,107,.12)}
+    .phase-progress-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+    .phase-progress-title{font-weight:900;color:var(--accent)}
+    .phase-progress-bar{height:10px;border-radius:999px;background:#fff;overflow:hidden;border:1px solid rgba(27,107,107,.10)}
+    .phase-progress-bar span{display:block;height:100%;background:linear-gradient(90deg,var(--primary),var(--mid-teal))}
+    .phase-progress-caption{margin-top:8px;font-size:.88rem;color:var(--muted)}
+    .phase-item-list{display:flex;flex-direction:column;gap:8px}
+    .phase-item{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:start;width:100%;padding:14px;border-radius:18px;background:var(--white);border:1px solid rgba(26,26,26,.06);text-align:left;transition:transform .15s ease,border-color .15s ease,background .15s ease,box-shadow .15s ease}
+    .phase-item:hover{transform:translateY(-1px);border-color:rgba(27,107,107,.18);box-shadow:0 12px 24px rgba(27,107,107,.06)}
+    .phase-item.is-active{background:var(--primary);color:var(--white);border-color:var(--primary)}
+    .phase-item.is-complete{border-color:rgba(27,107,107,.22)}
+    .phase-item.is-gate{border-color:rgba(245,166,35,.34);background:linear-gradient(180deg, rgba(245,166,35,.10), var(--white))}
+    .phase-item.is-locked{opacity:.72}
+    .phase-item-left{display:flex;flex-direction:column;gap:6px}
+    .phase-item-type{display:inline-flex;align-items:center;gap:6px;width:max-content;padding:4px 8px;border-radius:999px;font-size:.72rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;background:var(--light-teal);color:var(--primary)}
+    .phase-item.is-active .phase-item-type{background:rgba(255,255,255,.16);color:var(--white)}
+    .phase-item.is-gate .phase-item-type{background:rgba(245,166,35,.16);color:var(--amber)}
+    .phase-item-title{font-size:.96rem;font-weight:900;line-height:1.35}
+    .phase-item-meta{font-size:.8rem;color:var(--muted)}
+    .phase-item.is-active .phase-item-meta,.phase-item.is-active .phase-item-title{color:var(--white)}
+    .phase-item-status{font-size:.72rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--primary)}
+    .phase-item.is-active .phase-item-status{color:var(--white)}
+    .phase-item-status.is-ready{color:var(--primary)}
+    .phase-item-status.is-create{color:var(--amber)}
+    .phase-item-status.is-curate{color:var(--primary)}
+    .phase-item-status.is-gate{color:var(--amber)}
+    .phase-item-lock{font-size:1rem;line-height:1}
+    .portal-grid{display:grid;grid-template-columns:minmax(290px,320px) minmax(0,1fr);gap:20px;align-items:start}
+    .portal-stage{display:flex;flex-direction:column;gap:16px}
+    .view-hero{background:var(--white);border:1px solid rgba(27,107,107,.08);border-radius:24px;padding:24px;box-shadow:0 18px 40px rgba(27,107,107,.06)}
+    .view-kicker{font-size:.78rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+    .view-title{margin:0;font-size:clamp(1.6rem,2.6vw,2.2rem);font-weight:700;color:var(--ink);line-height:1.12}
+    .view-subtitle{margin-top:10px;font-size:1rem;line-height:1.7;color:var(--muted);max-width:72ch}
+    .view-badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+    .view-badge{display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;background:var(--soft);color:var(--accent);font-size:.78rem;font-weight:900;letter-spacing:.02em}
+    .detail-card{background:var(--white);border:1px solid rgba(27,107,107,.08);border-radius:22px;padding:26px;box-shadow:0 16px 36px rgba(27,107,107,.06)}
+    .detail-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
+    .detail-type{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:var(--light-teal);color:var(--primary);font-weight:900;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em}
+    .detail-status{display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;font-weight:900;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;background:rgba(27,107,107,.08);color:var(--primary)}
+    .detail-status.is-create{background:rgba(245,166,35,.16);color:var(--amber)}
+    .detail-status.is-curate{background:rgba(168,212,212,.22);color:var(--primary)}
+    .detail-status.is-ready{background:rgba(27,107,107,.08);color:var(--primary)}
+    .detail-status.is-gate{background:rgba(245,166,35,.18);color:var(--amber)}
+    .detail-body{margin-top:16px;font-size:1rem;line-height:1.8;color:var(--ink);max-width:68ch}
+    .detail-body h2{font-size:1.15rem;margin:0 0 .5rem 0;font-weight:700}
+    .detail-body h3{font-size:1rem;margin:0 0 .5rem 0;font-weight:600}
+    .detail-body p{margin:0 0 1rem 0}
+    .detail-body ul{margin:0 0 1rem 1.1rem}
+    .detail-body ol{margin:0 0 1rem 1.2rem}
+    .page-banner{background:linear-gradient(180deg, rgba(6,37,36,.86), rgba(6,37,36,.74));color:var(--white);padding:14px 18px;border-radius:12px;margin-bottom:16px;box-shadow:0 10px 30px rgba(6,37,36,.36);display:flex;align-items:center;justify-content:space-between}
+    .page-banner .banner-left{display:flex;flex-direction:column}
+    .page-banner .banner-left .banner-title{font-weight:800;letter-spacing:.06em}
+    .page-banner .banner-left .banner-sub{font-size:.86rem;color:rgba(255,255,255,.78);margin-top:4px}
+    .phase1-accordion{display:flex;flex-direction:column;gap:8px}
+    .phase1-accordion-panel{display:none;flex-direction:column;gap:10px;padding:10px 0 0}
+    .phase1-accordion:hover .phase1-accordion-panel,
+    .phase1-accordion.is-open .phase1-accordion-panel{display:flex}
+    .phase1-accordion-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;padding:12px 14px;border-radius:14px;border:1px solid rgba(27,107,107,.08);background:#fff;box-shadow:0 6px 16px rgba(26,26,26,.03);color:var(--ink);font-weight:900;text-align:left;transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease,background .15s ease}
+    .phase1-accordion-toggle:hover{transform:translateY(-1px);border-color:rgba(27,107,107,.18);box-shadow:0 10px 18px rgba(27,107,107,.07)}
+    .phase1-accordion-toggle.is-active{background:linear-gradient(180deg, rgba(27,107,107,.14), rgba(27,107,107,.07));border-color:rgba(27,107,107,.24);color:#174f39;box-shadow:0 10px 18px rgba(27,107,107,.08)}
+    .phase1-accordion-toggle span{display:block}
+    .phase1-accordion-toggle .phase1-accordion-title{font-size:.84rem;letter-spacing:.14em;text-transform:uppercase}
+    .phase1-accordion-toggle .phase1-accordion-caret{font-size:.8rem;color:var(--muted);transition:transform .15s ease}
+    .phase1-accordion:hover .phase1-accordion-caret,
+    .phase1-accordion.is-open .phase1-accordion-caret{transform:rotate(180deg)}
+    .phase1-accordion-pages{display:flex;flex-direction:column;gap:8px}
+    .phase1-accordion-pages .phase1-nav-item{padding:12px 14px;border-radius:14px}
+    .phase1-accordion-pages .phase1-nav-page{min-width:2.8rem;padding:3px 9px}
+    .phase1-accordion-pages .phase1-nav-title{font-size:.9rem}
+    .phase1-accordion-tracker{padding:12px 14px;border-radius:14px;background:linear-gradient(180deg, #f7fbfb, #ffffff);border:1px solid rgba(27,107,107,.10);box-shadow:0 8px 18px rgba(26,26,26,.04);display:flex;flex-direction:column;gap:8px}
+    .phase1-accordion-tracker-head{display:flex;justify-content:space-between;gap:10px;align-items:center}
+    .phase1-accordion-tracker-title{font-size:.74rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#174f39}
+    .phase1-accordion-tracker-meta{font-size:.84rem;font-weight:800;color:var(--muted)}
+    .phase1-accordion-tracker-bar{height:10px;border-radius:999px;background:rgba(23,79,57,.08);overflow:hidden}
+    .phase1-accordion-tracker-bar span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--primary),var(--mid-teal))}
+    .phase1-accordion-gate{padding:12px 14px;border-radius:14px;background:#fff;border:1px solid rgba(27,107,107,.10);box-shadow:0 8px 18px rgba(26,26,26,.04);display:flex;gap:10px;align-items:flex-start}
+    .phase1-accordion-gate .phase-item-lock{margin-top:2px}
+    .phase1-accordion-gate .phase-item-left{display:flex;flex-direction:column;gap:4px}
+    .phase1-accordion-gate .phase-item-type{font-size:.72rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#174f39}
+    .phase1-accordion-gate .phase-item-title{font-size:.92rem;font-weight:800;line-height:1.3;color:var(--ink)}
+    .phase1-accordion-gate .phase-item-meta{font-size:.82rem;color:var(--muted)}
+    .phase1-action-list{margin:0;padding-left:1.35rem;display:grid;gap:10px;list-style:decimal outside}
+    .phase1-action-list li{line-height:1.8;color:var(--ink);padding-left:.1rem}
+    .phase1-action-list li::marker{font-weight:900;color:#174f39}
+    .phase1-portal-list{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+    .phase1-portal-list li{position:relative;padding:0 0 0 24px;line-height:1.8;color:var(--ink)}
+    .phase1-portal-list li::before{content:"";position:absolute;left:0;top:.72em;width:10px;height:10px;border-radius:50%;background:#174f39;box-shadow:0 0 0 4px rgba(23,79,57,.10)}
+    .phase1-portal-list strong{color:#174f39}
+    .pdf-viewer{height:360px;border-radius:12px;border:1px solid rgba(255,255,255,.06);background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));display:grid;place-items:center;color:var(--white);opacity:.95}
+    .callout-highlight{padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(245,166,35,.12), rgba(255,255,255,.02));border:1px solid rgba(245,166,35,.14)}
+    .phase-section{margin-bottom:18px}
+    .content-preview{margin-top:18px;padding:18px;border-radius:18px;background:linear-gradient(180deg, var(--light-teal), var(--light-grey));border:1px solid rgba(27,107,107,.08)}
+    .content-preview h4{margin:0 0 8px 0}
+    .content-preview p{margin:0;color:var(--muted)}
+    .action-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px}
+    .action-bar .btn.primary{background:var(--primary);color:var(--white)}
+    .action-bar .btn.primary:hover{box-shadow:0 16px 28px rgba(27,107,107,.24)}
+    .checklist{padding-left:18px;margin:12px 0 0 0;line-height:1.7;color:var(--ink)}
+    .page-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    .page-card{background:var(--white);border:1px solid rgba(27,107,107,.08);border-radius:20px;padding:18px;box-shadow:0 14px 32px rgba(26,26,26,.05)}
+    .checkin-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .checkin-card{background:#fff;border:1px solid rgba(27,107,107,.08);border-radius:18px;padding:16px}
+    .checkin-card strong{display:block;color:var(--accent);margin-bottom:6px}
+    .faq-list{display:grid;grid-template-columns:1fr;gap:12px}
+    .faq-item{background:#fff;border:1px solid rgba(27,107,107,.08);border-radius:18px;padding:16px}
+    .faq-item summary{cursor:pointer;font-weight:900;color:var(--ink)}
+    .faq-item p{margin:10px 0 0 0;color:var(--muted);line-height:1.65}
+    .resource-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .resource-card{display:flex;gap:14px;background:var(--white);border-radius:18px;padding:16px;border:1px solid rgba(27,107,107,.08);box-shadow:0 14px 32px rgba(26,26,26,.05)}
+    .resource-icon{flex:0 0 42px;height:42px;border-radius:14px;display:grid;place-items:center;background:var(--light-teal);font-size:1.1rem}
+    .resource-title{font-weight:900;color:var(--ink)}
+    .resource-desc{font-size:.92rem;color:var(--muted);line-height:1.55;margin-top:6px}
+    .resource-cta{margin-top:10px}
+    .resource-cta .btn{background:var(--accent);color:#fff}
+    .resource-cta .btn:hover{background:var(--primary)}
+    .portal-content.dashboard-view{margin-top:0}
+    .portal-content.content-view{background:linear-gradient(180deg, #fbfaf7 0%, #f4f1ea 100%)}
+    .dashboard-stage{padding:0;max-width:none;width:100%}
+    .dashboard-hero{
+      position:relative;
+      min-height:100svh;
+      width:100vw;
+      margin-left:calc(50% - 50vw);
+      border-radius:0;
+      overflow:hidden;
+      background:linear-gradient(180deg,#091926,#0b2634);
+      box-shadow:none;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      isolation:isolate;
+    }
+    .dashboard-hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(168,212,212,.18), transparent 24%),
+        radial-gradient(circle at 82% 10%, rgba(255,255,255,.12), transparent 20%),
+        linear-gradient(180deg, rgba(6,37,36,.24), rgba(6,37,36,.64));
+      pointer-events:none;
+      z-index:1;
+    }
+    .dashboard-hero-video{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      z-index:0;
+      filter:saturate(.95) contrast(.92) brightness(.62);
+      transform:scale(1.02);
+    }
+    .dashboard-hero-inner{
+      position:relative;
+      z-index:2;
+      width:min(1180px,92%);
+      padding:clamp(10px,2.4vw,24px) 0 28px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
+      gap:10px;
+      color:var(--white);
+    }
+    .dashboard-hero-brand{display:flex;flex-direction:column;align-items:center;gap:0;margin-bottom:0}
+    .dashboard-hero-logo{width:clamp(170px,20vw,260px);height:auto;filter:drop-shadow(0 16px 30px rgba(0,0,0,.24))}
+    .dashboard-hero-title{margin:-6px 0 0;font-size:clamp(1.8rem,3.2vw,3rem);line-height:1.02;font-weight:900;max-width:14ch}
+    .dashboard-hero-subtitle{margin:0;max-width:68ch;font-size:.96rem;line-height:1.65;color:rgba(255,255,255,.84)}
+    .dashboard-phase-strip{width:100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:0}
+    .dashboard-phase-card{padding:12px 13px;border-radius:16px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);text-align:left;box-shadow:0 12px 24px rgba(6,37,36,.10)}
+    .dashboard-phase-card strong{display:block;font-size:.9rem;letter-spacing:.06em;text-transform:uppercase;color:#fff;margin-bottom:6px}
+    .dashboard-phase-card span{display:block;color:rgba(255,255,255,.82);line-height:1.4;font-size:.88rem}
+    .dashboard-programme-wrap{width:100%;display:flex;flex-direction:column;gap:8px;align-items:center}
+    .dashboard-programme{width:100%;padding:14px 14px 16px;border-radius:18px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 12px 28px rgba(6,37,36,.12)}
+    .dashboard-programme h2{margin:0 0 8px;font-size:.9rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.86)}
+    .dashboard-programme .timeline-grid{margin-top:0;gap:8px}
+    .dashboard-programme .timeline-step{padding:11px 12px 10px;border-radius:14px;background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.22);box-shadow:0 8px 18px rgba(6,37,36,.08)}
+    .dashboard-programme .timeline-step strong{display:block;color:var(--accent);margin-bottom:4px}
+    .dashboard-programme .timeline-step span{color:rgba(7,39,37,.72);line-height:1.5}
+    .portal-content.dashboard-view .dashboard{display:block;background:#fff;min-height:100vh}
+    .portal-content.dashboard-view .main{margin-left:400px;width:calc(100vw - 400px);min-height:100vh}
+    .portal-content.dashboard-view .sidebar{position:fixed;top:0;left:0;bottom:0;width:400px;height:100vh;background:linear-gradient(180deg, #ffffff 0%, #fbfdfe 100%);border-radius:0;margin:0;padding:30px 16px 20px;overflow-y:auto;z-index:50;border-right:1px solid rgba(27,107,107,.10);box-shadow:0 20px 45px rgba(26,26,26,.06);backdrop-filter:none;-webkit-backdrop-filter:none;display:flex;flex-direction:column;gap:14px}
+    .portal-content.dashboard-view .sidebar::before{border-radius:0;background:linear-gradient(180deg, rgba(27,107,107,.04), transparent 28%)}
+    .portal-content.dashboard-view .sidebar-top{padding-bottom:14px;margin-bottom:2px;gap:10px;border-bottom:1px solid rgba(27,107,107,.10)}
+    .portal-content.dashboard-view .sidebar-brand strong{font-size:.78rem;letter-spacing:.16em}
+    .portal-content.dashboard-view .sidebar-brand span{font-size:.76rem;color:rgba(7,39,37,.56)}
+    .portal-content.dashboard-view .user-badge{margin-top:2px;padding:10px 12px;border-radius:14px;background:linear-gradient(180deg, rgba(27,107,107,.10), rgba(27,107,107,.06));border:1px solid rgba(27,107,107,.08);box-shadow:0 8px 18px rgba(27,107,107,.05)}
+    .portal-content.dashboard-view .sidebar-section{margin-top:10px;padding-top:12px;border-top:1px solid rgba(27,107,107,.10)}
+    .portal-content.dashboard-view .sidebar-heading{margin-bottom:8px;letter-spacing:.14em;font-size:.74rem;color:rgba(23,79,57,.88)}
+    .portal-content.dashboard-view .sidebar-links{gap:8px}
+    .portal-content.dashboard-view .sidebar-links a{
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(27,107,107,.08);
+      background:#fff;
+      box-shadow:0 6px 16px rgba(26,26,26,.03);
+    }
+    .portal-content.dashboard-view .sidebar-links a:hover{border-color:rgba(27,107,107,.18);box-shadow:0 10px 18px rgba(27,107,107,.07);transform:translateY(-1px)}
+    .portal-content.dashboard-view .sidebar-links a.is-active{background:linear-gradient(180deg, rgba(27,107,107,.14), rgba(27,107,107,.07));border-color:rgba(27,107,107,.24);color:#174f39;box-shadow:0 10px 18px rgba(27,107,107,.08)}
+    .portal-content.dashboard-view .phase-switcher{gap:8px}
+    .portal-content.dashboard-view .phase-switcher button{padding:12px 14px;border-radius:14px;gap:4px;border:1px solid rgba(27,107,107,.08);background:#fff;box-shadow:0 6px 16px rgba(26,26,26,.03)}
+    .portal-content.dashboard-view .phase-switcher button span:first-child{font-size:.83rem}
+    .portal-content.dashboard-view .phase-switcher button span:last-child{font-size:.73rem;letter-spacing:.04em}
+    .portal-content.dashboard-view .phase-switcher button.is-active{background:linear-gradient(180deg, rgba(27,107,107,.14), rgba(27,107,107,.07));border-color:rgba(27,107,107,.24);color:#174f39;box-shadow:0 10px 18px rgba(27,107,107,.08)}
+    .portal-content.dashboard-view .sidebar-footer{margin-top:auto;padding-top:16px;border-top:1px solid rgba(27,107,107,.10)}
+    .portal-content.dashboard-view .nav-list{gap:8px}
+    .portal-content.dashboard-view .nav-list a{padding:12px 14px;border-radius:14px;box-shadow:0 6px 16px rgba(26,26,26,.03)}
+    .portal-content.dashboard-view .phase1-nav{gap:8px}
+    .portal-content.dashboard-view .phase1-nav-item{padding:12px 14px;border-radius:14px;box-shadow:0 6px 16px rgba(26,26,26,.03)}
+    .portal-content.dashboard-view .phase1-nav-page{min-width:2.8rem;padding:3px 9px}
+    .portal-content.dashboard-view .phase1-nav-title{font-size:.9rem}
+    .dashboard-overview{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:16px}
+    .overview-card{background:#fff;border:1px solid rgba(27,107,107,.08);border-radius:18px;padding:16px}
+    .overview-card h3{margin:0 0 8px 0}
+    .dashboard-phase-card span{display:block;color:rgba(255,255,255,.82);line-height:1.5;font-size:.92rem}
+    .timeline-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px}
+    .timeline-step{padding:14px;border-radius:16px;background:var(--soft);border:1px solid rgba(27,107,107,.08)}
+    .timeline-step strong{display:block;color:var(--accent);margin-bottom:6px}
+    .timeline-step span{color:var(--muted);line-height:1.5}
+    .callout{padding:16px;border-radius:18px;background:linear-gradient(180deg, rgba(232,244,244,.82), rgba(255,255,255,.96));border:1px solid rgba(27,107,107,.10)}
+    .callout strong{display:block;color:var(--white);margin-bottom:6px}
+    .sidebar-footer{margin-top:18px;padding-top:16px;border-top:1px solid rgba(27,107,107,.10);font-size:.9rem;line-height:1.6;color:var(--muted)}
+    .gate-card{position:fixed;inset:0;width:100vw;height:100svh;max-width:none;margin:0;padding:clamp(18px,4vw,42px);border-radius:0;box-shadow:none;border:none;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;isolation:isolate;animation:fadeUp .6s ease both;background:var(--dark)}
+    .gate-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 15% 20%, rgba(27,107,107,.20), transparent 18%), radial-gradient(circle at 85% 10%, rgba(168,212,212,.10), transparent 16%), linear-gradient(135deg, rgba(0,0,0,.20), transparent 34%);pointer-events:none;z-index:1}
+    .gate-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;filter:saturate(.98) contrast(.88) brightness(.56);transform:scale(1.02)}
+    .gate-noise{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.045;background-image:radial-gradient(rgba(255,255,255,.8) 0.55px, transparent 0.55px);background-size:7px 7px;mix-blend-mode:normal}
+    .gate-media,.gate-copy{position:relative;z-index:2}
+    .gate-media{display:none}
+    .gate-head{display:flex;align-items:center;gap:16px}
+    .gate-logo{width:clamp(170px,22vw,260px);height:auto;filter:none;box-shadow:none;background:transparent;border:none;display:block;position:relative;z-index:3;transform:none;transform-origin:center}
+    .gate-copy{width:min(560px,100%);background:transparent;border:none;border-radius:0;padding:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;transform:translateY(-38px);animation:fadeUp .7s ease both}
+    .gate-copy .btn.primary{background:var(--primary);color:var(--white);box-shadow:0 12px 26px rgba(27,107,107,.30)}
+    .gate-copy .btn.primary:hover{box-shadow:0 16px 34px rgba(27,107,107,.36);transform:scale(1.02)}
+    .gate-copy .btn.primary:focus-visible{outline:3px solid rgba(255,255,255,.28);outline-offset:2px}
+    .gate-title{font-weight:900;font-size:clamp(1.45rem,2.2vw,2.1rem);color:var(--white);letter-spacing:-.03em;animation:fadeUp .55s ease both;text-align:center}
+    .gate-controls{display:flex;flex-direction:column;gap:12px;margin-top:14px;animation:fadeUp .85s ease both}
+    .gate-controls input[type=password],.gate-controls input[type=email]{padding:13px 14px;border-radius:14px;border:1px solid rgba(255,255,255,.14);font-size:1rem;background:rgba(255,255,255,.10);color:#fff;box-shadow:inset 0 1px 2px rgba(255,255,255,.03);transition:border-color .15s ease,box-shadow .15s ease,transform .15s ease}
+    .gate-controls input[type=password]::placeholder,.gate-controls input[type=email]::placeholder{color:rgba(255,255,255,.45)}
+    .gate-controls input[type=password]:focus,.gate-controls input[type=email]:focus{border-color:rgba(168,212,212,.40);box-shadow:0 0 0 4px rgba(27,107,107,.18), inset 0 1px 2px rgba(255,255,255,.03);transform:translateY(-1px)}
+    .login-row{display:grid;grid-template-columns:1fr;gap:10px}
+    .login-field{display:flex;flex-direction:column}
+    .login-label{display:block;font-size:.86rem;font-weight:700;letter-spacing:.02em;color:rgba(255,255,255,.86);margin-bottom:4px;text-align:left}
+    .login-row + div{margin-top:2px}
+    .gate-controls #loginBtn{display:inline-flex;align-items:center;justify-content:center;min-width:128px;padding:12px 18px;border:none;border-radius:14px;background:linear-gradient(180deg, #2a7d7d, #185d5d);color:#fff;font-weight:800;letter-spacing:.02em;box-shadow:0 14px 28px rgba(24,93,93,.34);transition:transform .15s ease, box-shadow .15s ease, filter .15s ease}
+    .gate-controls #loginBtn:hover{transform:translateY(-1px);filter:brightness(1.04);box-shadow:0 18px 32px rgba(24,93,93,.42)}
+    .gate-controls #loginBtn:active{transform:translateY(0);box-shadow:0 10px 20px rgba(24,93,93,.28)}
+    .gate-controls #loginBtn:focus-visible{outline:3px solid rgba(255,255,255,.28);outline-offset:2px}
+    .error{color:var(--white);font-weight:800;font-size:.95rem;margin-top:6px;display:none;padding:10px 12px;border-radius:12px;background:rgba(245,166,35,.18);border:1px solid rgba(245,166,35,.24)}
+    .portal-content{margin-top:22px;display:none;animation:portalIn .35s ease both}
+    .dashboard{display:grid;grid-template-columns:280px 1fr;gap:20px;align-items:start}
+    .portal-content.dashboard-view .dashboard{background:#fff}
+    .sidebar{position:sticky;top:26px;align-self:start;background:linear-gradient(180deg, var(--light-grey), var(--white));border-radius:22px;padding:18px;border:1px solid rgba(27,107,107,.10);box-shadow:0 18px 46px rgba(26,26,26,.09);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);height:calc(100vh - 80px);overflow:auto}
+    .sidebar::before{content:"";position:absolute;inset:0;border-radius:22px;background:linear-gradient(180deg, rgba(27,107,107,.10), transparent 30%);pointer-events:none}
+    .sidebar .logo-small{width:120px;margin-bottom:14px;position:relative;z-index:1}
+    .sidebar-top{display:flex;align-items:flex-start;justify-content:flex-start;gap:12px}
+    .sidebar-brand{display:none}
+    .sidebar-logout{white-space:nowrap;padding:8px 12px;border-radius:10px;font-size:.9rem}
+    .sidebar-logout.is-hidden{display:none}
+    .user-badge{margin-top:0;padding:10px 12px;border-radius:14px;background:rgba(27,107,107,.08);color:var(--accent);font-size:.86rem;font-weight:800;display:none;word-break:break-word;position:relative;z-index:1}
+    .nav-list{list-style:none;padding:0;margin:8px 0 0 0;display:flex;flex-direction:column;gap:6px}
+    .nav-list a{
+      display:block;
+      padding:10px 12px;
+      border-radius:12px;
+      color:var(--ink);
+      font-weight:800;
+      border:1px solid rgba(27,107,107,.08);
+      background:#fff;
+      transition:background .15s ease,transform .15s ease,border-color .15s ease,box-shadow .15s ease,color .15s ease;
+    }
+    .nav-list a:hover,
+    .nav-list a.is-active{
+      background:linear-gradient(180deg, rgba(27,107,107,.12), rgba(27,107,107,.06));
+      border-color:rgba(27,107,107,.22);
+      color:#174f39;
+      box-shadow:0 10px 18px rgba(27,107,107,.10);
+    }
+    .nav-list a:focus-visible,
+    .btn:focus-visible{
+      outline:3px solid rgba(27,107,107,.28);
+      outline-offset:2px;
+    }
+    .main{min-height:60vh;position:relative;transition:opacity .18s ease, transform .18s ease, filter .18s ease}
+    .main.is-switching{opacity:.88;transform:translateY(6px);filter:blur(.8px)}
+    .main::before{
+      content:"";
+      position:absolute;
+      inset:18px 18px auto auto;
+      width:180px;
+      height:180px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(168,212,212,.20), transparent 68%);
+      pointer-events:none;
+      filter:blur(2px);
+      animation: floatGlow 14s ease-in-out infinite alternate;
+    }
+    .grid-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:12px}
+    .card{
+      background:linear-gradient(180deg, var(--white), var(--light-grey));
+      border-radius:18px;
+      padding:16px;
+      border:1px solid rgba(27,107,107,.08);
+      box-shadow:0 16px 36px rgba(26,26,26,.05);
+      backdrop-filter:blur(12px) saturate(120%);
+      -webkit-backdrop-filter:blur(12px) saturate(120%);
+      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    .card:hover{transform:translateY(-2px);box-shadow:0 20px 44px rgba(26,26,26,.08);border-color:rgba(27,107,107,.11)}
+    .phase-card{display:flex;flex-direction:column;gap:10px;min-height:176px;position:relative;overflow:hidden}
+    .phase-card::after{
+      content:"";
+      position:absolute;
+      inset:auto 0 0 0;
+      height:4px;
+      background:linear-gradient(90deg,var(--b),var(--c));
+      opacity:.8;
+    }
+    .phase-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      width:max-content;
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(27,107,107,.08);
+      color:var(--primary);
+      font-weight:900;
+      letter-spacing:.01em;
+    }
+    .phase-week{
+      display:inline-flex;
+      align-items:center;
+      width:max-content;
+      padding:5px 9px;
+      border-radius:999px;
+      background:rgba(168,212,212,.22);
+      color:var(--primary);
+      font-size:.78rem;
+      font-weight:800;
+      letter-spacing:.03em;
+      text-transform:uppercase;
+    }
+    .progress-line{background:linear-gradient(180deg, rgba(238,247,244,.95), rgba(249,252,251,.96));padding:14px;border-radius:14px;border:1px solid rgba(6,37,36,.06);position:relative;overflow:hidden}
+    .progress-line::before{
+      content:"";
+      position:absolute;
+      inset:-40% auto auto -10%;
+      width:45%;
+      height:180%;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,.45), transparent);
+      transform:rotate(14deg);
+      animation: shimmer 8s linear infinite;
+      pointer-events:none;
+    }
+    .progress-track{height:12px;background:linear-gradient(90deg,var(--c),var(--a));border-radius:999px;position:relative;box-shadow:inset 0 1px 1px rgba(255,255,255,.5)}
+    .weeks{display:flex;justify-content:space-between;margin-top:10px;font-size:.82rem;color:rgba(7,39,37,.64);font-weight:700}
+    .next-action{display:flex;flex-direction:column;gap:8px}
+    .sidebar-footer{margin-top:auto;padding-top:12px;border-top:1px solid rgba(27,107,107,.10);font-size:.92rem;color:rgba(7,39,37,.68);position:relative;z-index:1}
+    .panel-title{margin:0 0 4px 0;font-size:1.05rem}
+    .panel-sub{margin:0;color:rgba(7,39,37,.72)}
+    .section-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+    .section-chip{padding:12px 12px;border-radius:12px;background:linear-gradient(180deg,rgba(11,76,74,.05),rgba(255,255,255,.8));border:1px solid rgba(6,37,36,.06);font-weight:700;color:var(--ink)}
+    .phase-note{margin-top:10px;padding:12px 14px;border-left:4px solid var(--b);background:rgba(11,76,74,.05);border-radius:12px;color:#154846}
+    .phase-header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+    .phase-meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    .phase-progress-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 10px;border-radius:999px;background:rgba(11,76,74,.08);color:var(--b);font-weight:900;font-size:.84rem}
+    .progress-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}
+    .summary-stat{padding:14px;border-radius:16px;background:linear-gradient(180deg,rgba(11,76,74,.06),rgba(255,255,255,.92));border:1px solid rgba(255,255,255,.52)}
+    .summary-stat strong{display:block;font-size:1.35rem;color:var(--ink);margin-top:2px}
+    .summary-bar{height:10px;border-radius:999px;background:rgba(6,37,36,.08);overflow:hidden;margin-top:10px}
+    .summary-bar > span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--c),var(--a));width:0%}
+    .phase-progress-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}
+    .phase-progress-item{padding:12px 12px 13px;border-radius:16px;background:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.5);box-shadow:0 10px 26px rgba(6,37,36,.04)}
+    .phase-progress-item .phase-title{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:8px;font-weight:900;color:var(--ink)}
+    .phase-progress-track{height:9px;border-radius:999px;background:rgba(6,37,36,.08);overflow:hidden}
+    .phase-progress-track > span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--b),var(--c));width:0%}
+    .timeline-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
+    .timeline-step{padding:12px;border-radius:14px;border:1px solid rgba(6,37,36,.06);background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(239,247,244,.75))}
+    .timeline-step strong{display:block;font-size:.96rem;margin-bottom:3px}
+    .timeline-step span{color:rgba(7,39,37,.68);font-size:.88rem}
+    .button-row{display:flex;flex-wrap:wrap;gap:10px}
+    .portal-shell{position:relative}
+    .btn{border:none;cursor:pointer;transition:transform .12s ease,box-shadow .12s ease,background .12s ease,opacity .12s ease;border-radius:12px}
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{box-shadow:0 12px 26px rgba(11,76,74,.18)}
+    .btn.primary:hover{box-shadow:0 16px 32px rgba(11,76,74,.22)}
+
+    /* Resource card component */
+    .resource-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+    .resource-card{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:14px;background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.55);box-shadow:0 10px 30px rgba(6,37,36,.04);transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease}
+    .resource-card:hover{transform:translateY(-3px);box-shadow:0 18px 42px rgba(6,37,36,.09);border-color:rgba(11,76,74,.14)}
+    .resource-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;background:linear-gradient(180deg,rgba(11,76,74,.07),rgba(255,255,255,.6));color:var(--b);flex-shrink:0;border:1px solid rgba(6,37,36,.05)}
+    .resource-body{flex:1}
+    .resource-title{font-weight:800;color:var(--ink);margin-bottom:4px}
+    .resource-desc{color:rgba(7,39,37,.64);font-size:.95rem;margin-bottom:8px}
+    .resource-cta{display:inline-flex;gap:8px;align-items:center}
+    .resource-cta .btn{padding:8px 12px;border-radius:10px}
+    .module-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}
+    .module-card{padding:14px;border-radius:16px;background:rgba(255,255,255,.90);border:1px solid rgba(255,255,255,.52);box-shadow:0 10px 28px rgba(6,37,36,.04);transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease}
+    .module-card:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(6,37,36,.08);border-color:rgba(11,76,74,.12)}
+    .module-card-header{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .module-card h5{margin:0;font-size:1rem;color:var(--ink)}
+    .module-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+    .module-desc{margin-top:8px;color:rgba(7,39,37,.68);font-size:.95rem;line-height:1.55}
+    .module-check{display:flex;align-items:center;gap:8px;margin-top:12px;font-weight:800;color:var(--ink)}
+    .module-check input{width:18px;height:18px;accent-color:var(--b)}
+    .module-status{padding:5px 9px;border-radius:999px;background:rgba(11,76,74,.08);color:var(--b);font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.03em}
+    @media (max-width:900px){.resource-list{grid-template-columns:1fr}}
+
+    @media (max-width:900px){
+      .dashboard{grid-template-columns:1fr}
+      .sidebar{position:relative;height:auto;order:2}
+      .main{order:1}
+      .portal-content.dashboard-view .main{margin-left:0;width:100%;min-height:auto}
+      .portal-content.dashboard-view .sidebar{position:relative;top:auto;left:auto;bottom:auto;width:auto;height:auto;order:2}
+      .grid-cards{grid-template-columns:1fr}
+      .section-grid{grid-template-columns:1fr}
+      .dashboard-hero-video{display:none}
+      .dashboard-phase-strip{grid-template-columns:1fr 1fr}
+      .dashboard-programme .timeline-grid{grid-template-columns:1fr 1fr}
+      .progress-summary{grid-template-columns:1fr}
+      .phase-progress-list{grid-template-columns:1fr}
+      .module-grid{grid-template-columns:1fr}
+      .dashboard-hero{min-height:auto;width:100%;margin-left:0}
+      .dashboard-hero-inner{width:min(100%,92%);padding:28px 0 34px}
+      .dashboard-hero-title{max-width:none}
+    }
+    @media (max-width:560px){
+      body{padding:16px}
+      .gate-card{padding:20px}
+      .gate-head{align-items:flex-start}
+      .gate-logo{width:174px;transform:translateY(4px) scale(1.03)}
+      .login-row{grid-template-columns:1fr}
+      .dashboard-phase-strip{grid-template-columns:1fr}
+      .dashboard-programme .timeline-grid{grid-template-columns:1fr}
+      .resource-card{flex-direction:column}
+      .resource-icon{width:42px;height:42px}
+      .sidebar-top{align-items:center}
+    }
+    @media (min-width:720px){.gate-card{grid-template-columns:220px 1fr}}
+    .portal-body{padding:10px 6px}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes portalIn{from{opacity:0;transform:translateY(10px) scale(.995)}to{opacity:1;transform:translateY(0) scale(1)}}
+    @keyframes driftGlow{from{transform:translate3d(-1%,0,0) scale(1)}to{transform:translate3d(1%,1.5%,0) scale(1.04)}}
+    @keyframes floatGlow{from{transform:translateY(0) translateX(0)}to{transform:translateY(-10px) translateX(8px)}}
+    @keyframes shimmer{from{transform:translateX(-140%) rotate(14deg)}to{transform:translateX(260%) rotate(14deg)}}
+    @keyframes phase1UnlockFade{from{opacity:0}to{opacity:1}}
+    @keyframes phase1UnlockPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+    @keyframes phase1UnlockSpin{0%{transform:rotate(-18deg) scale(.85);opacity:.4}60%{transform:rotate(8deg) scale(1.06);opacity:1}100%{transform:rotate(0) scale(1);opacity:1}}
+
+    @media (prefers-reduced-motion: reduce){
+      *, *::before, *::after{animation:none !important;transition:none !important;scroll-behavior:auto !important}
+      body::before, body::after{display:none}
+    }
+  </style>
+</head>
+<body>
+  <main class="portal-wrap container">
+    <section class="gate-card" id="gate">
+      <video class="gate-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+        <source src="Student_studying_on_mountain_peak_202606301519.mp4" type="video/mp4">
+      </video>
+      <div class="gate-overlay" aria-hidden="true"></div>
+      <div class="gate-noise" aria-hidden="true"></div>
+
+      <div class="gate-media" aria-hidden="true">
+        <img src="logo.png" alt="IHSAAN Medics logo" class="gate-logo">
+      </div>
+
+      <div class="gate-copy">
+        <div class="gate-head">
+          <div>
+            <div class="gate-title">SRMA Student Portal</div>
+          </div>
+        </div>
+
+        <form class="gate-controls" id="loginForm">
+          <div class="login-row">
+            <div class="login-field">
+              <label for="loginEmail" class="login-label">Student email</label>
+              <input id="loginEmail" name="loginEmail" type="email" inputmode="email" autocomplete="email" placeholder="student@school.ac.uk" aria-label="Student email" required>
+            </div>
+
+            <div class="login-field">
+              <label for="loginPassword" class="login-label">Password</label>
+              <input id="loginPassword" name="loginPassword" type="password" autocomplete="current-password" placeholder="Your password" aria-label="Password" required>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+            <button id="loginBtn" class="btn primary" type="submit">Log in</button>
+          </div>
+
+          <div id="authError" class="error" role="status" aria-live="polite">Incorrect login details</div>
+        </form>
+      </div>
+
+    </section>
+
+    <section id="portal" class="portal-content">
+      <div class="dashboard">
+        <aside class="sidebar" id="sidebar" aria-label="SRMA navigation">
+          <div class="sidebar-top">
+            <div class="sidebar-brand">
+              <strong>SRMA Portal</strong>
+              <span>IHSAAN Medics</span>
+            </div>
+          </div>
+          <div id="userBadge" class="user-badge"></div>
+          <div id="sidebarMount"></div>
+
+          <div class="sidebar-footer">
+            <div>Access for enrolled pilot students. Contact the SRMA team for help.</div>
+            <div style="margin-top:12px">
+              <button id="logoutBtn" class="btn sidebar-logout is-hidden" type="button">Log out</button>
+            </div>
+          </div>
+        </aside>
+
+        <main class="main">
+          <div id="mainMount"></div>
+        </main>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const SUPABASE_URL = "https://nxagizhdoufnbpvsycxt.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_dK3IKYvg3qj8qj6QKrKlSg_gkxT3ruU";
+    const srmaSupabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const forceLoginEntry = new URLSearchParams(window.location.search).get('login') === '1';
+
+    const loginForm = document.getElementById('loginForm');
+    const loginEmail = document.getElementById('loginEmail');
+    const loginPassword = document.getElementById('loginPassword');
+    const authError = document.getElementById('authError');
+    const gate = document.getElementById('gate');
+    const portal = document.getElementById('portal');
+    const portalWrap = document.querySelector('.portal-wrap');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarMount = document.getElementById('sidebarMount');
+    const mainMount = document.getElementById('mainMount');
+    const userBadge = document.getElementById('userBadge');
+    const loginBtn = document.getElementById('loginBtn');
+
+    const phase1QuizMarkup = `
+      <form class="phase1-quiz quiz-form" data-quiz-id="phase1-9">
+        <fieldset class="phase1-quiz-q"><legend>1. What is the key difference between a systematic review and a narrative review?</legend><label><input type="radio" name="q1" value="A"> A. A systematic review is longer.</label><label><input type="radio" name="q1" value="B"> B. A systematic review uses a pre-defined, reproducible search strategy and transparent methods.</label><label><input type="radio" name="q1" value="C"> C. A systematic review is written by more authors.</label><label><input type="radio" name="q1" value="D"> D. A systematic review always includes a meta-analysis.</label></fieldset>
+        <fieldset class="phase1-quiz-q"><legend>2. A meta-analysis is:</legend><label><input type="radio" name="q2" value="A"> A. Another name for a systematic review.</label><label><input type="radio" name="q2" value="B"> B. A statistical method used to pool results from multiple studies within a systematic review.</label><label><input type="radio" name="q2" value="C"> C. A type of randomised controlled trial.</label><label><input type="radio" name="q2" value="D"> D. A search strategy for finding published papers.</label></fieldset>
+        <fieldset class="phase1-quiz-q"><legend>3. Your team conducts a systematic review but the included studies are too heterogeneous to pool statistically. What should you do?</legend><label><input type="radio" name="q3" value="A"> A. Abandon the review — it cannot be published without a forest plot.</label><label><input type="radio" name="q3" value="B"> B. Cherry-pick the most similar studies and pool only those.</label><label><input type="radio" name="q3" value="C"> C. Conduct a structured narrative synthesis instead — this is a valid publishable output.</label><label><input type="radio" name="q3" value="D"> D. Change your eligibility criteria until the studies become homogeneous enough to pool.</label></fieldset>
+        <fieldset class="phase1-quiz-q"><legend>4. What is PROSPERO?</legend><label><input type="radio" name="q4" value="A"> A. A database of published systematic reviews.</label><label><input type="radio" name="q4" value="B"> B. A reporting guideline for systematic reviews.</label><label><input type="radio" name="q4" value="C"> C. An international register where systematic reviews are registered before the search begins.</label><label><input type="radio" name="q4" value="D"> D. A screening tool for titles and abstracts.</label></fieldset>
+        <fieldset class="phase1-quiz-q"><legend>5. Why do you register your review on PROSPERO before searching?</legend><label><input type="radio" name="q5" value="A"> A. It is required by all journals before submission.</label><label><input type="radio" name="q5" value="B"> B. It creates a public time-stamped record of your question and methods, preventing outcome-reporting bias and duplicate reviews.</label><label><input type="radio" name="q5" value="C"> C. It gives you access to full-text articles.</label><label><input type="radio" name="q5" value="D"> D. It automatically generates a search strategy for you.</label></fieldset>
+        <fieldset class="phase1-quiz-q"><legend>6. What does the 'P' stand for in PICO?</legend><label><input type="radio" name="q6" value="A"> A. Protocol</label><label><input type="radio" name="q6" value="B"> B. Publication</label><label><input type="radio" name="q6" value="C"> C. Population</label><label><input type="radio" name="q6" value="D"> D. Primary outcome</label></fieldset>
+        <fieldset class="phase1-quiz-q"><legend>7. A scoping search (H1) is the same as the full systematic search you will conduct in Phase 3.</legend><label><input type="radio" name="q7" value="A"> A. True — both involve the same databases and level of detail.</label><label><input type="radio" name="q7" value="B"> B. False — a scoping search is a quick 1–2 hour reconnaissance to check your question is not already answered. The full search is exhaustive and built with a librarian.</label><label><input type="radio" name="q7" value="C"> C. True — both take the same amount of time.</label><label><input type="radio" name="q7" value="D"> D. False — a scoping search is done after registration, not before.</label></fieldset>
+        <fieldset class="phase1-quiz-q"><legend>8. PRISMA stands for:</legend><label><input type="radio" name="q8" value="A"> A. Preferred Reporting Items for Systematic reviews and Meta-Analyses.</label><label><input type="radio" name="q8" value="B"> B. Primary Research in Systematic Medical Abstracts.</label><label><input type="radio" name="q8" value="C"> C. Protocol Registration and Indexing of Systematic Meta-Analyses.</label><label><input type="radio" name="q8" value="D"> D. Peer Review in Systematic Medical Assessment.</label></fieldset>
+        <fieldset class="phase1-quiz-q"><legend>9. Which of the following is the strongest study design for testing whether an intervention works?</legend><label><input type="radio" name="q9" value="A"> A. Case series</label><label><input type="radio" name="q9" value="B"> B. Cross-sectional study</label><label><input type="radio" name="q9" value="C"> C. Cohort study</label><label><input type="radio" name="q9" value="D"> D. Randomised controlled trial</label></fieldset>
+        <fieldset class="phase1-quiz-q"><legend>10. You are reading a study and notice that a large number of participants dropped out before the end, and this is not accounted for in the analysis. This is an example of:</legend><label><input type="radio" name="q10" value="A"> A. Detection bias</label><label><input type="radio" name="q10" value="B"> B. Selection bias</label><label><input type="radio" name="q10" value="C"> C. Attrition bias</label><label><input type="radio" name="q10" value="D"> D. Performance bias</label></fieldset>
+        <div class="button-row" style="margin-top:8px"><button type="submit" class="btn primary">Submit and finish quiz</button></div>
+      </form>
+    `;
+
+    const PORTAL_VIEW_KEY = 'srma-portal:last-view';
+    const PORTAL_ITEM_KEY = 'srma-portal:last-item';
+    const LOCAL_PROGRESS_KEY = 'srma-portal:local-progress';
+    const PHASE1_UNLOCK_FLASH_KEY = 'srma-portal:phase1-unlock-flash';
+
+    const portalData = {
+      dashboard: {
+        title: 'Welcome to the SRMA Student Portal',
+        kicker: 'IHSAAN Medics',
+        subtitle: 'The portal follows the content specification for the four-phase SRMA programme, with the sidebar showing the exact item order, gate logic, and support pages.',
+        badges: [],
+        overview: [
+          { title: 'Phase 1', text: 'Foundations, topic feasibility, and Gate 1.' },
+          { title: 'Phase 2', text: 'Question, protocol, and PROSPERO registration.' },
+          { title: 'Phase 3', text: 'Screening, extraction, synthesis, and Gate 4.' },
+          { title: 'Phase 4', text: 'Writing, submission, and programme completion.' }
+        ],
+        timeline: [
+          { title: 'Weeks 1-2', text: 'Foundations and topic approval' },
+          { title: 'Weeks 3-5', text: 'Question, protocol, and registration' },
+          { title: 'Weeks 6-10', text: 'Screening, extraction, synthesis' },
+          { title: 'Weeks 11-16', text: 'Writing, QA, and submission' }
+        ]
+      },
+      // Quiz data for Phase 1 knowledge check
+      phase1Quiz: [
+        { id: 'q1', q: 'What is the key difference between a systematic review and a narrative review?', options: ['A. A systematic review is longer.', 'B. A systematic review uses a pre-defined, reproducible search strategy and transparent methods.', 'C. A systematic review is written by more authors.', 'D. A systematic review always includes a meta-analysis.'], answer: 'B' },
+        { id: 'q2', q: 'A meta-analysis is:', options: ['A. Another name for a systematic review.', 'B. A statistical method used to pool results from multiple studies within a systematic review.', 'C. A type of randomised controlled trial.', 'D. A search strategy for finding published papers.'], answer: 'B' },
+        { id: 'q3', q: 'Your team conducts a systematic review but the included studies are too heterogeneous to pool statistically. What should you do?', options: ['A. Abandon the review — it cannot be published without a forest plot.', 'B. Cherry-pick the most similar studies and pool only those.', 'C. Conduct a structured narrative synthesis instead — this is a valid publishable output.', 'D. Change your eligibility criteria until the studies become homogeneous enough to pool.'], answer: 'C' },
+        { id: 'q4', q: 'What is PROSPERO?', options: ['A. A database of published systematic reviews.', 'B. A reporting guideline for systematic reviews.', 'C. An international register where systematic reviews are registered before the search begins.', 'D. A screening tool for titles and abstracts.'], answer: 'C' },
+        { id: 'q5', q: 'Why do you register your review on PROSPERO before searching?', options: ['A. It is required by all journals before submission.', 'B. It creates a public time-stamped record of your question and methods, preventing outcome-reporting bias and duplicate reviews.', 'C. It gives you access to full-text articles.', 'D. It automatically generates a search strategy for you.'], answer: 'B' },
+        { id: 'q6', q: "What does the 'P' stand for in PICO?", options: ['A. Protocol', 'B. Publication', 'C. Population', 'D. Primary outcome'], answer: 'C' },
+        { id: 'q7', q: 'A scoping search (H1) is the same as the full systematic search you will conduct in Phase 3.', options: ['A. True — both involve the same databases and level of detail.', 'B. False — a scoping search is a quick 1–2 hour reconnaissance to check your question is not already answered. The full search is exhaustive and built with a librarian.', 'C. True — both take the same amount of time.', 'D. False — a scoping search is done after registration, not before.'], answer: 'B' },
+        { id: 'q8', q: 'PRISMA stands for:', options: ['A. Preferred Reporting Items for Systematic reviews and Meta-Analyses.', 'B. Primary Research in Systematic Medical Abstracts.', 'C. Protocol Registration and Indexing of Systematic Meta-Analyses.', 'D. Peer Review in Systematic Medical Assessment.'], answer: 'A' },
+        { id: 'q9', q: 'Which of the following is the strongest study design for testing whether an intervention works?', options: ['A. Case series', 'B. Cross-sectional study', 'C. Cohort study', 'D. Randomised controlled trial'], answer: 'D' },
+        { id: 'q10', q: 'You are reading a study and notice that a large number of participants dropped out before the end, and this is not accounted for in the analysis. This is an example of:', options: ['A. Detection bias', 'B. Selection bias', 'C. Attrition bias', 'D. Performance bias'], answer: 'C' }
+      ],
+      phase1Pages: [
+        { id:'phase1-1', page:'Page 1 of 9', title:'Welcome to the Programme' },
+        { id:'phase1-2', page:'Page 2 of 9', title:'What Is an SRMA? Introductory Guide' },
+        { id:'phase1-3', page:'Page 3 of 9', title:'Your Project Workflow: Phase by Phase' },
+        { id:'phase1-4', page:'Page 4 of 9', title:'Software & Access Setup' },
+        { id:'phase1-5', page:'Page 5 of 9', title:'Curated Reading List' },
+        { id:'phase1-6', page:'Page 6 of 9', title:'H1 · Scoping Search' },
+        { id:'phase1-7', page:'Page 7 of 9', title:'Worked Exemplar Review (Annotated)' },
+        { id:'phase1-8', page:'Page 8 of 9', title:'Critical Appraisal Mini-Guide' },
+        { id:'phase1-9', page:'Page 9 of 9', title:'Phase 1 Knowledge Check' },
+        { id:'phase1-10', page:'Page 10 of 10', title:'Gate 1 Workspace' }
+      ],
+      phase1Content: {
+        'phase1-1': `
+          <div class="phase1-page">
+            <section class="phase1-section-card">
+              <h2>Welcome to the IHSAAN Medics Research Mentorship Programme</h2>
+              <p>You have been accepted onto the SRMA Pilot Programme. Over the next 12–16 weeks, you and your team will conduct a systematic review of published medical literature — and leave with a registered PROSPERO protocol and a complete manuscript draft ready for journal submission.</p>
+              <p>This portal is your home for the programme: every resource, guide, template and deadline is here. Work through the items in order, mark items complete as you go, and submit your Topic Proposal &amp; Feasibility Form at Gate 1 for supervisor approval.</p>
+            </section>
+
+            <section class="phase1-section-card">
+              <h3>What this portal contains</h3>
+              <ul class="phase1-portal-list">
+                <li><strong>Guides and how-tos</strong> for every step of the review process, from topic development to manuscript submission.</li>
+                <li><strong>Templates and forms</strong> to download, complete, and upload at the right points in the programme.</li>
+                <li><strong>Short videos and screen recordings</strong> that show the software-based steps in a practical, visual way.</li>
+                <li><strong>Knowledge checks</strong> at the end of each phase so you can confirm understanding before moving on.</li>
+                <li><strong>Gates</strong> where your supervisor signs off before you progress to the next stage.</li>
+              </ul>
+            </section>
+
+            <section class="phase1-section-card">
+              <h3>What to do right now</h3>
+              <ol class="phase1-action-list">
+                <li>Read the Welcome page you are on now.</li>
+                <li>Work through the Phase 1 items in the sidebar, in order.</li>
+                <li>Complete the Phase 1 Knowledge Check.</li>
+                <li>Submit your topic at Gate 1.</li>
+              </ol>
+            </section>
+
+            <section class="phase1-callout is-amber">
+              <h3>Your guaranteed deliverable</h3>
+              <p>The programme guarantees a registered PROSPERO protocol and a complete manuscript draft. Journal submission and acceptance are the aspirational goal — they may continue after Week 16 and are not guaranteed.</p>
+            </section>
+
+            <section class="phase1-section-card">
+              <h3>A note on authorship</h3>
+              <p>Joining the programme does not guarantee authorship. Authorship is earned through real, documented contribution to the work. The Research Integrity &amp; Authorship Policy sets out the rules clearly. Read it early.</p>
+            </section>
+
+            <section class="phase1-section-card">
+              <h3>Need help?</h3>
+              <p>Contact the IHSAAN team via the Support page. Your supervisor is there for methodological and clinical guidance — use the check-in schedule to make the most of their time.</p>
+            </section>
+          </div>
+        `,
+        'phase1-2': `
+          <div class="phase1-page">
+            <section class="phase1-section-card">
+              <p class="eyebrow">Page 2 of 9 — What Is an SRMA? Introductory Guide</p>
+              <h2 class="phase1-section-title">What Is a Systematic Review and Meta-Analysis?</h2>
+              <p>A plain-English introduction to the type of research you are about to do.</p>
+              <p><strong>Start here: four types of review</strong></p>
+              <p>The medical literature is full of different kinds of reviews. Here is how they differ.</p>
+              <table class="phase1-table phase1-table--srma">
+                <thead>
+                  <tr><th>Type</th><th>What it is</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Narrative Review</td><td>A broad overview written by an expert, summarising what is known about a topic. Not reproducible — two people doing the same review might reach different conclusions.</td></tr>
+                  <tr><td>Scoping Review</td><td>Maps out what research exists on a topic without formally assessing quality. Good for understanding a field, not for answering a specific clinical question.</td></tr>
+                  <tr><td>Systematic Review</td><td>A reproducible, exhaustive search of the literature to answer one specific, pre-defined question. Every step is documented so another researcher could repeat it. This is what you are doing.</td></tr>
+                  <tr><td>Meta Analysis</td><td>A statistical technique used inside a systematic review to pool numerical results from multiple studies into a single combined estimate. Not all systematic reviews include a meta-analysis — and that is fine.</td></tr>
+                </tbody>
+              </table>
+            </section>
+            <section class="phase1-disclaimer">
+              <h3>IMPORTANT — NARRATIVE SYNTHESIS IS NOT A FAILURE</h3>
+              <p>Many student reviews end up doing a narrative synthesis rather than a meta-analysis. This happens when studies are too different from each other to pool statistically. A well-conducted narrative synthesis is a valid, publishable output. Do not drop out if a forest plot does not materialise.</p>
+            </section>
+            <section class="phase1-section-card">
+              <h2 class="phase1-section-title">Why systematic reviews matter</h2>
+              <div class="phase1-text-block">
+                <p>A well-conducted systematic review sits at the top of the evidence hierarchy. It tells clinicians, policymakers, and researchers what the totality of published evidence says about a question — not just one study, but all of them. That is why they get published and why they influence clinical guidelines.</p>
+              </div>
+            </section>
+            <section class="phase1-section-card">
+              <h2 class="phase1-section-title">The infrastructure that makes systematic reviews trustworthy</h2>
+              <div class="phase1-text-block">
+                <p><strong>PROSPERO</strong></p>
+                <p>PROSPERO is the international register for systematic reviews. You register your review before you start searching — this creates a public, time-stamped record of your question, methods, and analysis plan. It prevents outcome-reporting bias (changing your question after you see the results) and stops two teams accidentally doing the same review.</p>
+                <p><strong>Note:</strong> PROSPERO only accepts systematic reviews. It does not accept scoping reviews or pure literature reviews.</p>
+                <p><strong>PRISMA</strong></p>
+                <p>PRISMA (Preferred Reporting Items for Systematic reviews and Meta-Analyses) is the reporting standard for systematic reviews. The PRISMA 2020 checklist tells you exactly what to include in your manuscript — and journals expect you to follow it. You will also produce a PRISMA flow diagram showing how many records you found, screened, and included.</p>
+              </div>
+            </section>
+            <section class="phase1-section-card">
+              <h2 class="phase1-section-title">What you will look to produce on this programme</h2>
+              <ul class="phase1-bullets">
+                <li>A registered PROSPERO protocol — your pre-committed question and methods</li>
+                <li>A PRISMA 2020 flow diagram — your audit trail of records found and screened</li>
+                <li>A data extraction sheet — the data you pulled from each included study</li>
+                <li>A risk-of-bias assessment — a judgement of each study's methodological quality</li>
+                <li>A synthesis — either a meta-analysis (pooled statistics) or a structured narrative synthesis</li>
+                <li>A complete manuscript draft — structured to PRISMA 2020, ready for supervisor review and journal submission</li>
+              </ul>
+            </section>
+          </div>
+        `,
+        'phase1-3': `
+          <div class="phase1-page phase1-page--workflow">
+            <section class="phase1-section-card">
+              <p class="eyebrow">Page 3 of 9 — Your Project Workflow: Phase by Phase</p>
+              <h2 class="phase1-section-title">Your Project Workflow: Phase by Phase</h2>
+              <p class="muted"><em>Your map from Week 1 to submission. For the detailed how-to at each step, follow the guides in each phase.</em></p>
+            </section>
+
+            <section class="phase1-workflow-intro">
+              <h3>HOW TO READ THIS PAGE</h3>
+              <p>Each phase has a goal, a list of tasks, and a deliverable that your supervisor signs off at the Gate. Work through tasks in order. If something is unclear, the how-to guide for that step is in the sidebar.</p>
+            </section>
+
+            <section class="phase1-section-card">
+              <h3 class="phase1-phase-heading">Phase 1 — Foundations (Weeks 1–2)</h3>
+              <p class="phase1-goal">Goal: confirm your review question is original and feasible, and get supervisor approval to proceed.</p>
+              <ul class="phase1-phase-list">
+                <li>Get set up: Zotero, Rayyan, database access</li>
+                <li>Understand what a systematic review is and what this programme produces</li>
+                <li>Break your research idea into a PICO/PECO question (population, intervention/exposure, comparator, outcome)</li>
+                <li>Do a scoping search on PROSPERO and PubMed to check your question is not already answered</li>
+                <li>Complete the Phase 1 Knowledge Check</li>
+                <li>Submit your topic via the Gate 1 form — supervisor approves before you proceed</li>
+              </ul>
+              <div class="phase1-callout phase1-callout--green">
+                <h4>Gate 1 Deliverable</h4>
+                <p>Topic Proposal &amp; Feasibility Form — supervisor-approved.</p>
+              </div>
+            </section>
+
+            <section class="phase1-section-card">
+              <h3 class="phase1-phase-heading">Phase 2 — Question &amp; Protocol (Weeks 3–5)</h3>
+              <p class="phase1-goal">Goal: lock in your precise question, write a protocol, and register it on PROSPERO.</p>
+              <ul class="phase1-phase-list">
+                <li>Refine your PICO/PECO question with worked examples</li>
+                <li>Write your eligibility criteria (what studies you will and will not include)</li>
+                <li>Build a search strategy with a librarian — MeSH terms, Boolean logic, database translation</li>
+                <li>Write your full protocol using the PRISMA-P template</li>
+                <li>Register your protocol on PROSPERO</li>
+                <li>Complete the Phase 2 Knowledge Check</li>
+              </ul>
+              <div class="phase1-callout phase1-callout--green">
+                <h4>Gate 2 Deliverable</h4>
+                <p>Protocol draft — supervisor-approved.</p>
+              </div>
+              <div class="phase1-callout phase1-callout--green" style="margin-top:12px;">
+                <h4>Gate 3 Deliverable</h4>
+                <p>PROSPERO registration number — submitted.</p>
+              </div>
+            </section>
+
+            <section class="phase1-section-card">
+              <h3 class="phase1-phase-heading">Phase 3 — Screening &amp; Synthesis (Weeks 6–10)</h3>
+              <p class="phase1-goal">Goal: run your searches, screen all records, extract data, assess risk of bias, and produce your synthesis.</p>
+              <ul class="phase1-phase-list">
+                <li>Run searches across PubMed, Embase/Ovid, and Cochrane CENTRAL — export to Zotero</li>
+                <li>Deduplicate your results</li>
+                <li>Screen titles and abstracts in Rayyan with your co-screener (blind, independently)</li>
+                <li>Screen full texts and log exclusion reasons</li>
+                <li>Complete the PRISMA 2020 flow diagram</li>
+                <li>Extract data from included studies using the extraction template</li>
+                <li>Assess risk of bias (RoB 2 for RCTs, ROBINS-I for non-randomised studies)</li>
+                <li>Decide on meta-analysis or narrative synthesis — both are valid</li>
+                <li>Conduct your synthesis</li>
+                <li>Apply GRADE certainty ratings</li>
+                <li>Complete the Phase 3 Knowledge Check</li>
+              </ul>
+              <div class="phase1-callout phase1-callout--green">
+                <h4>Gate 4 Deliverable</h4>
+                <p>Analysis outputs (PRISMA diagram, extraction sheet, RoB table, synthesis) — supervisor-approved.</p>
+              </div>
+            </section>
+
+            <section class="phase1-section-card">
+              <h3 class="phase1-phase-heading">Phase 4 — Writing &amp; Submission (Weeks 11–16)</h3>
+              <p class="phase1-goal">Goal: write the manuscript, get supervisor sign-off, select a journal, and submit.</p>
+              <ul class="phase1-phase-list">
+                <li>Write each section of your manuscript using the template and PRISMA 2020 checklist</li>
+                <li>Manage citations with Zotero</li>
+                <li>Choose a journal and verify it is not predatory (Think-Check-Submit, DOAJ)</li>
+                <li>Get supervisor manuscript approval</li>
+                <li>Complete the Pre-Submission QA Checklist</li>
+                <li>Submit — and update your PROSPERO record to mark the review as completed</li>
+                <li>Respond to peer review if invited</li>
+              </ul>
+              <div class="phase1-callout phase1-callout--green">
+                <h4>Gate 5 Deliverable</h4>
+                <p>Manuscript draft — supervisor-approved.</p>
+              </div>
+              <div class="phase1-callout phase1-callout--green" style="margin-top:12px;">
+                <h4>Gate 6 Deliverable</h4>
+                <p>Submission readiness confirmed — programme complete.</p>
+              </div>
+            </section>
+
+            <section class="phase1-callout phase1-callout--orange">
+              <h4>Timeline Note</h4>
+              <p>Submission and acceptance may continue after Week 16. The guaranteed programme deliverable is a complete, supervisor-approved manuscript draft. What happens after submission is outside the programme window but the IHSAAN team will support you through it.</p>
+            </section>
+          </div>
+        `,
+        'phase1-4': `
+          <div class="phase1-page phase1-software-section">
+            <section class="phase1-section-card">
+              <p class="eyebrow">Page 4 of 9 — Software &amp; Access Setup</p>
+              <h2 class="phase1-section-title">Software &amp; Access Setup</h2>
+              <p class="phase1-software-subtitle"><em>Do this once in Week 1. Every how-to guide in the programme assumes you have completed these steps.</em></p>
+            </section>
+
+            <section class="phase1-workflow-intro">
+              <h3>BEFORE YOU START</h3>
+              <p>This page takes about 30 minutes. Work through it top to bottom. If you get stuck on database access, check with your university library or contact the IHSAAN team before your first supervisor check-in.</p>
+            </section>
+
+            <div class="phase1-software-grid">
+              <section class="phase1-software-card">
+                <h3>Step 1 — Zotero (reference manager)</h3>
+                <p>Zotero is the free reference manager you will use to collect, organise, and de-duplicate your search results — and to generate your bibliography when writing.</p>
+                <ol>
+                  <li>Go to zotero.org and create a free account.</li>
+                  <li>Download and install the Zotero desktop app.</li>
+                  <li>Install the Zotero Connector browser extension (this lets you save references from PubMed and other databases with one click).</li>
+                  <li>Open the desktop app and sign in. You should see your library synced.</li>
+                </ol>
+              </section>
+
+              <section class="phase1-software-card">
+                <h3>Step 2 — Rayyan (screening tool)</h3>
+                <p>Rayyan is the free screening platform you and your co-screener will use to screen titles and abstracts independently, then reconcile disagreements.</p>
+                <ol start="5">
+                  <li>Go to rayyan.ai and create a free account.</li>
+                  <li>You do not need to create a project yet — wait until Phase 3 when you have your search results.</li>
+                </ol>
+              </section>
+
+              <section class="phase1-software-card">
+                <h3>Step 3 — Database access</h3>
+                <p>You will search several databases. Here is how to access each one.</p>
+                <p><strong>PubMed — free for everyone</strong></p>
+                <ol start="7">
+                  <li>Go to pubmed.ncbi.nlm.nih.gov — no login required.</li>
+                  <li>Create a free NCBI account so you can save searches and set up email alerts. Click "Log in" in the top right.</li>
+                </ol>
+                <p><strong>Cochrane CENTRAL and PROSPERO — free for everyone</strong></p>
+                <ol start="9">
+                  <li>Cochrane Library: cochranelibrary.com — no login required for searching.</li>
+                  <li>PROSPERO: crd.york.ac.uk/prospero — no login required for searching. You will need to create a free account when you register your own review in Phase 2.</li>
+                </ol>
+                <p><strong>Embase / Ovid — requires institutional access</strong></p>
+                <p>Embase is accessed via Ovid or Athens, and requires a university login. Most UK medical students have access through their university.</p>
+                <ol start="11">
+                  <li>Search for your university name + "OpenAthens" or "Shibboleth" login.</li>
+                  <li>Log in at your institution's library page — not directly at ovid.com.</li>
+                  <li>Once logged in, navigate to Ovid &gt; Databases &gt; Embase.</li>
+                </ol>
+                <p>If you cannot access Embase/Ovid through your institution, contact your university library — it is usually available through NHS OpenAthens if you have an NHS placement login.</p>
+              </section>
+
+              <section class="phase1-software-card">
+                <h3>Step 4 — Optional but useful</h3>
+                <ol>
+                  <li>GRADEpro (gradepro.org) — for certainty of evidence assessments in Phase 3. Free account.</li>
+                  <li>RevMan (Cochrane RevMan) — for meta-analysis in Phase 3 if using the Cochrane tool. Free download from training.cochrane.org.</li>
+                  <li>R + the meta package — an alternative to RevMan for more flexible meta-analysis. Free, but requires basic R familiarity.</li>
+                </ol>
+              </section>
+            </div>
+
+            <section class="phase1-callout phase1-callout--green">
+              <h4>All set?</h4>
+              <p>Once you have Zotero installed, a Rayyan account, and database access confirmed, you are ready for the rest of Phase 1. If database access is taking time to sort out, do not let it block you — continue with the other Phase 1 items and resolve it before Phase 3 begins.</p>
+            </section>
+          </div>
+        `,
+        'phase1-5': `
+          <div class="phase1-page phase1-reading-page">
+            <section class="phase1-reading-intro">
+              <p class="eyebrow">Page 5 of 9 — Curated Reading List</p>
+              <h2>Curated Reading List</h2>
+              <p><em>Everything you need to understand the methodology — curated from the best free sources, so you are not lost online.</em></p>
+            </section>
+
+            <section class="phase1-section-card">
+              <h3 class="phase1-reading-section-title">The essential free resources</h3>
+              <p class="phase1-software-subtitle">These are the authoritative sources for systematic review methodology. Bookmark them. You will return to them throughout the programme.</p>
+              <div class="phase1-reading-grid">
+                <article class="phase1-reading-card">
+                  <h3>Cochrane Handbook for Systematic Reviews of Interventions</h3>
+                  <p>The definitive reference for how to conduct a systematic review. You do not need to read it cover to cover — use it as a reference when you have a specific question about methodology. Chapter 6 (searching) and Chapter 7 (screening) are especially useful in Phase 2–3.</p>
+                  <a class="phase1-reading-link" href="https://training.cochrane.org/handbook" target="_blank" rel="noopener">Cochrane Handbook (free, online) →</a>
+                </article>
+
+                <article class="phase1-reading-card">
+                  <h3>Cochrane Interactive Learning</h3>
+                  <p>Free online modules that teach systematic review methods step by step, with exercises. These are high quality and cover the same ground as this programme. Use them to go deeper on any topic — especially risk of bias, meta-analysis, and GRADE.</p>
+                  <a class="phase1-reading-link" href="https://training.cochrane.org/interactivelearning" target="_blank" rel="noopener">Cochrane Interactive Learning →</a>
+                </article>
+
+                <article class="phase1-reading-card">
+                  <h3>PRISMA 2020</h3>
+                  <p>The reporting standard you must follow. The website has the checklist, the flow diagram template, and explanation papers for each item. Bookmark this — you will use it in Phase 2 (protocol) and Phase 4 (manuscript).</p>
+                  <a class="phase1-reading-link" href="http://www.prismastatement.org" target="_blank" rel="noopener">PRISMA 2020 Statement and Checklist →</a>
+                </article>
+
+                <article class="phase1-reading-card">
+                  <h3>PROSPERO</h3>
+                  <p>The international register for systematic reviews. You will register your review here in Phase 2. Use the search function now to check whether your question is already registered.</p>
+                  <a class="phase1-reading-link" href="https://www.crd.york.ac.uk/prospero" target="_blank" rel="noopener">PROSPERO Register →</a>
+                </article>
+
+                <article class="phase1-reading-card" style="grid-column:1 / -1;">
+                  <h3>Your university library systematic review guide</h3>
+                  <p>Almost every UK university library has its own SR guide — with institution-specific database login instructions, librarian contact details, and local resources. Find yours by searching: [your university name] + "systematic review guide" + "library".</p>
+                </article>
+              </div>
+            </section>
+
+            <section class="phase1-section-card">
+              <h3 class="phase1-reading-section-title">Stay current: how to find research ideas</h3>
+              <p class="phase1-software-subtitle">The best systematic review ideas come from gaps you notice in the current literature — and the best way to notice gaps is to stay up to date with what is being published. Here is the habit we recommend you build from Week 1.</p>
+
+              <div class="phase1-reading-timeline">
+                <div class="phase1-reading-tip">
+                  <h4>FIND YOUR TOP 4 JOURNALS</h4>
+                  <p>Identify the four most important journals in your specialty or sub-specialty. These are the journals that publish the studies you would want to include in a review, and where you would want to publish your own work. If you are not sure which journals matter in your field, ask your supervisor — they will know instantly.</p>
+                </div>
+
+                <div class="phase1-reading-list">
+                  <div class="phase1-reading-tip">
+                    <h4>Step 1 — Identify your top 4 journals</h4>
+                    <p>Think about your specialty. If you are interested in cardiology, that might be the New England Journal of Medicine, JAMA Cardiology, the European Heart Journal, and Heart. If you are in surgery, it might be the British Journal of Surgery, JAMA Surgery, Annals of Surgery, and the Lancet.</p>
+                    <p>A quick way to find the leading journals in any field: search PubMed for a topic you care about, filter by systematic review, and look at where the best recent reviews were published. Those are your target journals.</p>
+                  </div>
+
+                  <div class="phase1-reading-tip">
+                    <h4>Step 2 — Subscribe to their table of contents alerts</h4>
+                    <p>Every major journal sends a free weekly or monthly email with its latest contents — titles, abstracts, links. This takes two minutes to set up and means the literature comes to you instead of you hunting for it.</p>
+                    <ol class="phase1-bullets" style="margin-top:10px;">
+                      <li>Go to each journal's website.</li>
+                      <li>Find "Alerts", "Email notifications", or "Table of Contents" — usually under "For Authors" or in the footer.</li>
+                      <li>Enter your email and subscribe.</li>
+                    </ol>
+                    <p>You will get an email each time a new issue is published. Scan the titles. Anything that catches your eye, save it to Zotero.</p>
+                  </div>
+
+                  <div class="phase1-reading-tip" style="grid-column:1 / -1;">
+                    <h4>Step 3 — Follow them on X (Twitter)</h4>
+                    <p>Most top medical journals are active on X and post new research daily. Following them takes thirty seconds and means your timeline becomes a live feed of what is being published.</p>
+                    <p>Search for your journals on X and follow their official accounts. Examples: @NEJM, @JAMAInternalMed, @TheLancet, @EuropeanHeartJ. Most publish daily highlights, open-access papers, and links to new systematic reviews as soon as they go live.</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="phase1-reading-why">
+              <h4>WHY THIS MATTERS</h4>
+              <p>Staying current is how you spot research gaps — the question that nobody has quite answered yet, or the field where a lot of new primary studies have appeared since the last review. This is where good review ideas come from. Make it a habit from day one.</p>
+            </section>
+          </div>
+        `,
+        'phase1-6': `
+          <div class="phase1-page">
+            <section class="phase1-section-card"><div class="pdf-viewer" style="height:420px">Upload/Embed H1 Scoping Search PDF here</div><div class="phase1-page-actions" style="margin-top:14px"><a class="btn" href="#">Download PDF</a><button class="btn primary" data-toggle-complete="phase1-6">Mark as Complete</button></div></section>
+          </div>
+        `,
+        'phase1-7': `
+          <div class="phase1-page">
+            <section class="phase1-section-card">
+              <h2>Worked Exemplar: A Systematic Review, Annotated</h2>
+              <p>Read one well-conducted published systematic review from start to finish. Annotations throughout point out what makes each section good — and what to replicate in your own work.</p>
+              <div class="phase1-callout is-amber"><h3>ANNOTATED PDF COMING SOON</h3><p>The annotated version of this exemplar review will be uploaded here shortly.</p></div>
+              <div class="phase1-grid">
+                <div class="phase1-step-card"><h3>Pay attention to</h3><ul><li>PICO in the introduction</li><li>Eligibility criteria wording</li><li>Search strategy reporting</li></ul></div>
+                <div class="phase1-step-card"><h3>Also note</h3><ul><li>PRISMA flow diagram accounting</li><li>Results without over-interpretation</li><li>Discussion of limitations</li></ul></div>
+              </div>
+              <div class="pdf-viewer" style="height:420px;margin-top:14px">Annotated PDF viewer placeholder</div>
+              <div class="phase1-page-actions" style="margin-top:14px"><a class="btn" href="#">Download PDF</a><button class="btn primary" data-toggle-complete="phase1-7">Mark as Complete</button></div>
+            </section>
+          </div>
+        `,
+        'phase1-8': `
+          <div class="phase1-page phase1-appraisal-page">
+            <section class="phase1-appraisal-intro">
+              <p class="eyebrow">Page 8 of 9 — Critical Appraisal Mini-Guide</p>
+              <h2>Critical Appraisal Mini-Guide</h2>
+              <p><em>How to read a medical paper — and how to spot when something is not right.</em></p>
+              <p>Critical appraisal is the skill of reading a study carefully and asking: is this research valid? Are the conclusions justified by the data? Should I trust this result?</p>
+              <p>You will need this skill throughout the programme — when assessing studies for inclusion in your review, and when conducting formal risk-of-bias assessment in Phase 3. This guide gives you the foundations.</p>
+            </section>
+
+            <section class="phase1-section-card">
+              <h3 class="phase1-appraisal-section-title">Step 1 — Read the abstract first, then the full paper</h3>
+              <p class="phase1-appraisal-text">Read the abstract to understand what the study claims. Then read the full paper to decide whether those claims are justified. The abstract is written to sell the paper; the Methods section is where the truth lives.</p>
+            </section>
+
+            <section class="phase1-section-card">
+              <h3 class="phase1-appraisal-section-title">Step 2 — Identify the study design</h3>
+              <p class="phase1-appraisal-text" style="margin-bottom:12px;">The study design determines what you can and cannot conclude. The main designs you will encounter in systematic reviews:</p>
+              <table class="phase1-table phase1-appraisal-table">
+                <thead>
+                  <tr><th>Study design</th><th>What it tells you</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Randomised controlled trial (RCT)</td><td>The strongest evidence for whether an intervention works. Participants are randomly assigned to groups, controlling for confounders.</td></tr>
+                  <tr><td>Cohort study</td><td>Follows a group of people over time. Good for understanding risk factors and prognosis. Cannot prove causation as reliably as an RCT.</td></tr>
+                  <tr><td>Case-control study</td><td>Compares people with a condition to those without, looking backwards for differences in exposure. Useful for rare outcomes. Prone to recall bias.</td></tr>
+                  <tr><td>Cross-sectional study</td><td>A snapshot in time. Useful for prevalence data. Cannot establish temporal relationships.</td></tr>
+                  <tr><td>Case report / case series</td><td>Describes one or a few patients. Useful for hypothesis generation. Very low on the evidence hierarchy.</td></tr>
+                </tbody>
+              </table>
+            </section>
+
+            <div class="phase1-appraisal-grid">
+              <section class="phase1-appraisal-card">
+                <h3>Step 3 — Ask the PICO questions</h3>
+                <ul>
+                  <li><strong>Population:</strong> who were the participants, and are they similar to the patients the study claims to apply to?</li>
+                  <li><strong>Intervention (or Exposure):</strong> what exactly was done to the participants, at what dose, for how long?</li>
+                  <li><strong>Comparator:</strong> what was it compared to? (placebo, usual care, a different intervention?)</li>
+                  <li><strong>Outcome:</strong> what was measured, and was it a meaningful outcome or a surrogate?</li>
+                </ul>
+              </section>
+
+              <section class="phase1-appraisal-card">
+                <h3>Step 4 — Assess the risk of bias</h3>
+                <p>Risk of bias refers to the ways a study's design or conduct may have introduced systematic error — making the results less trustworthy. In Phase 3, you will use formal tools (RoB 2 for RCTs, ROBINS-I for non-randomised studies) to do this systematically. For now, learn to spot the major issues:</p>
+                <ul>
+                  <li><strong>Selection bias:</strong> were participants randomised? If not, are the groups comparable at baseline?</li>
+                  <li><strong>Performance bias:</strong> did participants or researchers know which treatment group they were in? (Blinding)</li>
+                  <li><strong>Detection bias:</strong> was the outcome measured in the same way in both groups?</li>
+                  <li><strong>Attrition bias:</strong> how many participants dropped out, and are they accounted for?</li>
+                  <li><strong>Reporting bias:</strong> were all outcomes reported, or only the significant ones?</li>
+                </ul>
+              </section>
+            </div>
+
+            <section class="phase1-appraisal-card">
+              <h3>Step 5 — Use a CASP checklist</h3>
+              <p>The Critical Appraisal Skills Programme (CASP) provides free, structured checklists for each study design — RCTs, cohort studies, case-control studies, systematic reviews, and more. They walk you through the key appraisal questions in a logical order.</p>
+              <p><a href="https://casp-uk.net/casp-tools-checklists/" target="_blank" rel="noopener">CASP checklists (free download)</a></p>
+            </section>
+
+            <section class="phase1-appraisal-callout">
+              <h4>Quick rule of thumb</h4>
+              <p>A study can have an interesting question and still have poor methodology. Always read the Methods section critically. If you cannot tell from the Methods section how something was done, that is itself a problem.</p>
+            </section>
+          </div>
+        `,
+        'phase1-9': `
+          <div class="phase1-page">
+            <section class="phase1-section-card">
+              <h2>Phase 1 Knowledge Check</h2>
+              <p>10 questions. You need 70% to unlock Gate 1. You can retake as many times as you like.</p>
+              ${phase1QuizMarkup}
+              <div class="quiz-feedback" aria-live="polite" style="margin-top:14px"></div>
+            </section>
+          </div>
+        `,
+        'phase1-10': `
+          <div class="phase1-page">
+            <section class="phase1-section-card" style="min-height:280px"></section>
+          </div>
+        `
+      },
+      resources: {
+        title: 'Resources',
+        kicker: 'Always available',
+        subtitle: 'Core portal pages and reusable programme documents.'
+      },
+      supervisor: {
+        title: 'Supervisor Check-ins',
+        kicker: 'Programme cadence',
+        subtitle: 'The weekly and gate-based check-in map from the content specification.'
+      },
+      support: {
+        title: 'Support',
+        kicker: 'Help and escalation',
+        subtitle: 'Contact details, FAQ, and pause/exit guidance.'
+      },
+      phases: {
+        phase1: {
+          title: 'PHASE 1 - FOUNDATIONS',
+          subtitle: 'Weeks 1-2  |  Deliverable: Approved feasible topic - Gate 1',
+          overview: 'Welcome to the IHSAAN Medics Research Mentorship Programme. You have been accepted onto the SRMA Pilot Programme. Over the next 12–16 weeks, you and your team will conduct a systematic review of published medical literature — and leave with a registered PROSPERO protocol and a complete manuscript draft ready for journal submission. This portal is your home for the programme: every resource, guide, template and deadline is here. Work through the items in order, mark items complete as you go, and submit your Topic Proposal & Feasibility Form at Gate 1 for supervisor approval.',
+          items: [
+            { id:'phase1-1', type:'GUIDE', title:'Welcome to the Programme', time:'5 min', status:'Ready',
+              description: `
+                <h2>Welcome to the IHSAAN Medics Research Mentorship Programme</h2>
+                <p>You have been accepted onto the SRMA Pilot Programme. Over the next 12–16 weeks, you and your team will conduct a systematic review of published medical literature — and leave with a registered PROSPERO protocol and a complete manuscript draft ready for journal submission.</p>
+
+                <p>This portal is your home for the entire programme. Every resource, guide, template, and deadline lives here. Work through each phase in order, mark items complete as you go, and your supervisor will be notified automatically when you reach each Gate.</p>
+
+                <h3>What this portal contains</h3>
+                <ul>
+                  <li>Guides and how-tos for every step of the review process</li>
+                  <li>Templates you download, fill in, and upload</li>
+                  <li>Short videos and screen recordings for the practical, software-based steps</li>
+                  <li>Knowledge checks at the end of each phase</li>
+                  <li>Gates — the points where your supervisor signs off before you move on</li>
+                </ul>
+
+                <h3>What to do right now</h3>
+                <ol>
+                  <li>Read the Welcome page you are on now.</li>
+                  <li>Work through the Phase 1 items in the sidebar, in order.</li>
+                  <li>Complete the Phase 1 Knowledge Check.</li>
+                  <li>Submit your topic at Gate 1.</li>
+                </ol>
+
+                <h3>A note on authorship</h3>
+                <p>Joining the programme does not guarantee authorship. Authorship is earned through real, documented contribution to the work. The Research Integrity &amp; Authorship Policy (available in the Resources section) sets out the rules clearly. Read it early.</p>
+
+                <h3>Need help?</h3>
+                <p>Contact the IHSAAN team via the Support page. Your supervisor is there for methodological and clinical guidance — use the check-in schedule to make the most of their time.</p>
+              `,
+              cta:'Open guide', preview:'Welcome and navigation overview.' },
+            { id:'phase1-2', type:'GUIDE', title:'What Is an SRMA? Introductory Guide', time:'20 min', status:'Ready', description:'Plain-English introduction to systematic reviews and meta-analysis: narrative vs scoping vs systematic reviews, when meta-analysis is appropriate, and the role of PRISMA and PROSPERO.', cta:'Open guide', preview:'Foundational concepts and terminology.' },
+            { id:'phase1-3', type:'GUIDE', title:'Your Project Workflow — Phase by Phase', time:'10 min', status:'Ready', description:'A week-by-week map from Week 1 to submission: phase goals, key tasks, deliverables and gate expectations. Use this to plan your team workload and supervisor check-ins.', cta:'Open guide', preview:'Phase map and key milestones.' },
+            { id:'phase1-4', type:'GUIDE', title:'Software & Access Setup', time:'30 min', status:'Ready', description:'One-time setup: Zotero, Rayyan, and database access (PubMed, Cochrane CENTRAL, PROSPERO, Embase via institutional access). Step-by-step setup instructions and troubleshooting notes.', cta:'Open setup guide', preview:'Zotero, Rayyan, database access checklist.' },
+            { id:'phase1-5', type:'EXTERNAL', title:'Curated Reading List', time:'Browse', status:'Ready', description:'Essential free resources: Cochrane Handbook, PRISMA 2020, Cochrane Interactive Learning, PROSPERO and your university library guides.', cta:'Browse links', preview:'Curated methodology reading list.' },
+            { id:'phase1-6', type:'PDF', title:'H1 · Scoping Search (Upload)', time:'-', status:'Ready', description:'H1 scoping search PDF (upload). This page is a PDF viewer with download and Mark as Complete button.', cta:'View PDF', preview:'Scoping search PDF upload.' },
+            { id:'phase1-7', type:'PDF', title:'Worked Exemplar Review — Annotated', time:'45 min', status:'To create', description:'<p>Read one well-conducted published systematic review from start to finish. Annotations will show what makes each section good and what to replicate.</p><p><strong>As you read, pay attention to:</strong></p><ul><li>How the PICO question is stated in the introduction</li><li>How the eligibility criteria are written</li><li>How the search strategy is reported in the Methods</li><li>How the PRISMA flow diagram accounts for records</li><li>How the Results report findings without over-interpretation</li><li>How the Discussion handles limitations</li></ul><p class="callout-highlight" style="margin-top:8px">ANNOTATED PDF COMING SOON</p>', cta:'Open guide', preview:'Annotated exemplar review (placeholder).' },
+            { id:'phase1-8', type:'GUIDE', title:'Critical Appraisal Mini-Guide', time:'20 min', status:'Ready', description:`
+              <div class="phase1-page phase1-appraisal-page">
+                <section class="phase1-appraisal-intro">
+                  <p class="eyebrow">Page 8 of 9 — Critical Appraisal Mini-Guide</p>
+                  <h2>Critical Appraisal Mini-Guide</h2>
+                  <p><em>How to read a medical paper — and how to spot when something is not right.</em></p>
+                  <p>Critical appraisal is the skill of reading a study carefully and asking: is this research valid? Are the conclusions justified by the data? Should I trust this result?</p>
+                  <p>You will need this skill throughout the programme — when assessing studies for inclusion in your review, and when conducting formal risk-of-bias assessment in Phase 3. This guide gives you the foundations.</p>
+                </section>
+
+                <section class="phase1-section-card">
+                  <h3 class="phase1-appraisal-section-title">Step 1 — Read the abstract first, then the full paper</h3>
+                  <p class="phase1-appraisal-text">Read the abstract to understand what the study claims. Then read the full paper to decide whether those claims are justified. The abstract is written to sell the paper; the Methods section is where the truth lives.</p>
+                </section>
+
+                <section class="phase1-section-card">
+                  <h3 class="phase1-appraisal-section-title">Step 2 — Identify the study design</h3>
+                  <p class="phase1-appraisal-text" style="margin-bottom:12px;">The study design determines what you can and cannot conclude. The main designs you will encounter in systematic reviews:</p>
+                  <table class="phase1-table phase1-appraisal-table">
+                    <thead>
+                      <tr><th>Study design</th><th>What it tells you</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>Randomised controlled trial (RCT)</td><td>The strongest evidence for whether an intervention works. Participants are randomly assigned to groups, controlling for confounders.</td></tr>
+                      <tr><td>Cohort study</td><td>Follows a group of people over time. Good for understanding risk factors and prognosis. Cannot prove causation as reliably as an RCT.</td></tr>
+                      <tr><td>Case-control study</td><td>Compares people with a condition to those without, looking backwards for differences in exposure. Useful for rare outcomes. Prone to recall bias.</td></tr>
+                      <tr><td>Cross-sectional study</td><td>A snapshot in time. Useful for prevalence data. Cannot establish temporal relationships.</td></tr>
+                      <tr><td>Case report / case series</td><td>Describes one or a few patients. Useful for hypothesis generation. Very low on the evidence hierarchy.</td></tr>
+                    </tbody>
+                  </table>
+                </section>
+
+                <div class="phase1-appraisal-grid">
+                  <section class="phase1-appraisal-card">
+                    <h3>Step 3 — Ask the PICO questions</h3>
+                    <ul>
+                      <li><strong>Population:</strong> who were the participants, and are they similar to the patients the study claims to apply to?</li>
+                      <li><strong>Intervention (or Exposure):</strong> what exactly was done to the participants, at what dose, for how long?</li>
+                      <li><strong>Comparator:</strong> what was it compared to? (placebo, usual care, a different intervention?)</li>
+                      <li><strong>Outcome:</strong> what was measured, and was it a meaningful outcome or a surrogate?</li>
+                    </ul>
+                  </section>
+
+                  <section class="phase1-appraisal-card">
+                    <h3>Step 4 — Assess the risk of bias</h3>
+                    <p>Risk of bias refers to the ways a study's design or conduct may have introduced systematic error — making the results less trustworthy. In Phase 3, you will use formal tools (RoB 2 for RCTs, ROBINS-I for non-randomised studies) to do this systematically. For now, learn to spot the major issues:</p>
+                    <ul>
+                      <li><strong>Selection bias:</strong> were participants randomised? If not, are the groups comparable at baseline?</li>
+                      <li><strong>Performance bias:</strong> did participants or researchers know which treatment group they were in? (Blinding)</li>
+                      <li><strong>Detection bias:</strong> was the outcome measured in the same way in both groups?</li>
+                      <li><strong>Attrition bias:</strong> how many participants dropped out, and are they accounted for?</li>
+                      <li><strong>Reporting bias:</strong> were all outcomes reported, or only the significant ones?</li>
+                    </ul>
+                  </section>
+                </div>
+
+                <section class="phase1-appraisal-card">
+                  <h3>Step 5 — Use a CASP checklist</h3>
+                  <p>The Critical Appraisal Skills Programme (CASP) provides free, structured checklists for each study design — RCTs, cohort studies, case-control studies, systematic reviews, and more. They walk you through the key appraisal questions in a logical order.</p>
+                  <p><a href="https://casp-uk.net/casp-tools-checklists/" target="_blank" rel="noopener">CASP checklists (free download)</a></p>
+                </section>
+
+                <section class="phase1-appraisal-callout">
+                  <h4>Quick rule of thumb</h4>
+                  <p>A study can have an interesting question and still have poor methodology. Always read the Methods section critically. If you cannot tell from the Methods section how something was done, that is itself a problem.</p>
+                </section>
+              </div>
+            `, cta:'Open guide', preview:'Critical appraisal foundations.' },
+            { id:'phase1-2', type:'GUIDE', title:'What Is an SRMA? Introductory Guide', time:'20 min', status:'Ready', description:'Plain-English introduction to systematic reviews and meta-analysis: narrative vs scoping vs systematic reviews, when meta-analysis is appropriate, and the role of PRISMA and PROSPERO.', cta:'Open guide', preview:'Foundational concepts and terminology.' },
+            { id:'phase1-3', type:'GUIDE', title:'Your Project Workflow — Phase by Phase', time:'10 min', status:'Ready', description:'A week-by-week map from Week 1 to submission: phase goals, key tasks, deliverables and gate expectations. Use this to plan your team workload and supervisor check-ins.', cta:'Open guide', preview:'Phase map and key milestones.' },
+            { id:'phase1-4', type:'GUIDE', title:'Software & Access Setup', time:'30 min', status:'Ready', description:'One-time setup: Zotero, Rayyan, and database access (PubMed, Cochrane CENTRAL, PROSPERO, Embase via institutional access). Step-by-step setup instructions and troubleshooting notes.', cta:'Open setup guide', preview:'Zotero, Rayyan, database access checklist.' },
+            { id:'phase1-5', type:'EXTERNAL', title:'Curated Reading List', time:'Browse', status:'Ready', description:'Essential free resources: Cochrane Handbook, PRISMA 2020, Cochrane Interactive Learning, PROSPERO and your university library guides.', cta:'Browse links', preview:'Curated methodology reading list.' },
+            { id:'phase1-6', type:'PDF', title:'H1 · Scoping Search (Upload)', time:'-', status:'Ready', description:'H1 scoping search PDF (upload). This page is a PDF viewer with download and Mark as Complete button.', cta:'View PDF', preview:'Scoping search PDF upload.' },
+            { id:'phase1-7', type:'PDF', title:'Worked Exemplar Review — Annotated', time:'45 min', status:'To create', description:'<p>Read one well-conducted published systematic review from start to finish. Annotations will show what makes each section good and what to replicate.</p><p><strong>As you read, pay attention to:</strong></p><ul><li>How the PICO question is stated in the introduction</li><li>How the eligibility criteria are written</li><li>How the search strategy is reported in the Methods</li><li>How the PRISMA flow diagram accounts for records</li><li>How the Results report findings without over-interpretation</li><li>How the Discussion handles limitations</li></ul><p class="callout-highlight" style="margin-top:8px">ANNOTATED PDF COMING SOON</p>', cta:'Open guide', preview:'Annotated exemplar review (placeholder).' },
+            { id:'phase1-8', type:'GUIDE', title:'Critical Appraisal Mini-Guide', time:'20 min', status:'Ready', description:'How to read a paper critically: study designs, PICO questions, spotting bias, and using CASP checklists.', cta:'Open guide', preview:'Critical appraisal foundations.' },
+            { id:'phase1-9', type:'QUIZ', title:'Phase 1 Knowledge Check', time:'15 min', status:'Ready', description:'10 multiple-choice questions. Pass mark 70% to unlock Gate 1. Show correct/incorrect feedback after submission.', cta:'Start quiz', preview:'10-question knowledge check.' },
+            { id:'phase1-gate', type:'GATE', title:'GATE 1 - Topic Proposal & Feasibility Form', time:'-', status:'Gate 1', description:'Student completes and submits the Topic Proposal & Feasibility Form. Supervisor reviews and signs off to unlock Phase 2.', cta:'Submit for approval', preview:'Gate unlocks after the Phase 1 knowledge check and all prior items are complete.' }
+          ]
+        },
+        phase2: {
+          title: 'PHASE 2 - QUESTION & PROTOCOL',
+          subtitle: 'Weeks 3-5  |  Deliverable: Registered PROSPERO protocol - Gates 2 & 3',
+          overview: 'You have a feasible topic. Now you will sharpen it into a precise PICO/PECO question, write your eligibility criteria, build a search strategy with a librarian, write your protocol to PRISMA-P standard, and register it on PROSPERO. Gates 2 and 3 are the protocol draft approval and PROSPERO registration confirmation.',
+          items: [
+            { id:'phase2-1', type:'GUIDE', title:'H2 - Framing Your Question with PICO/PECO', time:'25 min', status:'To create', description:'Worked examples for translating a vague idea into a precise PICO or PECO question.', cta:'Open guide', preview:'Question framing and common mistakes.' },
+            { id:'phase2-2', type:'GUIDE', title:'H3 - Writing Eligibility Criteria', time:'20 min', status:'To create', description:'How to write inclusion and exclusion criteria so two people apply them identically.', cta:'Open guide', preview:'Eligibility criteria and examples.' },
+            { id:'phase2-3', type:'GUIDE', title:'H4 - Building a Search Strategy', time:'30 min', status:'To create', description:'MeSH vs free-text, Boolean logic, truncation, phrase searching, and translating strategies across databases.', cta:'Open guide', preview:'Search strategy construction.' },
+            { id:'phase2-4', type:'GUIDE', title:'H5 - Working with a Librarian', time:'10 min', status:'To create', description:'When and how to contact the librarian, what to send them, and how to acknowledge them.', cta:'Open guide', preview:'How to get librarian support.' },
+            { id:'phase2-5', type:'GUIDE', title:'H6 - Writing Your Protocol (PRISMA-P)', time:'35 min', status:'To create', description:'PRISMA-P checklist walkthrough with example text and template links.', cta:'Open guide', preview:'Protocol writing and PRISMA-P.' },
+            { id:'phase2-6', type:'TEMPLATE', title:'Protocol Template (PRISMA-P) (ST16)', time:'-', status:'To create', description:'Blank PRISMA-P protocol template for students to complete and upload for Gate 2.', cta:'Download template', preview:'Blank protocol template.' },
+            { id:'phase2-7', type:'GUIDE', title:'H7 - Registering on PROSPERO', time:'20 min', status:'To create', description:'Step-by-step walkthrough of the PROSPERO registration form.', cta:'Open guide', preview:'Registration workflow and form tips.' },
+            { id:'phase2-8', type:'QUIZ', title:'Phase 2 Knowledge Check (ST14)', time:'15 min', status:'To create', description:'8-10 questions on PICO, eligibility criteria, Boolean operators, PRISMA-P, and PROSPERO.', cta:'Start quiz', preview:'Pass mark: 70% to unlock Gate 2.' },
+            { id:'phase2-gate2', type:'GATE', title:'GATE 2 - Protocol Draft Approval', time:'-', status:'Gate 2', description:'Student uploads the completed PRISMA-P protocol draft. Supervisor reviews and approves, or returns feedback.', cta:'Request approval', preview:'Gate unlocks when the protocol draft is approved.' },
+            { id:'phase2-gate3', type:'GATE', title:'GATE 3 - PROSPERO Registration Confirmed', time:'-', status:'Gate 3', description:'Student pastes the PROSPERO registration number. Gate 3 turns green automatically once a valid number is submitted.', cta:'Confirm registration', preview:'Gate unlocks when registration is confirmed.' }
+          ]
+        },
+        phase3: {
+          title: 'PHASE 3 - SCREENING & SYNTHESIS',
+          subtitle: 'Weeks 6-10  |  Deliverable: Completed analysis - Gate 4',
+          overview: 'This is the engine room. You will run your searches, import records into Zotero, screen titles and abstracts and full texts in Rayyan with your co-screener, extract data, assess risk of bias, and produce your synthesis. It is the longest phase - allow 5+ hours per week.',
+          items: [
+            { id:'phase3-1', type:'VIDEO', title:'H8 - Running Searches & Exporting to Zotero', time:'20 min', status:'To create', description:'Screen recordings for PubMed, Ovid/Embase, and Cochrane CENTRAL showing how to run searches and export results to Zotero.', cta:'Watch video', preview:'Search and export workflow.' },
+            { id:'phase3-2', type:'VIDEO', title:'H9 - Deduplicating Your Results', time:'10 min', status:'To create', description:'Short demo showing how to deduplicate the combined Zotero library before importing to Rayyan.', cta:'Watch video', preview:'Deduplication process.' },
+            { id:'phase3-3', type:'VIDEO', title:'H10 - Screening in Rayyan', time:'25 min', status:'To create', description:'Screen recording of Rayyan setup, blind dual screening, and conflict resolution.', cta:'Watch video', preview:'Rayyan setup and screening.' },
+            { id:'phase3-4', type:'GUIDE', title:'H11 - Full-Text Screening', time:'15 min', status:'To create', description:'How to screen full texts, log exclusion reasons, and handle inaccessible papers.', cta:'Open guide', preview:'Full-text screening steps.' },
+            { id:'phase3-5', type:'GUIDE', title:'H12 - Making the PRISMA 2020 Flow Diagram', time:'20 min', status:'To create', description:'Step-by-step guide using the free PRISMA 2020 flow diagram tool.', cta:'Open guide', preview:'PRISMA flow diagram creation.' },
+            { id:'phase3-6', type:'GUIDE', title:'H13 - Data Extraction Form', time:'25 min', status:'To create', description:'How to design, pilot, and fill a data extraction form with an annotated example.', cta:'Open guide', preview:'Extraction form design.' },
+            { id:'phase3-7', type:'TEMPLATE', title:'Data Extraction Template (ST16)', time:'-', status:'To create', description:'Blank extraction spreadsheet with standard study and outcome columns.', cta:'Download template', preview:'Extraction spreadsheet template.' },
+            { id:'phase3-8', type:'GUIDE', title:'H14 - Risk of Bias (RoB 2 & ROBINS-I)', time:'30 min', status:'Curate', description:'Modular guide for RoB 2 and ROBINS-I, using Cochrane Interactive Learning as the source.', cta:'Open curated guide', preview:'Bias assessment guidance.' },
+            { id:'phase3-9', type:'GUIDE', title:'H15 - Meta-analysis vs Narrative Synthesis', time:'15 min', status:'To create', description:'Decision guide showing when pooling is appropriate and when narrative synthesis is the right call.', cta:'Open guide', preview:'Choose between meta-analysis and narrative synthesis.' },
+            { id:'phase3-10', type:'GUIDE', title:'H16 - Running a Basic Meta-analysis', time:'40 min', status:'Curate', description:'Guide and screen recording using RevMan or R for a basic pooled analysis and forest plot interpretation.', cta:'Open curated guide', preview:'Basic meta-analysis workflow.' },
+            { id:'phase3-11', type:'GUIDE', title:'H17 - Structured Narrative Synthesis (SWiM)', time:'25 min', status:'To create', description:'How to conduct and report a structured narrative synthesis using the SWiM framework.', cta:'Open guide', preview:'Structured narrative synthesis.' },
+            { id:'phase3-12', type:'GUIDE', title:'H18 - GRADE & Summary of Findings Table', time:'30 min', status:'Curate', description:'How to apply GRADE certainty ratings and build a Summary of Findings table.', cta:'Open curated guide', preview:'GRADE and summary of findings.' },
+            { id:'phase3-13', type:'QUIZ', title:'Phase 3 Knowledge Check (ST14)', time:'15 min', status:'To create', description:'Questions on dual screening, PRISMA flow diagram boxes, RoB 2 domains, meta-analysis vs narrative, and GRADE.', cta:'Start quiz', preview:'Pass mark: 70% to unlock Gate 4.' },
+            { id:'phase3-gate4', type:'GATE', title:'GATE 4 - Analysis Approved', time:'-', status:'Gate 4', description:'Student uploads the completed PRISMA flow diagram, extraction sheet, risk-of-bias table, and synthesis output. Supervisor reviews and approves.', cta:'Submit analysis', preview:'Gate unlocks after the Phase 3 knowledge check and analysis items are complete.' }
+          ]
+        },
+        phase4: {
+          title: 'PHASE 4 - WRITING & SUBMISSION',
+          subtitle: 'Weeks 11-16  |  Deliverable: Submission-ready manuscript - Gates 5 & 6',
+          overview: 'You have your analysis. Now you write the manuscript, get supervisor sign-off, select a journal, and submit. The guaranteed deliverable is a complete, supervisor-approved manuscript draft. Submission and acceptance are aspirational outcomes that may continue beyond Week 16.',
+          items: [
+            { id:'phase4-1', type:'TEMPLATE', title:'Manuscript Template (ST7)', time:'-', status:'To create', description:'Pre-structured Word document with all sections: title, structured abstract, methods, results, discussion, references, tables, figures, checklist, and supplementary search strategy.', cta:'Download template', preview:'Manuscript template and section scaffold.' },
+            { id:'phase4-2', type:'GUIDE', title:'H19 - Writing Each Manuscript Section', time:'45 min', status:'To create', description:'Section-by-section writing guide aligned to PRISMA 2020 with example sentences.', cta:'Open guide', preview:'Writing support for each manuscript section.' },
+            { id:'phase4-3', type:'GUIDE', title:'H20 - Citation Management in Zotero', time:'20 min', status:'To create', description:'How to insert in-text citations and auto-generate a bibliography from Zotero in Word.', cta:'Open guide', preview:'Citation workflow with Zotero.' },
+            { id:'phase4-4', type:'GUIDE', title:'H21 - Choosing a Journal & Spotting Predators', time:'20 min', status:'To create', description:'How to choose a journal and verify legitimacy using Think-Check-Submit and DOAJ.', cta:'Open guide', preview:'Journal selection and predatory journal checks.' },
+            { id:'phase4-5', type:'EXTERNAL', title:'PRISMA 2020 Checklist', time:'-', status:'Ready', description:'Direct link to the official PRISMA 2020 checklist. Students must complete and upload this as part of submission.', cta:'Open checklist', preview:'Official reporting checklist.' },
+            { id:'phase4-6', type:'GUIDE', title:'H22 - Submitting Your Manuscript', time:'20 min', status:'To create', description:'How to prepare submission files, write a cover letter, submit via the journal portal, and update PROSPERO.', cta:'Open guide', preview:'Submission steps and document set.' },
+            { id:'phase4-7', type:'GUIDE', title:'H23 - Responding to Peer Review', time:'25 min', status:'To create', description:'How to write a structured point-by-point response letter and manage revisions.', cta:'Open guide', preview:'Reviewer response and revision strategy.' },
+            { id:'phase4-8', type:'QUIZ', title:'Phase 4 Knowledge Check (ST14)', time:'15 min', status:'To create', description:'Questions on PRISMA 2020 sections, cover letters, Think-Check-Submit, and point-by-point responses.', cta:'Start quiz', preview:'Pass mark: 70% to pass.' },
+            { id:'phase4-gate5', type:'GATE', title:'GATE 5 - Supervisor Manuscript Approval', time:'-', status:'Gate 5', description:'Student uploads the full manuscript draft. Supervisor gives structured feedback and approves the draft.', cta:'Request approval', preview:'Gate unlocks when the manuscript is approved.' },
+            { id:'phase4-gate6', type:'GATE', title:'GATE 6 - Submission Readiness - Programme Complete', time:'-', status:'Gate 6', description:'Student confirms QA completion, all authors approved the final version, and the PRISMA checklist is uploaded. Completion certificate or badge can be issued here.', cta:'Confirm completion', preview:'Final programme completion gate.' }
+          ]
+        }
+      },
+      resourcesPage: [
+        { title:'Team Roles Sheet (ST5)', type:'PDF', description:'Who does what in a review team.', cta:'Open resource' },
+        { title:'Authorship Explanation for Students (ST6)', type:'Rich text', description:'Blunt and fair explainer on how authorship is earned.', cta:'Open resource' },
+        { title:'Contribution Log template (ST8)', type:'Spreadsheet', description:'Weekly evidence base for authorship disputes.', cta:'Download template' },
+        { title:'Research Integrity & Authorship Policy (G2)', type:'Policy', description:'Canonical policy document for research integrity and authorship.', cta:'Open policy' },
+        { title:'Curated Reading List (ST13)', type:'Links', description:'Shared reading list for the programme and the resources page.', cta:'Browse links' }
+      ],
+      supervisorTimeline: [
+        { week:'Wk 1', text:'Onboarding call (30 min)', status:'Upcoming' },
+        { week:'Wk 2', text:'PICO / feasibility approval - Gate 1', status:'Upcoming' },
+        { week:'Wk 4', text:'Protocol and search strategy review - Gate 2', status:'Upcoming' },
+        { week:'Wk 6', text:'PROSPERO registration confirmed - Gate 3', status:'Upcoming' },
+        { week:'Wk 8', text:'Extraction and synthesis direction check', status:'Upcoming' },
+        { week:'Wk 10', text:'Analysis approval - Gate 4', status:'Upcoming' },
+        { week:'Wk 12', text:'Manuscript outline review', status:'Upcoming' },
+        { week:'Wk 14-16', text:'Final manuscript review - Gate 5', status:'Upcoming' }
+      ],
+      supportFaq: [
+        { question:'How do I get help if I am stuck?', answer:'Use the contact email below or request an extra check-in. If you are blocked on a gate, keep working through the items above it and bring the specific problem to the team.' },
+        { question:'What happens if I need to pause?', answer:'Use the pause/exit path explained in the student handbook. The portal should preserve your checklist progress, so you can resume later.' },
+        { question:'Can I skip ahead to later phases?', answer:'No. Gates are ordered and the sidebar only unlocks when the content above has been completed.' },
+        { question:'Where do I find the official programme documents?', answer:'Use the Resources page for the shared role sheet, authorship explanation, contribution log, and policy links.' }
+      ]
+    };
+
+    let currentUser = null;
+    let currentView = 'dashboard';
+    let currentPhaseKey = 'phase1';
+    let currentItemId = null;
+    let progressLookup = new Map();
+    let pendingLogin = false;
+    let phase1UnlockTimer = null;
+
+    const nonGateItem = item => item.type !== 'GATE';
+
+    function getPhaseData(phaseKey){
+      return portalData.phases[phaseKey] || null;
+    }
+
+    function getPhaseItems(phaseKey){
+      const phase = getPhaseData(phaseKey);
+      return phase ? phase.items : [];
+    }
+
+    function getPhaseStats(phaseKey){
+      const items = getPhaseItems(phaseKey).filter(nonGateItem);
+      const completed = items.filter(item => progressLookup.get(item.id)).length;
+      const total = items.length;
+      const percent = total ? Math.round((completed / total) * 100) : 0;
+      return { completed, total, percent };
+    }
+
+    function getSelectedPhaseItem(phaseKey){
+      const items = getPhaseItems(phaseKey);
+      if (!items.length) return null;
+      const byId = items.find(item => item.id === currentItemId);
+      if (byId) return byId;
+      return items.find(nonGateItem) || items[0];
+    }
+
+    function renderPhase1QuizAnswers(){
+      return `
+        <div class="phase1-section-card" style="margin-top:14px">
+          <h4 style="margin:0 0 10px;font-size:1.02rem;font-weight:900;color:var(--ink)">Answer key</h4>
+          <div class="phase1-grid" style="gap:10px">
+            ${portalData.phase1Quiz.map((q, index) => `
+              <div class="phase1-step-card" style="padding:14px">
+                <h3 style="margin-bottom:8px">${index + 1}. ${q.q}</h3>
+                <p style="margin:0;color:var(--muted)"><strong>Correct answer:</strong> ${q.options.find(opt => opt.charAt(0) === q.answer)}</p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderPhase1UnlockOverlay(){
+      return `
+        <div class="phase1-unlock-overlay" role="status" aria-live="polite" aria-label="Unlocking Gate 1">
+          <div class="phase1-unlock-card">
+            <div class="phase1-unlock-lock">🔓</div>
+            <h3>Gate 1 unlocked</h3>
+            <p>Your score is above 70%. Gate 1 is now available.</p>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderPhase1GateBlank(pageId){
+      return `
+        <section class="phase1-page">
+          <div class="phase1-section-card" style="min-height:280px"></div>
+        </section>
+      `;
+    }
+
+    function triggerPhase1UnlockFlow(){
+      try { sessionStorage.setItem(PHASE1_UNLOCK_FLASH_KEY, '1'); } catch (error) {}
+      if (phase1UnlockTimer) clearTimeout(phase1UnlockTimer);
+      renderPortal();
+      phase1UnlockTimer = setTimeout(() => {
+        try { sessionStorage.removeItem(PHASE1_UNLOCK_FLASH_KEY); } catch (error) {}
+        window.showTemplate('phase1', 'phase1-10');
+      }, 1700);
+    }
+
+    function isGateUnlocked(phaseKey, itemId){
+      const items = getPhaseItems(phaseKey);
+      const index = items.findIndex(item => item.id === itemId);
+      if (index < 0) return false;
+      return items.slice(0, index).every(item => item.type === 'GATE' || progressLookup.get(item.id));
+    }
+
+    function normalizeProgressMap(rows){
+      const map = new Map();
+      rows.forEach(row => map.set(row.module_id, !!row.completed));
+      return map;
+    }
+
+    function readLocalProgressMap(){
+      try {
+        const raw = localStorage.getItem(LOCAL_PROGRESS_KEY);
+        if (!raw) return new Map();
+        const parsed = JSON.parse(raw);
+        return new Map(Object.entries(parsed || {}).map(([moduleId, completed]) => [moduleId, !!completed]));
+      } catch (error) {
+        return new Map();
+      }
+    }
+
+    function writeLocalProgressMap(moduleId, completed){
+      try {
+        const raw = localStorage.getItem(LOCAL_PROGRESS_KEY);
+        const parsed = raw ? JSON.parse(raw) : {};
+        parsed[moduleId] = !!completed;
+        localStorage.setItem(LOCAL_PROGRESS_KEY, JSON.stringify(parsed));
+      } catch (error) {}
+    }
+
+    function setPortalUser(user){
+      currentUser = user;
+      if (userBadge) {
+        userBadge.textContent = user?.email ? `Logged in as ${user.email}` : 'Logged in';
+      }
+      if (logoutBtn) logoutBtn.classList.remove('is-hidden');
+    }
+
+    function clearPortalUser(){
+      currentUser = null;
+      progressLookup = new Map();
+      if (userBadge) userBadge.style.display = 'none';
+      if (logoutBtn) logoutBtn.classList.add('is-hidden');
+    }
+
+    function showPortal(){
+      gate.style.display = 'none';
+      portal.style.display = 'block';
+      const firstBtn = document.querySelector('#portal .btn');
+      if (firstBtn) firstBtn.focus();
+    }
+
+    function showGate(){
+      portal.style.display = 'none';
+      gate.style.display = 'flex';
+      if (authError) authError.style.display = 'none';
+      if (loginForm) loginForm.reset();
+      loginEmail?.focus();
+    }
+
+    async function loadPortalData(){
+      if (!currentUser) return;
+      try {
+        const { data, error } = await srmaSupabase.from('student_progress').select('*').eq('user_id', currentUser.id);
+        if (error) throw error;
+        progressLookup = new Map([...readLocalProgressMap(), ...normalizeProgressMap(data || [])]);
+      } catch (error) {
+        progressLookup = readLocalProgressMap();
+      }
+    }
+
+    async function upsertProgress(moduleId, completed){
+      if (!currentUser) return;
+      const payload = { user_id: currentUser.id, module_id: moduleId, completed };
+      progressLookup.set(moduleId, completed);
+      writeLocalProgressMap(moduleId, completed);
+
+      const existingQuery = await srmaSupabase
+        .from('student_progress')
+        .select('user_id,module_id')
+        .eq('user_id', currentUser.id)
+        .eq('module_id', moduleId);
+
+      if (existingQuery.error) {
+        console.warn('Progress save skipped because the backend query failed.', existingQuery.error);
+        return;
+      }
+
+      if ((existingQuery.data || []).length > 0) {
+        const { error } = await srmaSupabase
+          .from('student_progress')
+          .update({ completed })
+          .eq('user_id', currentUser.id)
+          .eq('module_id', moduleId);
+        if (error) {
+          console.warn('Progress update fell back to local storage.', error);
+          return;
+        }
+      } else {
+        const { error } = await srmaSupabase.from('student_progress').insert(payload);
+        if (error) {
+          console.warn('Progress insert fell back to local storage.', error);
+          return;
+        }
+      }
+    }
+
+    function renderGlobalNav(){
+      const active = view => currentView === view ? 'is-active' : '';
+      return `
+        <div class="sidebar-section">
+          <div class="sidebar-links">
+            <a href="#" data-view="dashboard" class="${active('dashboard')}"><span>Dashboard</span></a>
+            <a href="#" data-view="supervisor" class="${active('supervisor')}"><span>Supervisor Check-ins</span></a>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-heading">Phases</div>
+          <div class="phase-switcher">
+            ${Object.entries(portalData.phases).map(([key, phase]) => {
+              const [phaseNum, description] = phase.title.split(' - ');
+              return `
+                <button type="button" data-view="${key}" class="${active(key)}">
+                  <span>${phaseNum.replace('PHASE ', 'Phase ')}</span>
+                  <span>${key === 'phase1' ? 'FOUNDATIONS' : description.toUpperCase()}</span>
+                </button>
+              `;
+            }).join('')}
+          </div>
+        </div>
+
+        ${currentView === 'phase1' ? `
+          <div class="sidebar-section">
+            <div class="sidebar-heading">PHASE 1</div>
+            <div class="phase1-accordion is-open" data-phase1-accordion>
+              <button type="button" class="phase1-accordion-toggle is-active">
+                <span class="phase1-accordion-title">FOUNDATIONS</span>
+                <span class="phase1-accordion-caret">▾</span>
+              </button>
+              <div class="phase1-accordion-panel">
+                <div class="phase1-accordion-pages">
+                  ${portalData.phase1Pages.map(page => {
+                    const completed = !!progressLookup.get(page.id);
+                    const shortPage = page.page.replace(/^Page\s+/i, '').replace(/\s+of\s+9$/i, '');
+                    return `
+                      <button type="button" class="phase1-nav-item ${currentItemId === page.id ? 'is-active' : ''} ${completed ? 'is-complete' : ''}" data-phase1-tab="${page.id}">
+                        <span class="phase1-nav-page">${shortPage.padStart(2, '0')}</span>
+                        <span class="phase1-nav-title">${page.title}</span>
+                      </button>
+                    `;
+                  }).join('')}
+                </div>
+                <div class="phase1-accordion-tracker">
+                  <div class="phase1-accordion-tracker-head">
+                    <div class="phase1-accordion-tracker-title">Progress Tracker</div>
+                    <div class="phase1-accordion-tracker-meta">${getPhaseStats('phase1').completed} of ${getPhaseStats('phase1').total} complete</div>
+                  </div>
+                  <div class="phase1-accordion-tracker-bar"><span style="width:${getPhaseStats('phase1').percent}%"></span></div>
+                  <div class="phase1-accordion-tracker-meta">${getPhaseStats('phase1').percent}% complete</div>
+                </div>
+                <button type="button" class="phase1-accordion-gate ${isGateUnlocked('phase1', 'phase1-gate') ? 'is-complete' : 'is-locked'}" data-phase1-tab="phase1-gate" ${isGateUnlocked('phase1', 'phase1-gate') ? '' : 'disabled'}>
+                  <div class="phase-item-left">
+                    <span class="phase-item-type">Gate</span>
+                    <span class="phase-item-title">GATE 1 - Topic Proposal &amp; Feasibility Form</span>
+                    <span class="phase-item-meta">${isGateUnlocked('phase1', 'phase1-gate') ? 'Unlocked' : 'Unlocks after the quiz reaches 70%+'}</span>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        ` : ''}
+
+        <div class="sidebar-section">
+          <div class="sidebar-links">
+            <a href="#" data-view="resources" class="${active('resources')}"><span>Resources</span></a>
+            <a href="#" data-view="support" class="${active('support')}"><span>Support</span></a>
+          </div>
+        </div>
+
+      `;
+    }
+
+    function renderPhaseSidebar(phaseKey){
+      const phase = getPhaseData(phaseKey);
+      if (!phase) return '';
+      const stats = getPhaseStats(phaseKey);
+      return `
+        <div class="sidebar-section">
+          <div class="sidebar-heading">${phase.title}</div>
+          <div class="phase-progress-wrap">
+            <div class="phase-progress-head">
+              <div class="phase-progress-title">${stats.completed} of ${stats.total} items complete</div>
+              <div class="phase-progress-title">${stats.percent}%</div>
+            </div>
+            <div class="phase-progress-bar"><span style="width:${stats.percent}%"></span></div>
+            <div class="phase-progress-caption">${phase.subtitle}</div>
+          </div>
+          <div class="phase-item-list">
+            ${phase.items.map(item => {
+              const completed = !!progressLookup.get(item.id);
+              const active = currentItemId === item.id;
+              const gateLocked = item.type === 'GATE' && !isGateUnlocked(phaseKey, item.id);
+              const classes = [
+                'phase-item',
+                completed ? 'is-complete' : '',
+                active ? 'is-active' : '',
+                item.type === 'GATE' ? 'is-gate' : '',
+                gateLocked ? 'is-locked' : ''
+              ].filter(Boolean).join(' ');
+              const typeLabel = item.type === 'GATE' ? 'Gate' : item.type;
+              const statusClass = item.status === 'Ready' ? 'is-ready' : item.status === 'To create' ? 'is-create' : item.status === 'Curate' ? 'is-curate' : item.type === 'GATE' ? 'is-gate' : 'is-ready';
+              const lockIcon = item.type === 'GATE' ? (gateLocked ? '🔒' : '🔓') : (completed ? '✓' : '•');
+              return `
+                <button type="button" class="${classes}" data-item-id="${item.id}" ${gateLocked ? 'disabled' : ''}>
+                  <div class="phase-item-lock">${lockIcon}</div>
+                  <div class="phase-item-left">
+                    <span class="phase-item-type">${typeLabel}</span>
+                    <span class="phase-item-title">${item.title}</span>
+                    <span class="phase-item-meta">${item.time}${item.type === 'GATE' ? ' | Gate item' : ''}</span>
+                  </div>
+                  <div class="phase-item-status ${statusClass}">${item.type === 'GATE' ? item.status : item.status}</div>
+                </button>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderDashboard(){
+      return `
+        <section class="portal-stage dashboard-stage">
+          <div class="dashboard-hero">
+            <video class="dashboard-hero-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+              <source src="Person_reading_book_under_tree_202607012036.mp4" type="video/mp4">
+            </video>
+            <div class="dashboard-hero-inner">
+              <div class="dashboard-hero-brand">
+                <img src="logo.png" alt="IHSAAN Medics" class="dashboard-hero-logo">
+              </div>
+              <h1 class="dashboard-hero-title">${portalData.dashboard.title}</h1>
+              <p class="dashboard-hero-subtitle">${portalData.dashboard.subtitle}</p>
+
+              <div class="dashboard-phase-strip" aria-label="Programme phases">
+                ${portalData.dashboard.overview.map(card => `
+                  <div class="dashboard-phase-card">
+                    <strong>${card.title}</strong>
+                    <span>${card.text}</span>
+                  </div>
+                `).join('')}
+              </div>
+
+              <div class="dashboard-programme-wrap">
+                <div class="dashboard-programme">
+                  <h2>Programme timeline</h2>
+                  <div class="timeline-grid">
+                    ${portalData.dashboard.timeline.map(step => `
+                      <div class="timeline-step"><strong>${step.title}</strong><span>${step.text}</span></div>
+                    `).join('')}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderResourcePage(){
+      return `
+        <section class="portal-stage">
+          <div class="view-hero">
+            <div class="view-kicker">${portalData.resources.kicker}</div>
+            <h1 class="view-title">${portalData.resources.title}</h1>
+            <p class="view-subtitle">${portalData.resources.subtitle}</p>
+          </div>
+
+          <div class="resource-list">
+            ${portalData.resourcesPage.map(resource => `
+              <article class="resource-card">
+                <div class="resource-icon" aria-hidden="true">${resource.type === 'PDF' ? '📄' : resource.type === 'Spreadsheet' ? '🗂️' : resource.type === 'Policy' ? '🛡️' : resource.type === 'Links' ? '🔗' : '📝'}</div>
+                <div class="resource-body">
+                  <div class="resource-title">${resource.title}</div>
+                  <div class="resource-desc">${resource.description}</div>
+                  <div class="resource-cta"><a class="btn primary" href="#">${resource.cta}</a></div>
+                </div>
+              </article>
+            `).join('')}
+          </div>
+        </section>
+      `;
+    }
+
+    function renderSupervisorPage(){
+      return `
+        <section class="portal-stage">
+          <div class="view-hero">
+            <div class="view-kicker">${portalData.supervisor.kicker}</div>
+            <h1 class="view-title">${portalData.supervisor.title}</h1>
+            <p class="view-subtitle">${portalData.supervisor.subtitle}</p>
+          </div>
+
+          <div class="checkin-list">
+            ${portalData.supervisorTimeline.map(checkin => `
+              <div class="checkin-card">
+                <strong>${checkin.week}</strong>
+                <div>${checkin.text}</div>
+                <div class="phase-item-status is-ready" style="margin-top:10px">${checkin.status}</div>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+      `;
+    }
+
+    function renderSupportPage(){
+      return `
+        <section class="portal-stage">
+          <div class="view-hero">
+            <div class="view-kicker">${portalData.support.kicker}</div>
+            <h1 class="view-title">${portalData.support.title}</h1>
+            <p class="view-subtitle">${portalData.support.subtitle}</p>
+          </div>
+
+          <div class="page-grid">
+            <div class="page-card">
+              <h3 style="margin-top:0">Contact</h3>
+              <p class="muted">If you need an extra check-in, request one through the supervisor page.</p>
+            </div>
+
+            <div class="page-card">
+              <h3 style="margin-top:0">Pause / exit path</h3>
+              <p class="muted">Use the pause and exit route in the Student Handbook if you need to step away from the programme.</p>
+              <div class="button-row"><a class="btn primary" href="#">Open handbook guidance</a></div>
+            </div>
+          </div>
+
+          <div class="faq-list">
+            ${portalData.supportFaq.map(item => `
+              <details class="faq-item">
+                <summary>${item.question}</summary>
+                <p>${item.answer}</p>
+              </details>
+            `).join('')}
+          </div>
+        </section>
+      `;
+    }
+
+    function renderPhaseItem(item, phaseKey){
+      const completed = !!progressLookup.get(item.id);
+      const unlocked = item.type === 'GATE' ? isGateUnlocked(phaseKey, item.id) : true;
+      const statusClass = item.status === 'Ready' ? 'is-ready' : item.status === 'To create' ? 'is-create' : item.status === 'Curate' ? 'is-curate' : item.type === 'GATE' ? 'is-gate' : 'is-ready';
+      const buttonLabel = completed ? 'Mark as incomplete' : item.type === 'GATE' ? (unlocked ? 'Confirm gate status' : 'Locked gate') : 'Mark as complete';
+      const actionDisabled = item.type === 'GATE' ? !unlocked : false;
+      const previewText = item.preview || item.description;
+      const extraNote = item.type === 'GATE'
+        ? (unlocked ? 'Gate action is available. Complete the upload or confirmation task for this gate.' : 'Complete all items above to unlock this gate.')
+        : item.type === 'QUIZ'
+          ? 'Pass the knowledge check to unlock the gate below.'
+          : item.type === 'EXTERNAL'
+            ? 'Use the curated links or embedded content for this section.'
+            : 'Use the built resource, then mark the item complete when finished.';
+
+      return `
+        <section class="portal-stage">
+          <div class="view-hero">
+            <div class="view-kicker">${getPhaseData(phaseKey).title}</div>
+            <h1 class="view-title">${item.title}</h1>
+            <p class="view-subtitle">${getPhaseData(phaseKey).subtitle}</p>
+            <div class="view-badges">
+              <span class="view-badge">${item.type}</span>
+              <span class="view-badge">${item.time}</span>
+              <span class="view-badge">${item.status}</span>
+            </div>
+          </div>
+
+          <div class="detail-card">
+            <div class="detail-head">
+              <div>
+                <div class="detail-type">${item.type}</div>
+                <div style="margin-top:10px;font-size:1.35rem;font-weight:900;color:var(--ink)">${item.title}</div>
+              </div>
+              <div class="detail-status ${statusClass}">${item.status}</div>
+            </div>
+
+                  <div class="detail-body">
+                    ${item.description}
+              ${item.type === 'PDF' ? `
+                <div class="content-preview">
+                  <h4>PDF</h4>
+                  <div class="pdf-viewer">H1 / PDF will be displayed here when uploaded.</div>
+                  <div style="margin-top:12px"><a class="btn" href="#" download>Download PDF</a></div>
+                </div>
+                <div class="action-bar">
+                  <div class="muted">${extraNote}</div>
+                  <div class="button-row">
+                    <button class="btn primary" data-toggle-complete="${item.id}" ${actionDisabled ? 'disabled' : ''}>${buttonLabel}</button>
+                  </div>
+                </div>
+              ` : item.type === 'QUIZ' ? `
+                <div class="content-preview">
+                  <h4>Knowledge check</h4>
+                  <div class="quiz-wrap">
+                        ${item.id === 'phase1-9' && progressLookup.get(item.id) ? `
+                          <div class="phase1-section-card" style="margin-bottom:14px;border-color:rgba(27,107,107,.18);background:linear-gradient(180deg,#e6fff7,#f7fffd)">
+                            <h4 style="margin:0 0 8px;font-size:1.02rem;font-weight:900;color:var(--b)">You passed the quiz</h4>
+                            <p style="margin:0;color:var(--muted)">Your score cleared the 70% threshold, so Gate 1 is now unlocked for this account. You can review the correct answers below anytime.</p>
+                            <div class="button-row" style="margin-top:12px">
+                              <button type="button" class="btn primary" data-open-phase1-gate>Open Gate 1 now</button>
+                            </div>
+                          </div>
+                          ${renderPhase1QuizAnswers()}
+                        ` : `
+                          <form class="quiz-form" data-quiz-id="${item.id}">
+                            ${portalData.phase1Quiz.map((q, i) => `
+                              <fieldset style="margin-bottom:12px">
+                                <legend style="font-weight:700">${i+1}. ${q.q}</legend>
+                                ${q.options.map(opt => `
+                                  <label style="display:block;margin:6px 0"><input type="radio" name="${q.id}" value="${opt.charAt(0)}"> ${opt}</label>
+                                `).join('')}
+                              </fieldset>
+                            `).join('')}
+                            <div class="button-row"><button type="submit" class="btn primary">Submit and finish quiz</button></div>
+                          </form>
+                          <div class="quiz-feedback" aria-live="polite" style="margin-top:12px"></div>
+                        `}
+                  </div>
+                </div>
+                <div class="action-bar">
+                  <div class="muted">${extraNote}</div>
+                </div>
+              ` : `
+                <div class="content-preview">
+                  <h4>${item.type === 'VIDEO' ? 'Video content' : item.type === 'TEMPLATE' ? 'Template action' : item.type === 'GATE' ? 'Gate action' : 'Resource content'}</h4>
+                  <p>${previewText}</p>
+                </div>
+                <div class="action-bar">
+                  <div class="muted">${extraNote}</div>
+                  <div class="button-row">
+                    ${(item.type === 'GUIDE' || item.type === 'TEMPLATE' || item.type === 'EXTERNAL') ? `<a class="btn" href="#">${item.cta}</a>` : ''}
+                    <button class="btn primary" data-toggle-complete="${item.id}" ${actionDisabled ? 'disabled' : ''}>${buttonLabel}</button>
+                  </div>
+                </div>
+              `}
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderPhase1Page(pageId){
+      const phase = getPhaseData('phase1');
+      if (!phase) return renderDashboard();
+
+      if (pageId === 'phase1-10' || pageId === 'phase1-gate') {
+        return renderPhase1GateBlank('phase1-10');
+      }
+
+      const item = phase?.items.find(entry => entry.id === pageId) || phase?.items[0];
+      if (!item) return renderDashboard();
+
+      const pageMeta = portalData.phase1Pages.find(page => page.id === item.id) || portalData.phase1Pages[0];
+      const quizPassed = item.id === 'phase1-9' && !!progressLookup.get(item.id);
+      const unlockFlash = quizPassed && (() => {
+        try { return sessionStorage.getItem(PHASE1_UNLOCK_FLASH_KEY) === '1'; } catch (error) { return false; }
+      })();
+      return `
+        <section class="phase1-page">
+          <div class="phase1-page-header">
+            <div class="phase1-banner">
+              <div class="phase1-banner-top">
+                <div>
+                  <div class="phase1-banner-kicker">PHASE 1 · FOUNDATIONS</div>
+                  <div class="phase1-banner-title">${pageMeta.page} — ${pageMeta.title}</div>
+                  <div class="phase1-banner-meta">
+                    <span class="phase1-banner-pill">Weeks 1–2</span>
+                    <span class="phase1-banner-pill">${item.type}</span>
+                    <span class="phase1-banner-pill">${item.status}</span>
+                  </div>
+                </div>
+                <div class="phase1-banner-pill">${item.type === 'QUIZ' ? 'Quiz' : item.type === 'PDF' ? 'PDF upload' : 'Ready'}</div>
+              </div>
+            </div>
+          </div>
+          <div class="phase1-section-card">
+            ${portalData.phase1Content[item.id] || `<div class="detail-body">${item.description}</div>`}
+            <div class="phase1-page-actions" style="margin-top:16px">
+              ${item.id === 'phase1-9' ? '' : `<button class="btn primary" data-toggle-complete="${item.id}">${progressLookup.get(item.id) ? 'Completed' : 'Mark as Complete'}</button>`}
+            </div>
+          </div>
+          ${quizPassed ? `
+            <div class="phase1-section-card" style="margin-top:16px;border-color:rgba(27,107,107,.18);background:linear-gradient(180deg,#e6fff7,#f7fffd)">
+              <h3 style="margin:0 0 8px;font-size:1.08rem;font-weight:900;color:var(--b)">You passed the quiz</h3>
+              <p style="margin:0;color:var(--muted)">Your score cleared the 70% threshold, so the answers are shown below and Gate 1 is available for this account.</p>
+              <div class="button-row" style="margin-top:12px">
+                <button type="button" class="btn primary" data-open-phase1-gate>Open Gate 1 now</button>
+              </div>
+            </div>
+            ${renderPhase1QuizAnswers()}
+          ` : ''}
+          ${unlockFlash ? renderPhase1UnlockOverlay() : ''}
+        </section>
+      `;
+    }
+
+    function renderPhasePage(phaseKey){
+      const phase = getPhaseData(phaseKey);
+      const selectedItem = getSelectedPhaseItem(phaseKey);
+      if (!phase) return renderDashboard();
+
+      if (phaseKey === 'phase1') {
+        return renderPhase1Page(currentItemId || selectedItem?.id || 'phase1-1');
+      }
+
+      const overviewMarkup = phase.overview ? `
+        <section class="portal-stage">
+          <div class="detail-card" style="margin-bottom:18px">
+            <div class="detail-body">
+              <p style="font-size:1.02rem;line-height:1.75;color:var(--ink);margin:0">${phase.overview}</p>
+            </div>
+          </div>
+        </section>
+      ` : '';
+
+      if (!selectedItem) return overviewMarkup + renderDashboard();
+
+      return overviewMarkup + renderPhaseItem(selectedItem, phaseKey);
+    }
+
+    function renderPage(viewKey){
+      if (viewKey === 'dashboard') return renderDashboard();
+      if (viewKey === 'resources') return renderResourcePage();
+      if (viewKey === 'supervisor') return renderSupervisorPage();
+      if (viewKey === 'support') return renderSupportPage();
+      if (portalData.phases[viewKey]) return renderPhasePage(viewKey);
+      return renderDashboard();
+    }
+
+    function bindSidebarEvents(){
+      sidebarMount.querySelectorAll('[data-view]').forEach(control => {
+        control.addEventListener('click', event => {
+          event.preventDefault();
+          window.showTemplate(control.getAttribute('data-view'));
+        });
+      });
+
+      sidebarMount.querySelectorAll('[data-phase1-tab]').forEach(control => {
+        control.addEventListener('click', () => {
+          window.showTemplate('phase1', control.getAttribute('data-phase1-tab'));
+        });
+      });
+
+      sidebarMount.querySelectorAll('[data-item-id]').forEach(control => {
+        control.addEventListener('click', () => {
+          const itemId = control.getAttribute('data-item-id');
+          currentItemId = itemId;
+          renderPortal();
+        });
+      });
+    }
+
+    function bindMainEvents(){
+      mainMount.querySelectorAll('[data-toggle-complete]').forEach(button => {
+        button.addEventListener('click', async () => {
+          const itemId = button.getAttribute('data-toggle-complete');
+          const phase = getPhaseData(currentPhaseKey);
+          const item = phase?.items.find(entry => entry.id === itemId);
+          if (!item) return;
+          if (item.type === 'GATE' && !isGateUnlocked(currentPhaseKey, itemId)) return;
+          const nextState = !progressLookup.get(itemId);
+          button.disabled = true;
+          await upsertProgress(itemId, nextState);
+          renderPortal();
+        });
+      });
+
+      mainMount.querySelectorAll('[data-open-phase1-gate]').forEach(button => {
+        button.addEventListener('click', () => {
+          window.showTemplate('phase1', 'phase1-10');
+        });
+      });
+
+      // Bind quiz forms
+      mainMount.querySelectorAll('.quiz-form').forEach(form => {
+        form.addEventListener('submit', async (ev) => {
+          ev.preventDefault();
+          if (!currentUser) {
+            alert('Please log in to submit the quiz.');
+            return;
+          }
+          const quizId = form.getAttribute('data-quiz-id');
+          const formData = new FormData(form);
+          let correct = 0;
+          portalData.phase1Quiz.forEach(q => {
+            const val = formData.get(q.id);
+            if (val === q.answer) correct += 1;
+          });
+          const score = correct;
+          const feedbackEl = form.parentElement.querySelector('.quiz-feedback');
+          if (score >= 7) {
+            await upsertProgress(quizId, true);
+            triggerPhase1UnlockFlow();
+          } else {
+            feedbackEl.innerHTML = `<div style="padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff6f0,#fff8f2);border:1px solid rgba(245,166,35,.12);font-weight:700;color:var(--ink)">You scored ${score}/10. You need 7/10 (70%) to unlock Gate 1. Retake the quiz and submit again when you're ready.</div>`;
+          }
+        });
+      });
+    }
+
+    function renderSidebar(){
+      if (!sidebarMount) return;
+      const phaseMarkup = currentView && portalData.phases[currentView] && currentView !== 'phase1' ? renderPhaseSidebar(currentView) : '';
+      sidebarMount.innerHTML = `${renderGlobalNav()}${phaseMarkup}`;
+      if (userBadge) {
+        userBadge.style.display = currentView === 'dashboard' && currentUser ? 'block' : 'none';
+      }
+      bindSidebarEvents();
+    }
+
+    function savePortalViewState(){
+      try {
+        sessionStorage.setItem(PORTAL_VIEW_KEY, currentView || 'dashboard');
+        sessionStorage.setItem(PORTAL_ITEM_KEY, currentItemId || '');
+      } catch (error) {}
+    }
+
+    function restorePortalViewState(){
+      try {
+        const savedView = sessionStorage.getItem(PORTAL_VIEW_KEY);
+        const savedItem = sessionStorage.getItem(PORTAL_ITEM_KEY);
+        if (savedView) currentView = savedView;
+        if (savedItem) currentItemId = savedItem;
+      } catch (error) {}
+    }
+
+    function renderMain(){
+      if (!mainMount) return;
+      mainMount.innerHTML = renderPage(currentView);
+      bindMainEvents();
+    }
+
+    function renderPortal(){
+      portalWrap?.classList.toggle('is-dashboard-shell', currentView === 'dashboard');
+      portal?.classList.toggle('dashboard-view', currentView === 'dashboard');
+      portal?.classList.toggle('content-view', currentView !== 'dashboard');
+      savePortalViewState();
+      renderSidebar();
+      renderMain();
+    }
+
+    window.showTemplate = function(viewKey, itemId){
+      currentView = portalData.phases[viewKey] ? viewKey : viewKey;
+      if (portalData.phases[currentView]) {
+        currentPhaseKey = currentView;
+        if (currentView === 'phase1') {
+          currentItemId = itemId || currentItemId || 'phase1-1';
+        } else {
+          currentItemId = itemId || currentItemId || getPhaseItems(currentPhaseKey).find(item => item.type !== 'GATE')?.id || getPhaseItems(currentPhaseKey)[0]?.id || null;
+        }
+      } else if (viewKey === 'dashboard' || viewKey === 'resources' || viewKey === 'supervisor' || viewKey === 'support') {
+        currentPhaseKey = currentPhaseKey || 'phase1';
+        currentItemId = null;
+      } else {
+        currentView = 'dashboard';
+        currentPhaseKey = 'phase1';
+        currentItemId = null;
+      }
+      renderPortal();
+      requestAnimationFrame(() => {
+        mainMount?.querySelector('a, button, summary')?.focus();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    };
+
+    async function handleLogin(event){
+      event.preventDefault();
+      if (authError) authError.style.display = 'none';
+      if (loginBtn) {
+        loginBtn.disabled = true;
+        loginBtn.textContent = 'Signing in...';
+      }
+
+      const email = (loginEmail?.value || '').trim();
+      const password = loginPassword?.value || '';
+
+      try {
+        const { data, error } = await srmaSupabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        setPortalUser(data.user);
+        await loadPortalData();
+        showPortal();
+        restorePortalViewState();
+        renderPortal();
+      } catch (error) {
+        if (authError) {
+          authError.textContent = error?.message || 'Unable to sign in right now.';
+          authError.style.display = 'block';
+        }
+      } finally {
+        if (loginBtn) {
+          loginBtn.disabled = false;
+          loginBtn.textContent = 'Log in';
+        }
+      }
+    }
+
+    async function handleLogout(){
+      await srmaSupabase.auth.signOut();
+      clearPortalUser();
+      showGate();
+    }
+
+    async function initSupabaseAuth(){
+      const { data: sessionData } = await srmaSupabase.auth.getSession();
+      const session = sessionData?.session;
+      if (session?.user) {
+        setPortalUser(session.user);
+        await loadPortalData();
+        restorePortalViewState();
+        if (forceLoginEntry) {
+          showGate();
+        } else {
+          showPortal();
+          renderPortal();
+        }
+      } else {
+        showGate();
+      }
+
+      srmaSupabase.auth.onAuthStateChange(async (_event, sessionState) => {
+        if (sessionState?.user) {
+          setPortalUser(sessionState.user);
+          await loadPortalData();
+          restorePortalViewState();
+          showPortal();
+          renderPortal();
+        } else {
+          clearPortalUser();
+          try { sessionStorage.removeItem(PORTAL_VIEW_KEY); sessionStorage.removeItem(PORTAL_ITEM_KEY); } catch (error) {}
+          showGate();
+        }
+      });
+    }
+
+    loginForm?.addEventListener('submit', handleLogin);
+    if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
+
+    initSupabaseAuth();
+
+    (function(){
+      function ensureToggle(){
+        if (window.innerWidth <= 900){
+          if (!document.getElementById('sidebarToggle')){
+            const btn = document.createElement('button');
+            btn.id = 'sidebarToggle';
+            btn.className = 'btn';
+            btn.style.marginBottom = '10px';
+            btn.textContent = 'Toggle menu';
+            btn.setAttribute('aria-expanded', 'true');
+            btn.addEventListener('click', ()=>{ sidebar.style.display = (sidebar.style.display === 'none') ? 'block' : 'none'; });
+            const main = document.querySelector('.main');
+            if (main) main.parentNode.insertBefore(btn, main);
+          }
+        } else {
+          const t = document.getElementById('sidebarToggle');
+          if (t) t.remove();
+          sidebar.style.display = '';
+        }
+      }
+      window.addEventListener('resize', ensureToggle);
+      ensureToggle();
+    })();
+  </script>
+</body>
+</html>
