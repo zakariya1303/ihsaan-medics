@@ -24,22 +24,24 @@
       --muted:rgba(26,26,26,.68);
       --b:#1B6B6B;
     }
-    html{scroll-behavior:smooth}
+    html{scroll-behavior:smooth;min-height:100%;-webkit-text-size-adjust:100%}
     body{
       margin:0;
+      min-height:100vh;
       font-family:'Poppins',sans-serif;
       color:var(--ink);
       background:
         radial-gradient(900px 420px at 10% 0%, rgba(27,107,107,.10), transparent 60%),
         radial-gradient(700px 320px at 90% 10%, rgba(168,212,212,.16), transparent 55%),
         linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
+      overflow-x:hidden;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
     }
     h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;letter-spacing:-.02em}
     .btn{font-family:'Poppins',sans-serif}
     .portal-wrap{width:100%;max-width:1240px;margin:0 auto;position:relative;z-index:1}
-    .portal-wrap.is-dashboard-shell{max-width:none;width:100vw;margin:0;overflow-x:hidden}
+    .portal-wrap.is-dashboard-shell{max-width:none;width:100%;margin:0;overflow-x:hidden}
     .portal-footer-note,.muted,.help-text,.login-help{color:var(--muted)}
     .sidebar-section{margin-top:12px;padding-top:12px;border-top:1px solid rgba(27,107,107,.10)}
     .sidebar-section:first-of-type{margin-top:0;padding-top:0;border-top:none}
@@ -150,6 +152,7 @@
     .phase1-appraisal-table tbody td:nth-child(2){color:#111}
     .phase1-appraisal-table tbody tr:last-child td{border-bottom:none}
     .phase1-appraisal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .phase1-appraisal-list{margin-left:0.5cm}
     .phase1-appraisal-card{padding:18px;border-radius:18px;background:#fff;border:1px solid rgba(23,79,57,.12);box-shadow:0 12px 28px rgba(26,26,26,.04)}
     .phase1-appraisal-card h3{margin:0 0 10px;color:#174f39;font-weight:900;line-height:1.2}
     .phase1-appraisal-card p,.phase1-appraisal-card li{line-height:1.8;color:var(--ink)}
@@ -168,6 +171,54 @@
     .phase1-unlock-card h3{margin:0;font-size:1.2rem;font-weight:900;color:var(--ink)}
     .phase1-unlock-card p{margin:0;color:var(--muted);line-height:1.6}
     .phase1-page-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+    .phase1-slide-page{gap:16px}
+    .phase1-slide-hero{display:flex;flex-direction:column;gap:14px}
+    .phase1-slide-hero-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .phase1-slide-hero-title{margin:6px 0 0;font-size:clamp(1.4rem,2.2vw,1.9rem);font-weight:900;line-height:1.15;color:var(--ink)}
+    .phase1-slide-hero-subtitle{margin:8px 0 0;max-width:72ch;line-height:1.7;color:var(--muted)}
+    .phase1-slide-badge{display:inline-flex;align-items:center;justify-content:center;padding:8px 12px;border-radius:999px;background:rgba(27,107,107,.10);color:#174f39;font-size:.78rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+    .phase1-slide-viewport{overflow:hidden}
+    .phase1-slide-track{display:flex;will-change:transform;transition:transform .35s ease}
+    .phase1-slide{flex:0 0 100%;min-width:100%}
+    .phase1-slide-inner{display:flex;flex-direction:column;gap:14px}
+    .phase1-slide-panel{padding:18px;border-radius:20px;background:rgba(255,255,255,.96);border:1px solid rgba(27,107,107,.08);box-shadow:0 14px 34px rgba(26,26,26,.05)}
+    .phase1-slide-panel h3{margin:0 0 10px;color:#174f39;font-weight:900;line-height:1.2}
+    .phase1-slide-panel p{margin:0 0 10px;line-height:1.8;color:var(--ink)}
+    .phase1-slide-panel p:last-child{margin-bottom:0}
+    .phase1-slide-panel .phase1-table{margin-top:8px}
+    .phase1-step3-list{margin-left:0.4cm}
+    .phase1-step4-list{margin-left:0.4cm}
+    .phase1-slide-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    .phase1-slide-counter{font-size:.86rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+    .phase1-slide-nav .btn:disabled{opacity:.5;cursor:not-allowed}
+    .phase1-appraisal-bullet-list{margin:10px 0 0;padding-left:1.15rem;display:grid;gap:10px;line-height:1.75;color:var(--ink)}
+    .phase1-appraisal-bullet-list li::marker{color:#174f39;font-weight:800}
+    .phase1-gate-page{gap:16px}
+    .phase1-gate-hero{padding:22px;border-radius:24px;background:linear-gradient(135deg, #154b35 0%, #1d6c57 48%, #eff8ef 100%);color:#fff;box-shadow:0 18px 40px rgba(21,75,53,.18)}
+    .phase1-gate-hero h2{margin:0 0 10px;font-size:clamp(1.5rem,2.4vw,2.2rem);line-height:1.12;font-weight:900}
+    .phase1-gate-hero p{margin:0;max-width:78ch;line-height:1.8;color:rgba(255,255,255,.92)}
+    .phase1-gate-hero p + p{margin-top:10px}
+    .phase1-gate-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.95fr);gap:16px;align-items:start}
+    .phase1-gate-panel{padding:20px;border-radius:22px;background:rgba(255,255,255,.96);border:1px solid rgba(27,107,107,.08);box-shadow:0 14px 34px rgba(26,26,26,.05)}
+    .phase1-gate-panel h3{margin:0 0 12px;color:#174f39;font-weight:900;line-height:1.2}
+    .phase1-gate-panel p{margin:0 0 12px;line-height:1.8;color:var(--ink)}
+    .phase1-gate-panel p:last-child{margin-bottom:0}
+    .phase1-gate-field{display:flex;flex-direction:column;gap:8px}
+    .phase1-gate-field label{font-size:.82rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#174f39}
+    .phase1-gate-field input,.phase1-gate-field textarea{width:100%;padding:13px 14px;border-radius:16px;border:1px solid rgba(23,79,57,.14);background:#fff;color:var(--ink);font:inherit;box-shadow:inset 0 1px 0 rgba(255,255,255,.75)}
+    .phase1-gate-field input::placeholder,.phase1-gate-field textarea::placeholder{color:#7a8c85}
+    .phase1-gate-field textarea{min-height:104px;resize:vertical}
+    .phase1-gate-field input:focus,.phase1-gate-field textarea:focus{outline:none;border-color:rgba(23,79,57,.42);box-shadow:0 0 0 4px rgba(27,107,107,.10)}
+    .phase1-gate-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .phase1-gate-fields--single{grid-template-columns:1fr}
+    .phase1-gate-list{display:grid;gap:12px;margin:0;padding:0;list-style:none}
+    .phase1-gate-choice{padding:14px 14px 14px 40px;border-radius:16px;background:#fff;border:1px solid rgba(27,107,107,.10);box-shadow:0 10px 22px rgba(26,26,26,.04);position:relative}
+    .phase1-gate-choice input{position:absolute;left:14px;top:16px;margin:0;transform:scale(1.05)}
+    .phase1-gate-choice strong{display:block;margin-bottom:4px;color:#174f39}
+    .phase1-gate-choice span{display:block;line-height:1.7;color:var(--ink)}
+    .phase1-gate-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:18px 20px;border-radius:20px;background:linear-gradient(180deg,#f2faf5,#ffffff);border:1px solid rgba(27,107,107,.10);box-shadow:0 14px 34px rgba(26,26,26,.05)}
+    .phase1-gate-actions .btn{min-width:120px}
+    .phase1-gate-note{margin:0;color:var(--muted);line-height:1.75;max-width:60ch}
     .phase-progress-wrap{margin:12px 0 14px;padding:12px;border-radius:16px;background:linear-gradient(180deg, var(--light-teal), var(--light-grey));border:1px solid rgba(27,107,107,.12)}
     .phase-progress-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
     .phase-progress-title{font-weight:900;color:var(--accent)}
@@ -288,9 +339,10 @@
     .dashboard-stage{padding:0;max-width:none;width:100%}
     .dashboard-hero{
       position:relative;
-      min-height:100svh;
-      width:100vw;
-      margin-left:calc(50% - 50vw);
+      min-height:100vh;
+      min-height:100dvh;
+      width:100%;
+      margin-left:0;
       border-radius:0;
       overflow:hidden;
       background:linear-gradient(180deg,#091926,#0b2634);
@@ -325,19 +377,20 @@
       position:relative;
       z-index:2;
       width:min(1180px,92%);
-      padding:clamp(10px,2.4vw,24px) 0 28px;
+      padding:clamp(4px,1.6vw,16px) 0 24px;
       display:flex;
       flex-direction:column;
       align-items:center;
       text-align:center;
-      gap:10px;
+      gap:8px;
       color:var(--white);
     }
     .dashboard-hero-brand{display:flex;flex-direction:column;align-items:center;gap:0;margin-bottom:0}
     .dashboard-hero-logo{width:clamp(170px,20vw,260px);height:auto;filter:drop-shadow(0 16px 30px rgba(0,0,0,.24))}
-    .dashboard-hero-title{margin:-6px 0 0;font-size:clamp(1.8rem,3.2vw,3rem);line-height:1.02;font-weight:900;max-width:14ch}
+    .dashboard-hero-copy{width:100%;display:flex;flex-direction:column;align-items:center;text-align:center;transform:translateY(-1.10cm)}
+    .dashboard-hero-title{margin:-10px auto 0;font-size:clamp(1.8rem,3.2vw,3rem);line-height:1.02;font-weight:900;max-width:14ch}
     .dashboard-hero-subtitle{margin:0;max-width:68ch;font-size:.96rem;line-height:1.65;color:rgba(255,255,255,.84)}
-    .dashboard-phase-strip{width:100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:0}
+    .dashboard-phase-strip{width:100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:0.65cm}
     .dashboard-phase-card{padding:12px 13px;border-radius:16px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);text-align:left;box-shadow:0 12px 24px rgba(6,37,36,.10)}
     .dashboard-phase-card strong{display:block;font-size:.9rem;letter-spacing:.06em;text-transform:uppercase;color:#fff;margin-bottom:6px}
     .dashboard-phase-card span{display:block;color:rgba(255,255,255,.82);line-height:1.4;font-size:.88rem}
@@ -349,8 +402,8 @@
     .dashboard-programme .timeline-step strong{display:block;color:var(--accent);margin-bottom:4px}
     .dashboard-programme .timeline-step span{color:rgba(7,39,37,.72);line-height:1.5}
     .portal-content.dashboard-view .dashboard{display:block;background:#fff;min-height:100vh}
-    .portal-content.dashboard-view .main{margin-left:400px;width:calc(100vw - 400px);min-height:100vh}
-    .portal-content.dashboard-view .sidebar{position:fixed;top:0;left:0;bottom:0;width:400px;height:100vh;background:linear-gradient(180deg, #ffffff 0%, #fbfdfe 100%);border-radius:0;margin:0;padding:30px 16px 20px;overflow-y:auto;z-index:50;border-right:1px solid rgba(27,107,107,.10);box-shadow:0 20px 45px rgba(26,26,26,.06);backdrop-filter:none;-webkit-backdrop-filter:none;display:flex;flex-direction:column;gap:14px}
+    .portal-content.dashboard-view .main{margin-left:0;width:100%;min-height:100vh;min-height:100dvh}
+    .portal-content.dashboard-view .sidebar{display:none}
     .portal-content.dashboard-view .sidebar::before{border-radius:0;background:linear-gradient(180deg, rgba(27,107,107,.04), transparent 28%)}
     .portal-content.dashboard-view .sidebar-top{padding-bottom:14px;margin-bottom:2px;gap:10px;border-bottom:1px solid rgba(27,107,107,.10)}
     .portal-content.dashboard-view .sidebar-brand strong{font-size:.78rem;letter-spacing:.16em}
@@ -391,7 +444,7 @@
     .callout{padding:16px;border-radius:18px;background:linear-gradient(180deg, rgba(232,244,244,.82), rgba(255,255,255,.96));border:1px solid rgba(27,107,107,.10)}
     .callout strong{display:block;color:var(--white);margin-bottom:6px}
     .sidebar-footer{margin-top:18px;padding-top:16px;border-top:1px solid rgba(27,107,107,.10);font-size:.9rem;line-height:1.6;color:var(--muted)}
-    .gate-card{position:fixed;inset:0;width:100vw;height:100svh;max-width:none;margin:0;padding:clamp(18px,4vw,42px);border-radius:0;box-shadow:none;border:none;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;isolation:isolate;animation:fadeUp .6s ease both;background:var(--dark)}
+    .gate-card{position:fixed;inset:0;width:100%;height:100vh;height:100dvh;max-width:none;margin:0;padding:clamp(18px,4vw,42px);border-radius:0;box-shadow:none;border:none;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;isolation:isolate;animation:fadeUp .6s ease both;background:var(--dark)}
     .gate-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 15% 20%, rgba(27,107,107,.20), transparent 18%), radial-gradient(circle at 85% 10%, rgba(168,212,212,.10), transparent 16%), linear-gradient(135deg, rgba(0,0,0,.20), transparent 34%);pointer-events:none;z-index:1}
     .gate-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;filter:saturate(.98) contrast(.88) brightness(.56);transform:scale(1.02)}
     .gate-noise{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.045;background-image:radial-gradient(rgba(255,255,255,.8) 0.55px, transparent 0.55px);background-size:7px 7px;mix-blend-mode:normal}
@@ -777,18 +830,17 @@
         { id:'phase1-4', page:'Page 4 of 9', title:'Software & Access Setup' },
         { id:'phase1-5', page:'Page 5 of 9', title:'Curated Reading List' },
         { id:'phase1-6', page:'Page 6 of 9', title:'H1 · Scoping Search' },
-        { id:'phase1-7', page:'Page 7 of 9', title:'Worked Exemplar Review (Annotated)' },
-        { id:'phase1-8', page:'Page 8 of 9', title:'Critical Appraisal Mini-Guide' },
-        { id:'phase1-9', page:'Page 9 of 9', title:'Phase 1 Knowledge Check' },
-        { id:'phase1-10', page:'Page 10 of 10', title:'Gate 1 Workspace' }
+        { id:'phase1-8', page:'Page 7 of 9', title:'Critical Appraisal Mini-Guide' },
+        { id:'phase1-9', page:'Page 8 of 9', title:'Phase 1 Knowledge Check' },
+        { id:'phase1-10', page:'Page 9 of 9', title:'Gate 1 Workspace' }
       ],
       phase1Content: {
         'phase1-1': `
           <div class="phase1-page">
             <section class="phase1-section-card">
               <h2>Welcome to the IHSAAN Medics Research Mentorship Programme</h2>
-              <p>You have been accepted onto the SRMA Pilot Programme. Over the next 12–16 weeks, you and your team will conduct a systematic review of published medical literature — and leave with a registered PROSPERO protocol and a complete manuscript draft ready for journal submission.</p>
-              <p>This portal is your home for the programme: every resource, guide, template and deadline is here. Work through the items in order, mark items complete as you go, and submit your Topic Proposal &amp; Feasibility Form at Gate 1 for supervisor approval.</p>
+              <p>Over the next 12–16 weeks, you and your team will work towards a high-quality, submission-ready systematic review protocol. PROSPERO registration is not guaranteed and depends on eligibility and approval from all named team members.</p>
+              <p>This portal is your home for the programme. Every resource, guide, template and deadline is here. Work through the items in order, mark them complete as you go, and submit your Topic Proposal &amp; Feasibility Form at Gate 1 for supervisor approval.</p>
             </section>
 
             <section class="phase1-section-card">
@@ -814,7 +866,7 @@
 
             <section class="phase1-callout is-amber">
               <h3>Your guaranteed deliverable</h3>
-              <p>The programme guarantees a registered PROSPERO protocol and a complete manuscript draft. Journal submission and acceptance are the aspirational goal — they may continue after Week 16 and are not guaranteed.</p>
+              <p>The guaranteed outcome of the programme is a high-quality, submission-ready systematic review protocol. PROSPERO registration is not guaranteed; it depends on eligibility and approval from all named team members.</p>
             </section>
 
             <section class="phase1-section-card">
@@ -871,7 +923,7 @@
             <section class="phase1-section-card">
               <h2 class="phase1-section-title">What you will look to produce on this programme</h2>
               <ul class="phase1-bullets">
-                <li>A registered PROSPERO protocol — your pre-committed question and methods</li>
+                <li>A high-quality, submission-ready systematic review protocol</li>
                 <li>A PRISMA 2020 flow diagram — your audit trail of records found and screened</li>
                 <li>A data extraction sheet — the data you pulled from each included study</li>
                 <li>A risk-of-bias assessment — a judgement of each study's methodological quality</li>
@@ -1020,18 +1072,18 @@
                 <h3>Step 3 — Database access</h3>
                 <p>You will search several databases. Here is how to access each one.</p>
                 <p><strong>PubMed — free for everyone</strong></p>
-                <ol start="7">
+                <ol start="1">
                   <li>Go to pubmed.ncbi.nlm.nih.gov — no login required.</li>
                   <li>Create a free NCBI account so you can save searches and set up email alerts. Click "Log in" in the top right.</li>
                 </ol>
                 <p><strong>Cochrane CENTRAL and PROSPERO — free for everyone</strong></p>
-                <ol start="9">
+                <ol start="1">
                   <li>Cochrane Library: cochranelibrary.com — no login required for searching.</li>
                   <li>PROSPERO: crd.york.ac.uk/prospero — no login required for searching. You will need to create a free account when you register your own review in Phase 2.</li>
                 </ol>
                 <p><strong>Embase / Ovid — requires institutional access</strong></p>
                 <p>Embase is accessed via Ovid or Athens, and requires a university login. Most UK medical students have access through their university.</p>
-                <ol start="11">
+                <ol start="1">
                   <li>Search for your university name + "OpenAthens" or "Shibboleth" login.</li>
                   <li>Log in at your institution's library page — not directly at ovid.com.</li>
                   <li>Once logged in, navigate to Ovid &gt; Databases &gt; Embase.</li>
@@ -1146,25 +1198,10 @@
             <section class="phase1-section-card"><div class="pdf-viewer" style="height:420px">Upload/Embed H1 Scoping Search PDF here</div><div class="phase1-page-actions" style="margin-top:14px"><a class="btn" href="#">Download PDF</a><button class="btn primary" data-toggle-complete="phase1-6">Mark as Complete</button></div></section>
           </div>
         `,
-        'phase1-7': `
-          <div class="phase1-page">
-            <section class="phase1-section-card">
-              <h2>Worked Exemplar: A Systematic Review, Annotated</h2>
-              <p>Read one well-conducted published systematic review from start to finish. Annotations throughout point out what makes each section good — and what to replicate in your own work.</p>
-              <div class="phase1-callout is-amber"><h3>ANNOTATED PDF COMING SOON</h3><p>The annotated version of this exemplar review will be uploaded here shortly.</p></div>
-              <div class="phase1-grid">
-                <div class="phase1-step-card"><h3>Pay attention to</h3><ul><li>PICO in the introduction</li><li>Eligibility criteria wording</li><li>Search strategy reporting</li></ul></div>
-                <div class="phase1-step-card"><h3>Also note</h3><ul><li>PRISMA flow diagram accounting</li><li>Results without over-interpretation</li><li>Discussion of limitations</li></ul></div>
-              </div>
-              <div class="pdf-viewer" style="height:420px;margin-top:14px">Annotated PDF viewer placeholder</div>
-              <div class="phase1-page-actions" style="margin-top:14px"><a class="btn" href="#">Download PDF</a><button class="btn primary" data-toggle-complete="phase1-7">Mark as Complete</button></div>
-            </section>
-          </div>
-        `,
         'phase1-8': `
           <div class="phase1-page phase1-appraisal-page">
             <section class="phase1-appraisal-intro">
-              <p class="eyebrow">Page 8 of 9 — Critical Appraisal Mini-Guide</p>
+              <p class="eyebrow">Page 7 of 9 — Critical Appraisal Mini-Guide</p>
               <h2>Critical Appraisal Mini-Guide</h2>
               <p><em>How to read a medical paper — and how to spot when something is not right.</em></p>
               <p>Critical appraisal is the skill of reading a study carefully and asking: is this research valid? Are the conclusions justified by the data? Should I trust this result?</p>
@@ -1264,14 +1301,14 @@
         phase1: {
           title: 'PHASE 1 - FOUNDATIONS',
           subtitle: 'Weeks 1-2  |  Deliverable: Approved feasible topic - Gate 1',
-          overview: 'Welcome to the IHSAAN Medics Research Mentorship Programme. You have been accepted onto the SRMA Pilot Programme. Over the next 12–16 weeks, you and your team will conduct a systematic review of published medical literature — and leave with a registered PROSPERO protocol and a complete manuscript draft ready for journal submission. This portal is your home for the programme: every resource, guide, template and deadline is here. Work through the items in order, mark items complete as you go, and submit your Topic Proposal & Feasibility Form at Gate 1 for supervisor approval.',
+          overview: 'Welcome to the IHSAAN Medics Research Mentorship Programme. Over the next 12–16 weeks, your team will work towards a high-quality, submission-ready systematic review protocol. PROSPERO registration is not guaranteed and depends on eligibility and approval from all named team members. Use this portal to access resources, guides, templates and deadlines. Complete each item in order, then submit your Topic Proposal & Feasibility Form at Gate 1 for supervisor approval.',
           items: [
             { id:'phase1-1', type:'GUIDE', title:'Welcome to the Programme', time:'5 min', status:'Ready',
               description: `
                 <h2>Welcome to the IHSAAN Medics Research Mentorship Programme</h2>
-                <p>You have been accepted onto the SRMA Pilot Programme. Over the next 12–16 weeks, you and your team will conduct a systematic review of published medical literature — and leave with a registered PROSPERO protocol and a complete manuscript draft ready for journal submission.</p>
+                <p>Over the next 12–16 weeks, your team will work towards a high-quality, submission-ready systematic review protocol. PROSPERO registration is not guaranteed and depends on eligibility and approval from all named team members.</p>
 
-                <p>This portal is your home for the entire programme. Every resource, guide, template, and deadline lives here. Work through each phase in order, mark items complete as you go, and your supervisor will be notified automatically when you reach each Gate.</p>
+                <p>Use this portal to access resources, guides, templates and deadlines. Complete each item in order, then submit your Topic Proposal &amp; Feasibility Form at Gate 1 for supervisor approval.</p>
 
                 <h3>What this portal contains</h3>
                 <ul>
@@ -1302,11 +1339,10 @@
             { id:'phase1-4', type:'GUIDE', title:'Software & Access Setup', time:'30 min', status:'Ready', description:'One-time setup: Zotero, Rayyan, and database access (PubMed, Cochrane CENTRAL, PROSPERO, Embase via institutional access). Step-by-step setup instructions and troubleshooting notes.', cta:'Open setup guide', preview:'Zotero, Rayyan, database access checklist.' },
             { id:'phase1-5', type:'EXTERNAL', title:'Curated Reading List', time:'Browse', status:'Ready', description:'Essential free resources: Cochrane Handbook, PRISMA 2020, Cochrane Interactive Learning, PROSPERO and your university library guides.', cta:'Browse links', preview:'Curated methodology reading list.' },
             { id:'phase1-6', type:'PDF', title:'H1 · Scoping Search (Upload)', time:'-', status:'Ready', description:'H1 scoping search PDF (upload). This page is a PDF viewer with download and Mark as Complete button.', cta:'View PDF', preview:'Scoping search PDF upload.' },
-            { id:'phase1-7', type:'PDF', title:'Worked Exemplar Review — Annotated', time:'45 min', status:'To create', description:'<p>Read one well-conducted published systematic review from start to finish. Annotations will show what makes each section good and what to replicate.</p><p><strong>As you read, pay attention to:</strong></p><ul><li>How the PICO question is stated in the introduction</li><li>How the eligibility criteria are written</li><li>How the search strategy is reported in the Methods</li><li>How the PRISMA flow diagram accounts for records</li><li>How the Results report findings without over-interpretation</li><li>How the Discussion handles limitations</li></ul><p class="callout-highlight" style="margin-top:8px">ANNOTATED PDF COMING SOON</p>', cta:'Open guide', preview:'Annotated exemplar review (placeholder).' },
             { id:'phase1-8', type:'GUIDE', title:'Critical Appraisal Mini-Guide', time:'20 min', status:'Ready', description:`
               <div class="phase1-page phase1-appraisal-page">
                 <section class="phase1-appraisal-intro">
-                  <p class="eyebrow">Page 8 of 9 — Critical Appraisal Mini-Guide</p>
+                  <p class="eyebrow">Page 7 of 9 — Critical Appraisal Mini-Guide</p>
                   <h2>Critical Appraisal Mini-Guide</h2>
                   <p><em>How to read a medical paper — and how to spot when something is not right.</em></p>
                   <p>Critical appraisal is the skill of reading a study carefully and asking: is this research valid? Are the conclusions justified by the data? Should I trust this result?</p>
@@ -1338,7 +1374,7 @@
                 <div class="phase1-appraisal-grid">
                   <section class="phase1-appraisal-card">
                     <h3>Step 3 — Ask the PICO questions</h3>
-                    <ul>
+                    <ul class="phase1-appraisal-bullet-list">
                       <li><strong>Population:</strong> who were the participants, and are they similar to the patients the study claims to apply to?</li>
                       <li><strong>Intervention (or Exposure):</strong> what exactly was done to the participants, at what dose, for how long?</li>
                       <li><strong>Comparator:</strong> what was it compared to? (placebo, usual care, a different intervention?)</li>
@@ -1349,7 +1385,7 @@
                   <section class="phase1-appraisal-card">
                     <h3>Step 4 — Assess the risk of bias</h3>
                     <p>Risk of bias refers to the ways a study's design or conduct may have introduced systematic error — making the results less trustworthy. In Phase 3, you will use formal tools (RoB 2 for RCTs, ROBINS-I for non-randomised studies) to do this systematically. For now, learn to spot the major issues:</p>
-                    <ul>
+                    <ul class="phase1-appraisal-bullet-list">
                       <li><strong>Selection bias:</strong> were participants randomised? If not, are the groups comparable at baseline?</li>
                       <li><strong>Performance bias:</strong> did participants or researchers know which treatment group they were in? (Blinding)</li>
                       <li><strong>Detection bias:</strong> was the outcome measured in the same way in both groups?</li>
@@ -1376,7 +1412,6 @@
             { id:'phase1-4', type:'GUIDE', title:'Software & Access Setup', time:'30 min', status:'Ready', description:'One-time setup: Zotero, Rayyan, and database access (PubMed, Cochrane CENTRAL, PROSPERO, Embase via institutional access). Step-by-step setup instructions and troubleshooting notes.', cta:'Open setup guide', preview:'Zotero, Rayyan, database access checklist.' },
             { id:'phase1-5', type:'EXTERNAL', title:'Curated Reading List', time:'Browse', status:'Ready', description:'Essential free resources: Cochrane Handbook, PRISMA 2020, Cochrane Interactive Learning, PROSPERO and your university library guides.', cta:'Browse links', preview:'Curated methodology reading list.' },
             { id:'phase1-6', type:'PDF', title:'H1 · Scoping Search (Upload)', time:'-', status:'Ready', description:'H1 scoping search PDF (upload). This page is a PDF viewer with download and Mark as Complete button.', cta:'View PDF', preview:'Scoping search PDF upload.' },
-            { id:'phase1-7', type:'PDF', title:'Worked Exemplar Review — Annotated', time:'45 min', status:'To create', description:'<p>Read one well-conducted published systematic review from start to finish. Annotations will show what makes each section good and what to replicate.</p><p><strong>As you read, pay attention to:</strong></p><ul><li>How the PICO question is stated in the introduction</li><li>How the eligibility criteria are written</li><li>How the search strategy is reported in the Methods</li><li>How the PRISMA flow diagram accounts for records</li><li>How the Results report findings without over-interpretation</li><li>How the Discussion handles limitations</li></ul><p class="callout-highlight" style="margin-top:8px">ANNOTATED PDF COMING SOON</p>', cta:'Open guide', preview:'Annotated exemplar review (placeholder).' },
             { id:'phase1-8', type:'GUIDE', title:'Critical Appraisal Mini-Guide', time:'20 min', status:'Ready', description:'How to read a paper critically: study designs, PICO questions, spotting bias, and using CASP checklists.', cta:'Open guide', preview:'Critical appraisal foundations.' },
             { id:'phase1-9', type:'QUIZ', title:'Phase 1 Knowledge Check', time:'15 min', status:'Ready', description:'10 multiple-choice questions. Pass mark 70% to unlock Gate 1. Show correct/incorrect feedback after submission.', cta:'Start quiz', preview:'10-question knowledge check.' },
             { id:'phase1-gate', type:'GATE', title:'GATE 1 - Topic Proposal & Feasibility Form', time:'-', status:'Gate 1', description:'Student completes and submits the Topic Proposal & Feasibility Form. Supervisor reviews and signs off to unlock Phase 2.', cta:'Submit for approval', preview:'Gate unlocks after the Phase 1 knowledge check and all prior items are complete.' }
@@ -1467,6 +1502,13 @@
     let currentView = 'dashboard';
     let currentPhaseKey = 'phase1';
     let currentItemId = null;
+    let currentPhase1SlideIndex = 0;
+    let currentPhase1SlidePages = {
+      'phase1-4': 0,
+      'phase1-3': 0,
+      'phase1-5': 0,
+      'phase1-8': 0
+    };
     let progressLookup = new Map();
     let pendingLogin = false;
     let phase1UnlockTimer = null;
@@ -1526,7 +1568,678 @@
       `;
     }
 
+    function renderPhase1Page2Slides(){
+      return [
+        `
+          <div class="phase1-slide-inner">
+            <section class="phase1-slide-panel">
+              <p class="eyebrow">Start here</p>
+              <h3>What Is a Systematic Review and Meta-Analysis?</h3>
+              <p>A plain-English introduction to the type of research you are about to do.</p>
+              <p><strong>Start here: four types of review</strong></p>
+              <p>The medical literature is full of different kinds of reviews. Here is how they differ.</p>
+            </section>
+
+            <section class="phase1-slide-panel">
+              <table class="phase1-table phase1-table--srma">
+                <thead>
+                  <tr><th>Type</th><th>What it is</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Narrative Review</td><td>A broad overview written by an expert, summarising what is known about a topic. Not reproducible — two people doing the same review might reach different conclusions.</td></tr>
+                  <tr><td>Scoping Review</td><td>Maps out what research exists on a topic without formally assessing quality. Good for understanding a field, not for answering a specific clinical question.</td></tr>
+                  <tr><td>Systematic Review</td><td>A reproducible, exhaustive search of the literature to answer one specific, pre-defined question. Every step is documented so another researcher could repeat it. This is what you are doing.</td></tr>
+                  <tr><td>Meta Analysis</td><td>A statistical technique used inside a systematic review to pool numerical results from multiple studies into a single combined estimate. Not all systematic reviews include a meta-analysis — and that is fine.</td></tr>
+                </tbody>
+              </table>
+            </section>
+          </div>
+        `,
+        `
+          <div class="phase1-slide-inner">
+            <section class="phase1-slide-panel">
+              <h3>IMPORTANT — NARRATIVE SYNTHESIS IS NOT A FAILURE</h3>
+              <p>Many student reviews end up doing a narrative synthesis rather than a meta-analysis. This happens when studies are too different from each other to pool statistically. A well-conducted narrative synthesis is a valid, publishable output. Do not drop out if a forest plot does not materialise.</p>
+            </section>
+
+            <section class="phase1-slide-panel">
+              <h3>Why systematic reviews matter</h3>
+              <p>A well-conducted systematic review sits at the top of the evidence hierarchy. It tells clinicians, policymakers, and researchers what the totality of published evidence says about a question — not just one study, but all of them. That is why they get published and why they influence clinical guidelines.</p>
+            </section>
+          </div>
+        `,
+        `
+          <div class="phase1-slide-inner">
+            <section class="phase1-slide-panel">
+              <h3>The infrastructure that makes systematic reviews trustworthy</h3>
+              <p><strong>PROSPERO</strong></p>
+              <p>PROSPERO is the international register for systematic reviews. You register your review before you start searching — this creates a public, time-stamped record of your question, methods, and analysis plan. It prevents outcome-reporting bias (changing your question after you see the results) and stops two teams accidentally doing the same review.</p>
+              <p><strong>Note:</strong> PROSPERO only accepts systematic reviews. It does not accept scoping reviews or pure literature reviews.</p>
+              <p><strong>PRISMA</strong></p>
+              <p>PRISMA (Preferred Reporting Items for Systematic reviews and Meta-Analyses) is the reporting standard for systematic reviews. The PRISMA 2020 checklist tells you exactly what to include in your manuscript — and journals expect you to follow it. You will also produce a PRISMA flow diagram showing how many records you found, screened, and included.</p>
+            </section>
+          </div>
+        `,
+        `
+          <div class="phase1-slide-inner">
+            <section class="phase1-slide-panel">
+              <h3>What you will look to produce on this programme</h3>
+              <ul class="phase1-bullets">
+                <li>A registered PROSPERO protocol — your pre-committed question and methods</li>
+                <li>A PRISMA 2020 flow diagram — your audit trail of records found and screened</li>
+                <li>A data extraction sheet — the data you pulled from each included study</li>
+                <li>A risk-of-bias assessment — a judgement of each study's methodological quality</li>
+                <li>A synthesis — either a meta-analysis (pooled statistics) or a structured narrative synthesis</li>
+                <li>A complete manuscript draft — structured to PRISMA 2020, ready for supervisor review and journal submission</li>
+              </ul>
+            </section>
+          </div>
+        `
+      ];
+    }
+
+    function renderPhase1SlideDeck(pageMeta){
+      const slides = renderPhase1Page2Slides();
+      const activeSlideIndex = Math.min(Math.max(currentPhase1SlideIndex, 0), slides.length - 1);
+      currentPhase1SlideIndex = activeSlideIndex;
+
+      return `
+        <section class="phase1-page phase1-slide-page">
+          <div class="phase1-section-card phase1-slide-hero">
+            <div class="phase1-slide-hero-top">
+              <div>
+                <div class="phase1-banner-kicker">PHASE 1 · FOUNDATIONS</div>
+                <h2 class="phase1-slide-hero-title">${pageMeta.page} — ${pageMeta.title}</h2>
+                <p class="phase1-slide-hero-subtitle">Use the previous and next buttons to move through the content cards while keeping the wording and structure of the original page.</p>
+              </div>
+              <div class="phase1-slide-badge">Slide ${activeSlideIndex + 1} of ${slides.length}</div>
+            </div>
+
+            <div class="phase1-slide-nav">
+              <button type="button" class="btn" data-slide-nav="prev" data-slide-page="${pageMeta.id}" ${activeSlideIndex === 0 ? 'disabled' : ''}>Previous</button>
+              <div class="phase1-slide-counter">Slide ${activeSlideIndex + 1} of ${slides.length}</div>
+              <button type="button" class="btn primary" data-slide-nav="next" data-slide-page="${pageMeta.id}" ${activeSlideIndex === slides.length - 1 ? 'disabled' : ''}>Next</button>
+            </div>
+          </div>
+
+          <div class="phase1-slide-viewport" aria-label="${pageMeta.page} slide deck">
+            <div class="phase1-slide-track" style="transform:translateX(-${activeSlideIndex * 100}%)">
+              ${slides.map(slide => `
+                <article class="phase1-slide">
+                  ${slide}
+                </article>
+              `).join('')}
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderGenericPhase1SlideDeck(pageMeta, slides, deckPageId, subtitle){
+      const activeSlideIndex = Math.min(Math.max(currentPhase1SlidePages[deckPageId] || 0, 0), slides.length - 1);
+      currentPhase1SlidePages[deckPageId] = activeSlideIndex;
+
+      return `
+        <section class="phase1-page phase1-slide-page">
+          <div class="phase1-section-card phase1-slide-hero">
+            <div class="phase1-slide-hero-top">
+              <div>
+                <div class="phase1-banner-kicker">PHASE 1 · FOUNDATIONS</div>
+                <h2 class="phase1-slide-hero-title">${pageMeta.page} — ${pageMeta.title}</h2>
+                <p class="phase1-slide-hero-subtitle">${subtitle}</p>
+              </div>
+              <div class="phase1-slide-badge">Slide ${activeSlideIndex + 1} of ${slides.length}</div>
+            </div>
+
+            <div class="phase1-slide-nav">
+              <button type="button" class="btn" data-slide-nav="prev" data-slide-page="${deckPageId}" ${activeSlideIndex === 0 ? 'disabled' : ''}>Previous</button>
+              <div class="phase1-slide-counter">Slide ${activeSlideIndex + 1} of ${slides.length}</div>
+              <button type="button" class="btn primary" data-slide-nav="next" data-slide-page="${deckPageId}" ${activeSlideIndex === slides.length - 1 ? 'disabled' : ''}>Next</button>
+            </div>
+          </div>
+
+          <div class="phase1-slide-viewport" aria-label="${pageMeta.page} slide deck">
+            <div class="phase1-slide-track" style="transform:translateX(-${activeSlideIndex * 100}%)">
+              ${slides.map(slide => `
+                <article class="phase1-slide">
+                  ${slide}
+                </article>
+              `).join('')}
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderPhase1Page3Slides(){
+      return [
+        `
+          <div class="phase1-slide-inner">
+            <section class="phase1-slide-panel">
+              <p class="eyebrow">Page 3 of 9 — Your Project Workflow: Phase by Phase</p>
+              <h3>Your Project Workflow: Phase by Phase</h3>
+              <p class="muted"><em>Your map from Week 1 to submission. For the detailed how-to at each step, follow the guides in each phase.</em></p>
+            </section>
+
+            <section class="phase1-slide-panel">
+              <h3>HOW TO READ THIS PAGE</h3>
+              <p>Each phase has a goal, a list of tasks, and a deliverable that your supervisor signs off at the Gate. Work through tasks in order. If something is unclear, the how-to guide for that step is in the sidebar.</p>
+            </section>
+          </div>
+        `,
+        `
+          <div class="phase1-slide-inner">
+            <section class="phase1-slide-panel">
+              <h3 class="phase1-phase-heading">Phase 1 — Foundations (Weeks 1–2)</h3>
+              <p class="phase1-goal">Goal: confirm your review question is original and feasible, and get supervisor approval to proceed.</p>
+              <ul class="phase1-phase-list">
+                <li>Get set up: Zotero, Rayyan, database access</li>
+                <li>Understand what a systematic review is and what this programme produces</li>
+                <li>Break your research idea into a PICO/PECO question (population, intervention/exposure, comparator, outcome)</li>
+                <li>Do a scoping search on PROSPERO and PubMed to check your question is not already answered</li>
+                <li>Complete the Phase 1 Knowledge Check</li>
+                <li>Submit your topic via the Gate 1 form — supervisor approves before you proceed</li>
+              </ul>
+              <div class="phase1-callout phase1-callout--green" style="margin-top:14px">
+                <h4>Gate 1 Deliverable</h4>
+                <p>Topic Proposal &amp; Feasibility Form — supervisor-approved.</p>
+              </div>
+            </section>
+          </div>
+        `,
+        `
+          <div class="phase1-slide-inner">
+            <section class="phase1-slide-panel">
+              <h3 class="phase1-phase-heading">Phase 2 — Question &amp; Protocol (Weeks 3–5)</h3>
+              <p class="phase1-goal">Goal: lock in your precise question, write a protocol, and register it on PROSPERO.</p>
+              <ul class="phase1-phase-list">
+                <li>Refine your PICO/PECO question with worked examples</li>
+                <li>Write your eligibility criteria (what studies you will and will not include)</li>
+                <li>Build a search strategy with a librarian — MeSH terms, Boolean logic, database translation</li>
+                <li>Write your full protocol using the PRISMA-P template</li>
+                <li>Register your protocol on PROSPERO</li>
+                <li>Complete the Phase 2 Knowledge Check</li>
+              </ul>
+              <div class="phase1-callout phase1-callout--green" style="margin-top:14px">
+                <h4>Gate 2 Deliverable</h4>
+                <p>Protocol draft — supervisor-approved.</p>
+              </div>
+              <div class="phase1-callout phase1-callout--green" style="margin-top:12px">
+                <h4>Gate 3 Deliverable</h4>
+                <p>PROSPERO registration number — submitted.</p>
+              </div>
+            </section>
+          </div>
+        `,
+        `
+          <div class="phase1-slide-inner">
+            <section class="phase1-slide-panel">
+              <h3 class="phase1-phase-heading">Phase 3 — Screening &amp; Synthesis (Weeks 6–10)</h3>
+              <p class="phase1-goal">Goal: run your searches, screen all records, extract data, assess risk of bias, and produce your synthesis.</p>
+              <ul class="phase1-phase-list">
+                <li>Run searches across PubMed, Embase/Ovid, and Cochrane CENTRAL — export to Zotero</li>
+                <li>Deduplicate your results</li>
+                <li>Screen titles and abstracts in Rayyan with your co-screener (blind, independently)</li>
+                <li>Screen full texts and log exclusion reasons</li>
+                <li>Complete the PRISMA 2020 flow diagram</li>
+                <li>Extract data from included studies using the extraction template</li>
+                <li>Assess risk of bias (RoB 2 for RCTs, ROBINS-I for non-randomised studies)</li>
+                <li>Decide on meta-analysis or narrative synthesis — both are valid</li>
+                <li>Conduct your synthesis</li>
+                <li>Apply GRADE certainty ratings</li>
+                <li>Complete the Phase 3 Knowledge Check</li>
+              </ul>
+              <div class="phase1-callout phase1-callout--green" style="margin-top:14px">
+                <h4>Gate 4 Deliverable</h4>
+                <p>Analysis outputs (PRISMA diagram, extraction sheet, RoB table, synthesis) — supervisor-approved.</p>
+              </div>
+            </section>
+          </div>
+        `,
+        `
+          <div class="phase1-slide-inner">
+            <section class="phase1-slide-panel">
+              <h3 class="phase1-phase-heading">Phase 4 — Writing &amp; Submission (Weeks 11–16)</h3>
+              <p class="phase1-goal">Goal: write the manuscript, get supervisor sign-off, select a journal, and submit.</p>
+              <ul class="phase1-phase-list">
+                <li>Write each section of your manuscript using the template and PRISMA 2020 checklist</li>
+                <li>Manage citations with Zotero</li>
+                <li>Choose a journal and verify it is not predatory (Think-Check-Submit, DOAJ)</li>
+                <li>Get supervisor manuscript approval</li>
+                <li>Complete the Pre-Submission QA Checklist</li>
+                <li>Submit — and update your PROSPERO record to mark the review as completed</li>
+                <li>Respond to peer review if invited</li>
+              </ul>
+              <div class="phase1-callout phase1-callout--green" style="margin-top:14px">
+                <h4>Gate 5 Deliverable</h4>
+                <p>Manuscript draft — supervisor-approved.</p>
+              </div>
+              <div class="phase1-callout phase1-callout--green" style="margin-top:12px">
+                <h4>Gate 6 Deliverable</h4>
+                <p>Submission readiness confirmed — programme complete.</p>
+              </div>
+            </section>
+          </div>
+        `,
+        `
+          <div class="phase1-slide-inner">
+            <section class="phase1-slide-panel phase1-callout phase1-callout--orange">
+              <h4>Timeline Note</h4>
+              <p>Submission and acceptance may continue after Week 16. The guaranteed programme deliverable is a complete, supervisor-approved manuscript draft. What happens after submission is outside the programme window but the IHSAAN team will support you through it.</p>
+            </section>
+          </div>
+        `
+      ];
+    }
+
+    function renderPhase1Page5Slides(){
+      return [
+        `
+          <div class="phase1-slide-inner">
+            <section class="phase1-slide-panel">
+              <p class="eyebrow">Page 5 of 9 — Curated Reading List</p>
+              <h3>Curated Reading List</h3>
+              <p><em>Everything you need to understand the methodology — curated from the best free sources, so you are not lost online.</em></p>
+            </section>
+
+            <section class="phase1-slide-panel">
+              <h3>The essential free resources</h3>
+              <p class="phase1-software-subtitle">These are the authoritative sources for systematic review methodology. Bookmark them. You will return to them throughout the programme.</p>
+            </section>
+          </div>
+        `,
+        `
+          <div class="phase1-slide-inner">
+            <div class="phase1-grid" style="gap:14px">
+              <article class="phase1-reading-card">
+                <h3>Cochrane Handbook for Systematic Reviews of Interventions</h3>
+                <p>The definitive reference for how to conduct a systematic review. You do not need to read it cover to cover — use it as a reference when you have a specific question about methodology. Chapter 6 (searching) and Chapter 7 (screening) are especially useful in Phase 2–3.</p>
+                <a class="phase1-reading-link" href="https://training.cochrane.org/handbook" target="_blank" rel="noopener">Cochrane Handbook (free, online) →</a>
+              </article>
+
+              <article class="phase1-reading-card">
+                <h3>Cochrane Interactive Learning</h3>
+                <p>Free online modules that teach systematic review methods step by step, with exercises. These are high quality and cover the same ground as this programme. Use them to go deeper on any topic — especially risk of bias, meta-analysis, and GRADE.</p>
+                <a class="phase1-reading-link" href="https://training.cochrane.org/interactivelearning" target="_blank" rel="noopener">Cochrane Interactive Learning →</a>
+              </article>
+            </div>
+          </div>
+        `,
+        `
+          <div class="phase1-slide-inner">
+            <div class="phase1-grid" style="gap:14px">
+              <article class="phase1-reading-card">
+                <h3>PRISMA 2020</h3>
+                <p>The reporting standard you must follow. The website has the checklist, the flow diagram template, and explanation papers for each item. Bookmark this — you will use it in Phase 2 (protocol) and Phase 4 (manuscript).</p>
+                <a class="phase1-reading-link" href="http://www.prismastatement.org" target="_blank" rel="noopener">PRISMA 2020 Statement and Checklist →</a>
+              </article>
+
+              <article class="phase1-reading-card">
+                <h3>PROSPERO</h3>
+                <p>The international register for systematic reviews. You will register your review here in Phase 2. Use the search function now to check whether your question is already registered.</p>
+                <a class="phase1-reading-link" href="https://www.crd.york.ac.uk/prospero" target="_blank" rel="noopener">PROSPERO Register →</a>
+              </article>
+            </div>
+
+            <section class="phase1-slide-panel">
+              <h3>Your university library systematic review guide</h3>
+              <p>Almost every UK university library has its own SR guide — with institution-specific database login instructions, librarian contact details, and local resources. Find yours by searching: [your university name] + "systematic review guide" + "library".</p>
+            </section>
+          </div>
+        `,
+        `
+          <div class="phase1-slide-inner">
+            <section class="phase1-slide-panel">
+              <h3>Stay current: how to find research ideas</h3>
+              <p class="phase1-software-subtitle">The best systematic review ideas come from gaps you notice in the current literature — and the best way to notice gaps is to stay up to date with what is being published. Here is the habit we recommend you build from Week 1.</p>
+            </section>
+
+            <section class="phase1-reading-tip">
+              <h4>FIND YOUR TOP 4 JOURNALS</h4>
+              <p>Identify the four most important journals in your specialty or sub-specialty. These are the journals that publish the studies you would want to include in a review, and where you would want to publish your own work. If you are not sure which journals matter in your field, ask your supervisor — they will know instantly.</p>
+            </section>
+
+            <section class="phase1-reading-tip">
+              <h4>Step 1 — Identify your top 4 journals</h4>
+              <p>Think about your specialty. If you are interested in cardiology, that might be the New England Journal of Medicine, JAMA Cardiology, the European Heart Journal, and Heart. If you are in surgery, it might be the British Journal of Surgery, JAMA Surgery, Annals of Surgery, and the Lancet.</p>
+              <p>A quick way to find the leading journals in any field: search PubMed for a topic you care about, filter by systematic review, and look at where the best recent reviews were published. Those are your target journals.</p>
+            </section>
+          </div>
+        `,
+        `
+          <div class="phase1-slide-inner">
+            <section class="phase1-slide-panel">
+              <h3>Step 2 — Subscribe to their table of contents alerts</h3>
+              <p>Every major journal sends a free weekly or monthly email with its latest contents — titles, abstracts, links. This takes two minutes to set up and means the literature comes to you instead of you hunting for it.</p>
+              <ol class="phase1-bullets" style="margin-top:10px;">
+                <li>Go to each journal's website.</li>
+                <li>Find "Alerts", "Email notifications", or "Table of Contents" — usually under "For Authors" or in the footer.</li>
+                <li>Enter your email and subscribe.</li>
+              </ol>
+              <p>You will get an email each time a new issue is published. Scan the titles. Anything that catches your eye, save it to Zotero.</p>
+            </section>
+
+            <section class="phase1-slide-panel phase1-reading-why">
+              <h4>WHY THIS MATTERS</h4>
+              <p>Staying current is how you spot research gaps — the question that nobody has quite answered yet, or the field where a lot of new primary studies have appeared since the last review. This is where good review ideas come from. Make it a habit from day one.</p>
+            </section>
+          </div>
+        `,
+        `
+          <div class="phase1-slide-inner">
+            <section class="phase1-slide-panel">
+              <h3>Step 3 — Follow them on X (Twitter)</h3>
+              <p>Most top medical journals are active on X and post new research daily. Following them takes thirty seconds and means your timeline becomes a live feed of what is being published.</p>
+              <p>Search for your journals on X and follow their official accounts. Examples: @NEJM, @JAMAInternalMed, @TheLancet, @EuropeanHeartJ. Most publish daily highlights, open-access papers, and links to new systematic reviews as soon as they go live.</p>
+            </section>
+
+            <section class="phase1-reading-why">
+              <h4>WHY THIS MATTERS</h4>
+              <p>Staying current is how you spot research gaps — the question that nobody has quite answered yet, or the field where a lot of new primary studies have appeared since the last review. This is where good review ideas come from. Make it a habit from day one.</p>
+            </section>
+          </div>
+        `
+      ];
+    }
+
+    function renderPhase1Page4Slides(){
+      return [
+        `
+          <div class="phase1-slide-inner">
+            <section class="phase1-slide-panel">
+              <p class="eyebrow">Page 4 of 9 — Software &amp; Access Setup</p>
+              <h3>Software &amp; Access Setup</h3>
+              <p class="phase1-software-subtitle"><em>Do this once in Week 1. Every how-to guide in the programme assumes you have completed these steps.</em></p>
+            </section>
+
+            <section class="phase1-workflow-intro">
+              <h3>BEFORE YOU START</h3>
+              <p>This page takes about 30 minutes. Work through it top to bottom. If you get stuck on database access, check with your university library or contact the IHSAAN team before your first supervisor check-in.</p>
+            </section>
+          </div>
+        `,
+        `
+          <div class="phase1-slide-inner">
+            <div class="phase1-grid" style="gap:14px">
+              <section class="phase1-software-card">
+                <h3>Step 1 — Zotero (reference manager)</h3>
+                <p>Zotero is the free reference manager you will use to collect, organise, and de-duplicate your search results — and to generate your bibliography when writing.</p>
+                <ol>
+                  <li>Go to zotero.org and create a free account.</li>
+                  <li>Download and install the Zotero desktop app.</li>
+                  <li>Install the Zotero Connector browser extension (this lets you save references from PubMed and other databases with one click).</li>
+                  <li>Open the desktop app and sign in. You should see your library synced.</li>
+                </ol>
+              </section>
+
+              <section class="phase1-software-card">
+                <h3>Step 2 — Rayyan (screening tool)</h3>
+                <p>Rayyan is the free screening platform you and your co-screener will use to screen titles and abstracts independently, then reconcile disagreements.</p>
+                <ol start="5">
+                  <li>Go to rayyan.ai and create a free account.</li>
+                  <li>You do not need to create a project yet — wait until Phase 3 when you have your search results.</li>
+                </ol>
+              </section>
+            </div>
+          </div>
+        `,
+        `
+          <div class="phase1-slide-inner">
+            <section class="phase1-slide-panel">
+              <h3>Step 3 — Database access</h3>
+              <p>You will search several databases. Here is how to access each one.</p>
+              <p><strong>PubMed — free for everyone</strong></p>
+              <ol class="phase1-step3-list" start="1">
+                <li>Go to pubmed.ncbi.nlm.nih.gov — no login required.</li>
+                <li>Create a free NCBI account so you can save searches and set up email alerts. Click "Log in" in the top right.</li>
+              </ol>
+              <p><strong>Cochrane CENTRAL and PROSPERO — free for everyone</strong></p>
+              <ol class="phase1-step3-list" start="1">
+                <li>Cochrane Library: cochranelibrary.com — no login required for searching.</li>
+                <li>PROSPERO: crd.york.ac.uk/prospero — no login required for searching. You will need to create a free account when you register your own review in Phase 2.</li>
+              </ol>
+              <p><strong>Embase / Ovid — requires institutional access</strong></p>
+              <p>Embase is accessed via Ovid or Athens, and requires a university login. Most UK medical students have access through their university.</p>
+              <ol class="phase1-step3-list" start="1">
+                <li>Search for your university name + "OpenAthens" or "Shibboleth" login.</li>
+                <li>Log in at your institution's library page — not directly at ovid.com.</li>
+                <li>Once logged in, navigate to Ovid &gt; Databases &gt; Embase.</li>
+              </ol>
+              <p>If you cannot access Embase/Ovid through your institution, contact your university library — it is usually available through NHS OpenAthens if you have an NHS placement login.</p>
+            </section>
+          </div>
+        `,
+        `
+          <div class="phase1-slide-inner">
+            <section class="phase1-slide-panel">
+              <h3>Step 4 — Optional but useful</h3>
+              <ol class="phase1-step4-list">
+                <li>GRADEpro (gradepro.org) — for certainty of evidence assessments in Phase 3. Free account.</li>
+                <li>RevMan (Cochrane RevMan) — for meta-analysis in Phase 3 if using the Cochrane tool. Free download from training.cochrane.org.</li>
+                <li>R + the meta package — an alternative to RevMan for more flexible meta-analysis. Free, but requires basic R familiarity.</li>
+              </ol>
+            </section>
+
+            <section class="phase1-callout phase1-callout--green">
+              <h4>All set?</h4>
+              <p>Once you have Zotero installed, a Rayyan account, and database access confirmed, you are ready for the rest of Phase 1. If database access is taking time to sort out, do not let it block you — continue with the other Phase 1 items and resolve it before Phase 3 begins.</p>
+            </section>
+          </div>
+        `
+      ];
+    }
+
+    function renderPhase1Page8Slides(){
+      return [
+        `
+          <div class="phase1-slide-inner">
+            <section class="phase1-slide-panel">
+              <p class="eyebrow">Page 7 of 9 — Critical Appraisal Mini-Guide</p>
+              <h3>Critical Appraisal Mini-Guide</h3>
+              <p><em>How to read a medical paper — and how to spot when something is not right.</em></p>
+              <p>Critical appraisal is the skill of reading a study carefully and asking: is this research valid? Are the conclusions justified by the data? Should I trust this result?</p>
+              <p>You will need this skill throughout the programme — when assessing studies for inclusion in your review, and when conducting formal risk-of-bias assessment in Phase 3. This guide gives you the foundations.</p>
+            </section>
+
+            <section class="phase1-slide-panel">
+              <h3>Step 1 — Read the abstract first, then the full paper</h3>
+              <p class="phase1-appraisal-text">Read the abstract to understand what the study claims. Then read the full paper to decide whether those claims are justified. The abstract is written to sell the paper; the Methods section is where the truth lives.</p>
+            </section>
+          </div>
+        `,
+        `
+          <div class="phase1-slide-inner">
+            <section class="phase1-slide-panel">
+              <h3>Step 2 — Identify the study design</h3>
+              <p class="phase1-appraisal-text" style="margin-bottom:12px;">The study design determines what you can and cannot conclude. The main designs you will encounter in systematic reviews:</p>
+              <table class="phase1-table phase1-appraisal-table">
+                <thead>
+                  <tr><th>Study design</th><th>What it tells you</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Randomised controlled trial (RCT)</td><td>The strongest evidence for whether an intervention works. Participants are randomly assigned to groups, controlling for confounders.</td></tr>
+                  <tr><td>Cohort study</td><td>Follows a group of people over time. Good for understanding risk factors and prognosis. Cannot prove causation as reliably as an RCT.</td></tr>
+                  <tr><td>Case-control study</td><td>Compares people with a condition to those without, looking backwards for differences in exposure. Useful for rare outcomes. Prone to recall bias.</td></tr>
+                  <tr><td>Cross-sectional study</td><td>A snapshot in time. Useful for prevalence data. Cannot establish temporal relationships.</td></tr>
+                  <tr><td>Case report / case series</td><td>Describes one or a few patients. Useful for hypothesis generation. Very low on the evidence hierarchy.</td></tr>
+                </tbody>
+              </table>
+            </section>
+          </div>
+        `,
+        `
+          <div class="phase1-slide-inner">
+            <div class="phase1-appraisal-grid">
+              <section class="phase1-slide-panel">
+                <h3>Step 3 — Ask the PICO questions</h3>
+                <ul class="phase1-appraisal-list">
+                  <li><strong>Population:</strong> who were the participants, and are they similar to the patients the study claims to apply to?</li>
+                  <li><strong>Intervention (or Exposure):</strong> what exactly was done to the participants, at what dose, for how long?</li>
+                  <li><strong>Comparator:</strong> what was it compared to? (placebo, usual care, a different intervention?)</li>
+                  <li><strong>Outcome:</strong> what was measured, and was it a meaningful outcome or a surrogate?</li>
+                </ul>
+              </section>
+
+              <section class="phase1-slide-panel">
+                <h3>Step 4 — Assess the risk of bias</h3>
+                <p>Risk of bias refers to the ways a study's design or conduct may have introduced systematic error — making the results less trustworthy. In Phase 3, you will use formal tools (RoB 2 for RCTs, ROBINS-I for non-randomised studies) to do this systematically. For now, learn to spot the major issues:</p>
+                <ul class="phase1-appraisal-list">
+                  <li><strong>Selection bias:</strong> were participants randomised? If not, are the groups comparable at baseline?</li>
+                  <li><strong>Performance bias:</strong> did participants or researchers know which treatment group they were in? (Blinding)</li>
+                  <li><strong>Detection bias:</strong> was the outcome measured in the same way in both groups?</li>
+                  <li><strong>Attrition bias:</strong> how many participants dropped out, and are they accounted for?</li>
+                  <li><strong>Reporting bias:</strong> were all outcomes reported, or only the significant ones?</li>
+                </ul>
+              </section>
+            </div>
+          </div>
+        `,
+        `
+          <div class="phase1-slide-inner">
+            <section class="phase1-slide-panel">
+              <h3>Step 5 — Use a CASP checklist</h3>
+              <p>The Critical Appraisal Skills Programme (CASP) provides free, structured checklists for each study design — RCTs, cohort studies, case-control studies, systematic reviews, and more. They walk you through the key appraisal questions in a logical order.</p>
+              <p><a href="https://casp-uk.net/casp-tools-checklists/" target="_blank" rel="noopener">CASP checklists (free download)</a></p>
+            </section>
+
+            <section class="phase1-slide-panel phase1-appraisal-callout">
+              <h4>Quick rule of thumb</h4>
+              <p>A study can have an interesting question and still have poor methodology. Always read the Methods section critically. If you cannot tell from the Methods section how something was done, that is itself a problem.</p>
+            </section>
+          </div>
+        `
+      ];
+    }
+
     function renderPhase1GateBlank(pageId){
+      if (pageId === 'phase1-10') {
+        return `
+          <section class="phase1-page phase1-gate-page">
+            <section class="phase1-gate-hero">
+              <h2>Gate 1 — Topic Proposal &amp; Feasibility</h2>
+              <p>Complete this form with your team. Once you are satisfied, share it with your supervisor for review.</p>
+              <p>Use this workspace to capture the topic, your first feasibility check, and the eligibility criteria before you submit Gate 1.</p>
+            </section>
+
+            <div class="phase1-gate-grid">
+              <form class="phase1-gate-panel" autocomplete="on">
+                <h3>Project details</h3>
+                <div class="phase1-gate-fields">
+                  <label class="phase1-gate-field">
+                    <span>Proposed review title</span>
+                    <input type="text" name="proposed-review-title" placeholder="Enter the working title">
+                  </label>
+                  <label class="phase1-gate-field">
+                    <span>Lead student</span>
+                    <input type="text" name="lead-student" placeholder="Enter the lead student name">
+                  </label>
+                  <label class="phase1-gate-field">
+                    <span>Team members</span>
+                    <textarea name="team-members" placeholder="List the team members, one per line"></textarea>
+                  </label>
+                  <label class="phase1-gate-field">
+                    <span>Supervisor</span>
+                    <input type="text" name="supervisor" placeholder="Enter the supervisor name">
+                  </label>
+                </div>
+
+                <h3 style="margin-top:18px;">Research question</h3>
+                <div class="phase1-gate-fields phase1-gate-fields--single">
+                  <label class="phase1-gate-field">
+                    <span>Topic area</span>
+                    <input type="text" name="topic-area" placeholder="Broad clinical or methodological area">
+                  </label>
+                  <label class="phase1-gate-field">
+                    <span>Brief background and rationale</span>
+                    <textarea name="background-rationale" placeholder="Why does this topic matter?"></textarea>
+                  </label>
+                  <label class="phase1-gate-field">
+                    <span>Why is this review needed?</span>
+                    <textarea name="why-needed" placeholder="What gap or uncertainty does it address?"></textarea>
+                  </label>
+                  <label class="phase1-gate-field">
+                    <span>Proposed research question</span>
+                    <textarea name="research-question" placeholder="Write the question in plain language"></textarea>
+                  </label>
+                  <label class="phase1-gate-field">
+                    <span>PICO framework</span>
+                    <textarea name="pico-framework" placeholder="Population, Intervention, Comparator, Outcome"></textarea>
+                  </label>
+                </div>
+
+                <h3 style="margin-top:18px;">Proposed eligibility criteria</h3>
+                <div class="phase1-gate-fields phase1-gate-fields--single">
+                  <label class="phase1-gate-field">
+                    <span>Population</span>
+                    <textarea name="population" placeholder="Define who will be included"></textarea>
+                  </label>
+                  <label class="phase1-gate-field">
+                    <span>Intervention or exposure</span>
+                    <textarea name="intervention-exposure" placeholder="Define the intervention or exposure"></textarea>
+                  </label>
+                  <label class="phase1-gate-field">
+                    <span>Comparator</span>
+                    <textarea name="comparator" placeholder="Define the comparator group or condition"></textarea>
+                  </label>
+                  <label class="phase1-gate-field">
+                    <span>Outcomes</span>
+                    <textarea name="outcomes" placeholder="List the outcomes of interest"></textarea>
+                  </label>
+                  <label class="phase1-gate-field">
+                    <span>Study designs</span>
+                    <textarea name="study-designs" placeholder="RCTs, cohort studies, case-control studies..."></textarea>
+                  </label>
+                  <label class="phase1-gate-field">
+                    <span>Main inclusion criteria</span>
+                    <textarea name="main-inclusion-criteria" placeholder="Key conditions for inclusion"></textarea>
+                  </label>
+                  <label class="phase1-gate-field">
+                    <span>Main exclusion criteria</span>
+                    <textarea name="main-exclusion-criteria" placeholder="Key conditions for exclusion"></textarea>
+                  </label>
+                </div>
+              </form>
+
+              <aside class="phase1-gate-panel">
+                <h3>Team declaration</h3>
+                <ul class="phase1-gate-list">
+                  <li class="phase1-gate-choice">
+                    <input type="checkbox" name="topic-feasible" id="topic-feasible">
+                    <label for="topic-feasible">
+                      <strong>The topic appears feasible.</strong>
+                      <span>We have enough early evidence to justify moving forward.</span>
+                    </label>
+                  </li>
+                  <li class="phase1-gate-choice">
+                    <input type="checkbox" name="team-reviewed" id="team-reviewed">
+                    <label for="team-reviewed">
+                      <strong>All team members have reviewed the proposal.</strong>
+                      <span>Everyone has checked the wording, scope, and feasibility notes.</span>
+                    </label>
+                  </li>
+                  <li class="phase1-gate-choice">
+                    <input type="checkbox" name="ready-supervisor" id="ready-supervisor">
+                    <label for="ready-supervisor">
+                      <strong>The form is ready to share with the supervisor.</strong>
+                      <span>We are happy for the supervisor to review the Gate 1 submission.</span>
+                    </label>
+                  </li>
+                </ul>
+
+                <div class="phase1-gate-actions" style="margin-top:16px;">
+                  <div>
+                    <p class="phase1-gate-note">Save Draft · Preview · Please save your response yourself in case of any accidental loss of data/response.</p>
+                  </div>
+                  <div class="phase1-page-actions">
+                    <button type="button" class="btn btn-secondary">Save Draft</button>
+                    <button type="button" class="btn btn-outline">Preview</button>
+                  </div>
+                </div>
+              </aside>
+            </div>
+          </section>
+        `;
+      }
       return `
         <section class="phase1-page">
           <div class="phase1-section-card" style="min-height:280px"></div>
@@ -1788,8 +2501,14 @@
               <div class="dashboard-hero-brand">
                 <img src="logo.png" alt="IHSAAN Medics" class="dashboard-hero-logo">
               </div>
-              <h1 class="dashboard-hero-title">${portalData.dashboard.title}</h1>
-              <p class="dashboard-hero-subtitle">${portalData.dashboard.subtitle}</p>
+              <div class="dashboard-hero-copy">
+                <h1 class="dashboard-hero-title">${portalData.dashboard.title}</h1>
+                <p class="dashboard-hero-subtitle">${portalData.dashboard.subtitle}</p>
+              </div>
+
+                <div class="button-row" style="margin-top:-34px">
+                  <button type="button" class="btn primary" data-open-phase1-page="phase1-1">Enter Workflow</button>
+                </div>
 
               <div class="dashboard-phase-strip" aria-label="Programme phases">
                 ${portalData.dashboard.overview.map(card => `
@@ -2007,6 +2726,31 @@
         return renderPhase1GateBlank('phase1-10');
       }
 
+      if (pageId === 'phase1-2') {
+        const pageMeta = portalData.phase1Pages.find(page => page.id === pageId) || portalData.phase1Pages[0];
+        return renderPhase1SlideDeck(pageMeta);
+      }
+
+      if (pageId === 'phase1-4') {
+        const pageMeta = portalData.phase1Pages.find(page => page.id === pageId) || portalData.phase1Pages[0];
+        return renderGenericPhase1SlideDeck(pageMeta, renderPhase1Page4Slides(), 'phase1-4', 'Complete the setup cards in order so every later guide works the way it should.');
+      }
+
+      if (pageId === 'phase1-3') {
+        const pageMeta = portalData.phase1Pages.find(page => page.id === pageId) || portalData.phase1Pages[0];
+        return renderGenericPhase1SlideDeck(pageMeta, renderPhase1Page3Slides(), 'phase1-3', 'A phase-by-phase map from Week 1 to submission. Keep moving through the cards to follow the full programme flow.');
+      }
+
+      if (pageId === 'phase1-5') {
+        const pageMeta = portalData.phase1Pages.find(page => page.id === pageId) || portalData.phase1Pages[0];
+        return renderGenericPhase1SlideDeck(pageMeta, renderPhase1Page5Slides(), 'phase1-5', 'Bookmark the essentials, then move through the reading and alert-setting workflow at your own pace.');
+      }
+
+      if (pageId === 'phase1-8') {
+        const pageMeta = portalData.phase1Pages.find(page => page.id === pageId) || portalData.phase1Pages[0];
+        return renderGenericPhase1SlideDeck(pageMeta, renderPhase1Page8Slides(), 'phase1-8', 'Read this as a guided deck: each slide adds one layer to your appraisal workflow.');
+      }
+
       const item = phase?.items.find(entry => entry.id === pageId) || phase?.items[0];
       if (!item) return renderDashboard();
 
@@ -2131,6 +2875,44 @@
         });
       });
 
+      mainMount.querySelectorAll('[data-open-phase1-page]').forEach(button => {
+        button.addEventListener('click', () => {
+          window.showTemplate('phase1', button.getAttribute('data-open-phase1-page') || 'phase1-1');
+        });
+      });
+
+      mainMount.querySelectorAll('[data-slide-nav]').forEach(button => {
+        button.addEventListener('click', () => {
+          const slidePage = button.getAttribute('data-slide-page');
+          const slideFactories = {
+            'phase1-2': renderPhase1Page2Slides,
+            'phase1-4': renderPhase1Page4Slides,
+            'phase1-3': renderPhase1Page3Slides,
+            'phase1-5': renderPhase1Page5Slides,
+            'phase1-8': renderPhase1Page8Slides
+          };
+          const slideFactory = slideFactories[slidePage];
+          if (!slideFactory) return;
+
+          const slides = slideFactory();
+          const direction = button.getAttribute('data-slide-nav');
+          const currentIndex = slidePage === 'phase1-2'
+            ? currentPhase1SlideIndex
+            : (currentPhase1SlidePages[slidePage] || 0);
+          const nextIndex = direction === 'next'
+            ? Math.min(currentIndex + 1, slides.length - 1)
+            : Math.max(currentIndex - 1, 0);
+
+          if (nextIndex === currentIndex) return;
+          if (slidePage === 'phase1-2') {
+            currentPhase1SlideIndex = nextIndex;
+          } else {
+            currentPhase1SlidePages[slidePage] = nextIndex;
+          }
+          renderPortal();
+        });
+      });
+
       // Bind quiz forms
       mainMount.querySelectorAll('.quiz-form').forEach(form => {
         form.addEventListener('submit', async (ev) => {
@@ -2205,6 +2987,11 @@
         currentPhaseKey = currentView;
         if (currentView === 'phase1') {
           currentItemId = itemId || currentItemId || 'phase1-1';
+          if (currentItemId === 'phase1-2') {
+            currentPhase1SlideIndex = 0;
+          } else if (currentPhase1SlidePages[currentItemId] !== undefined) {
+            currentPhase1SlidePages[currentItemId] = 0;
+          }
         } else {
           currentItemId = itemId || currentItemId || getPhaseItems(currentPhaseKey).find(item => item.type !== 'GATE')?.id || getPhaseItems(currentPhaseKey)[0]?.id || null;
         }
